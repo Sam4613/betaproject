@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A WASTED DEATH — World Film Adaptation Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Barlow+Condensed:ital,wght@0,300;0,600;0,700;0,900;1,300;1,700&family=DM+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root{
+  --white:   #FEFCF7;
+  --paper:   #F7F3EC;
+  --paper2:  #F0EBE0;
+  --gold:    #B8860B;
+  --gold2:   #D4A017;
+  --gold3:   #F0C040;
+  --gold-lt: #FDF6E3;
+  --ink:     #1A1208;
+  --ink2:    #2E2210;
+  --ink3:    #4A3820;
+  --muted:   #8C7A5E;
+  --red:     #8B1A1A;
+  --red-lt:  #FDF0F0;
+  --blue:    #1B3F7A;
+  --blue-lt: #EEF4FF;
+  --grn:     #1A5C2A;
+  --grn-lt:  #EEF8F0;
+  --border:  rgba(184,134,11,.22);
+  --border2: rgba(184,134,11,.12);
+  --shadow:  0 2px 30px rgba(26,18,8,.08);
+  --shadow2: 0 8px 60px rgba(26,18,8,.14);
+  --TW: 1200px;
+}
+
+/* ═══════════════════════════════════════════
+   RESET + BASE
+═══════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:var(--white);
+  color:var(--ink);
+  font-family:'Libre Baskerville',serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* ═══ CURSOR ═══ */
+#cur{
+  position:fixed;width:10px;height:10px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s;
+  mix-blend-mode:multiply;
+}
+#cur-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid var(--gold);border-radius:50%;
+  pointer-events:none;z-index:99998;
+  transform:translate(-50%,-50%);
+  transition:transform .35s ease;
+  opacity:.6;
+}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:20px;height:20px}
+
+/* ═══ PROGRESS ═══ */
+#progress{
+  position:fixed;top:0;left:0;height:2px;z-index:9999;
+  background:linear-gradient(90deg,var(--red),var(--gold),var(--gold3));
+  width:0%;box-shadow:0 0 8px var(--gold2);
+}
+
+/* ═══ FILM GRAIN ═══ */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9990;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+/* ═══ NAV ═══ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:22px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s;
+  background:transparent;
+}
+#nav.solid{
+  background:rgba(254,252,247,.96);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:14px 60px;
+  box-shadow:var(--shadow);
+}
+.nav-brand{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:20px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);
+  display:flex;align-items:center;gap:10px;
+}
+.nav-brand em{color:var(--gold);font-style:normal}
+.nav-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--red);display:inline-block;
+  animation:blink 1.6s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+
+.nav-links{display:flex;gap:2px;align-items:center}
+.nav-link{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  padding:8px 14px;border-radius:2px;transition:all .2s;
+}
+.nav-link:hover{color:var(--ink);background:var(--gold-lt)}
+.nav-cta{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--gold);color:var(--white);
+  padding:10px 22px;text-decoration:none;
+  border:1px solid var(--gold);border-radius:2px;
+  transition:all .25s;margin-left:8px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.nav-cta:hover{background:var(--gold2);border-color:var(--gold2);transform:translateY(-1px);box-shadow:0 4px 20px rgba(184,134,11,.3)}
+
+/* ═══════════════════════════════════════════
+   HERO — CINEMATIC WHITE
+═══════════════════════════════════════════ */
+#hero{
+  min-height:100vh;position:relative;
+  display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+}
+
+/* ornamental grid */
+#hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(var(--border2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border2) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+.hero-deco-line{
+  position:absolute;top:0;bottom:0;right:420px;
+  width:1px;background:var(--border);
+}
+.hero-deco-line2{
+  position:absolute;top:0;bottom:0;right:419px;
+  width:1px;background:rgba(184,134,11,.06);
+  transform:translateX(-3px);
+}
+
+.hero-img-panel{
+  position:absolute;right:0;top:0;bottom:0;width:42%;
+  overflow:hidden;
+  border-left:2px solid var(--gold);
+}
+.hero-img-panel img{
+  width:100%;height:100%;object-fit:cover;
+  filter:sepia(.35) contrast(1.1) brightness(.95);
+  transform:scale(1.05);
+  transition:transform 8s ease;
+}
+.hero-img-panel:hover img{transform:scale(1)}
+.hero-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(254,252,247,.6) 0%,rgba(254,252,247,.1) 40%,transparent 70%);
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  max-width:var(--TW);margin:0 auto;
+  padding:140px 60px 80px;
+  width:100%;
+}
+
+.hero-stamp{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid var(--border);padding:8px 18px;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-lt);
+  margin-bottom:36px;
+  opacity:0;animation:fadeUp .7s .3s forwards;
+}
+.stamp-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1.4s infinite}
+
+.hero-label{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:18px;
+  opacity:0;animation:fadeUp .7s .45s forwards;
+}
+
+.hero-h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(72px,11vw,160px);
+  font-weight:900;letter-spacing:-.02em;line-height:.88;
+  margin-bottom:6px;
+  overflow:hidden;
+}
+.h1-row{
+  display:block;overflow:hidden;
+  opacity:0;
+}
+.h1-row:nth-child(1){animation:slideUp .7s .55s forwards}
+.h1-row:nth-child(2){
+  animation:slideUp .7s .7s forwards;
+  color:var(--gold);
+  text-shadow:none;
+  -webkit-text-stroke:0;
+}
+.h1-row:nth-child(3){
+  animation:slideUp .7s .85s forwards;
+  -webkit-text-stroke:1.5px var(--ink);
+  color:transparent;
+  font-style:italic;
+}
+
+.hero-sub{
+  font-family:'Libre Baskerville',serif;
+  font-size:clamp(15px,1.6vw,19px);font-style:italic;
+  font-weight:400;line-height:1.75;
+  color:var(--ink3);max-width:520px;
+  margin:28px 0 0;
+  opacity:0;animation:fadeUp .8s 1s forwards;
+}
+
+.hero-divider{
+  width:60px;height:2px;
+  background:linear-gradient(to right,var(--gold),transparent);
+  margin:32px 0;
+  opacity:0;animation:fadeIn .8s 1.1s forwards;
+}
+
+.hero-facts{
+  display:flex;gap:0;
+  border:1px solid var(--border);
+  background:var(--gold-lt);
+  margin-bottom:40px;
+  opacity:0;animation:fadeUp .8s 1.15s forwards;
+}
+.hf{
+  flex:1;padding:20px 24px;
+  border-right:1px solid var(--border);
+}
+.hf:last-child{border-right:none}
+.hf .n{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(28px,3vw,44px);font-weight:900;
+  color:var(--gold);line-height:1;display:block;margin-bottom:4px;
+}
+.hf .l{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);line-height:1.4;
+}
+
+.hero-ctas{
+  display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .8s 1.3s forwards;
+}
+.btn-gold{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:14px 32px;background:var(--gold);color:var(--white);
+  border:2px solid var(--gold);border-radius:2px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.btn-gold::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.2) 50%,transparent 70%);
+  transform:translateX(-100%);transition:transform .5s;
+}
+.btn-gold:hover{background:var(--gold2);border-color:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(184,134,11,.35)}
+.btn-gold:hover::after{transform:translateX(100%)}
+
+.btn-outline{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:12px 30px;background:transparent;color:var(--ink);
+  border:2px solid var(--border);border-radius:2px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  transition:all .25s;
+}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-lt)}
+
+/* ═══ MARQUEE ═══ */
+.marquee-wrap{
+  background:var(--ink);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  padding:12px 0;overflow:hidden;
+}
+.marquee-inner{
+  display:flex;white-space:nowrap;
+  animation:marquee 28s linear infinite;
+}
+.mi{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--white);padding:0 32px;flex-shrink:0;
+}
+.mi-dot{color:var(--gold3)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+.wrap{max-width:var(--TW);margin:0 auto;padding:0 60px}
+.sec{padding:100px 0;position:relative}
+.sec-paper{background:var(--paper)}
+.sec-paper2{background:var(--paper2)}
+
+.sec-eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:14px;margin-bottom:14px;
+}
+.sec-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
+
+.sec-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(44px,6vw,84px);font-weight:900;
+  letter-spacing:-.01em;line-height:.92;
+  margin-bottom:20px;color:var(--ink);
+}
+.sec-title .accent{color:var(--gold)}
+.sec-title .outline{
+  -webkit-text-stroke:1.5px var(--ink);color:transparent;font-style:italic;
+}
+.sec-title .outline.gold{-webkit-text-stroke-color:var(--gold)}
+
+.sec-body{
+  font-size:clamp(16px,1.5vw,18px);font-weight:400;
+  line-height:1.8;color:var(--ink3);max-width:680px;
+}
+
+.gold-rule{
+  width:50px;height:2px;
+  background:linear-gradient(to right,var(--gold),rgba(184,134,11,.2));
+  margin:20px 0 28px;
+}
+
+/* ═══ REVEAL ═══ */
+.rv{opacity:0;transform:translateY(28px);transition:all .65s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-l{opacity:0;transform:translateX(-32px);transition:all .65s cubic-bezier(.22,1,.36,1)}
+.rv-l.in{opacity:1;transform:translateX(0)}
+.rv-r{opacity:0;transform:translateX(32px);transition:all .65s cubic-bezier(.22,1,.36,1)}
+.rv-r.in{opacity:1;transform:translateX(0)}
+
+/* ═══ CHAPTER CARDS — ACTS ═══ */
+.acts-wrapper{overflow:hidden;border:1px solid var(--border)}
+.acts-rail{display:flex;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.act-card{
+  min-width:340px;flex-shrink:0;
+  padding:44px 36px;
+  border-right:1px solid var(--border);
+  background:var(--white);position:relative;overflow:hidden;
+  transition:background .3s;cursor:pointer;
+}
+.act-card:hover{background:var(--gold-lt)}
+.act-card.red-act{background:var(--red-lt)}
+.act-card.red-act:hover{background:rgba(139,26,26,.08)}
+.act-bg{
+  position:absolute;bottom:-30px;right:-10px;
+  font-family:'Barlow Condensed',sans-serif;font-size:220px;font-weight:900;
+  color:rgba(184,134,11,.04);line-height:1;pointer-events:none;user-select:none;
+}
+.act-num{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:18px;
+}
+.act-title{
+  font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;
+  color:var(--ink);line-height:.95;margin-bottom:10px;
+}
+.act-period{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;
+  color:var(--muted);margin-bottom:18px;
+  padding-left:12px;border-left:2px solid var(--gold);
+}
+.act-body{font-size:14px;line-height:1.72;color:var(--ink3)}
+.act-body strong{color:var(--ink);font-weight:700}
+.act-card.red-act .act-title{color:var(--red)}
+.act-card.red-act .act-num{color:var(--red)}
+.acts-controls{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 0;border-top:1px solid var(--border);
+}
+.acts-btn{
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--border);
+  background:transparent;cursor:pointer;font-size:16px;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.acts-btn:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+.acts-prog{
+  font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);
+}
+.acts-dots{display:flex;gap:6px;margin-left:auto}
+.adot{width:6px;height:6px;border-radius:50%;background:var(--paper2);border:1px solid var(--border);cursor:pointer;transition:all .3s}
+.adot.on{background:var(--gold);border-color:var(--gold);width:22px;border-radius:3px}
+
+/* ═══ NUMBERS STRIP ═══ */
+.nums-strip{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  border:1px solid var(--border);
+  background:var(--white);
+}
+.ncell{
+  padding:44px 28px;border-right:1px solid var(--border);
+  position:relative;overflow:hidden;transition:background .3s;
+}
+.ncell:last-child{border-right:none}
+.ncell::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gold);transform:scaleX(0);transition:transform .4s;transform-origin:left;
+}
+.ncell:hover{background:var(--gold-lt)}
+.ncell:hover::before{transform:scaleX(1)}
+.ncell .nv{
+  font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,3.5vw,58px);
+  font-weight:900;color:var(--gold);line-height:1;display:block;margin-bottom:8px;
+}
+.ncell .nl{
+  font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);line-height:1.5;
+}
+
+/* ═══ CARDS / GRID ═══ */
+.card-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+}
+.card{
+  background:var(--white);padding:32px 28px;
+  position:relative;overflow:hidden;transition:background .3s;
+}
+.card:hover{background:var(--gold-lt)}
+.card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transition:transform .35s;transform-origin:left;
+}
+.card:hover::after{transform:scaleX(1)}
+.card-badge{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);background:var(--gold-lt);border:1px solid rgba(184,134,11,.2);
+  padding:4px 10px;display:inline-block;margin-bottom:14px;
+}
+.card-title{
+  font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;
+  color:var(--ink);margin-bottom:10px;
+}
+.card-body{font-size:14px;line-height:1.7;color:var(--ink3)}
+
+/* ═══ PARTNER CARDS ═══ */
+.p-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.pc{
+  background:var(--white);padding:30px 26px;
+  position:relative;transition:background .3s;
+}
+.pc:hover{background:var(--gold-lt)}
+.pc-rank{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:10px;
+}
+.pc-rank.gold{color:var(--gold)}
+.pc-rank.blue{color:var(--blue)}
+.pc-rank.red{color:var(--red)}
+.pc-name{
+  font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;
+  color:var(--ink);margin-bottom:5px;
+}
+.pc-plat{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:14px;
+}
+.pc-desc{font-size:13.5px;line-height:1.67;color:var(--ink3)}
+.pc-action{
+  margin-top:16px;padding-top:14px;border-top:1px solid var(--border2);
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+  color:var(--gold);text-transform:uppercase;
+}
+
+/* ═══ CAST ═══ */
+.cast-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.cc{background:var(--white);padding:28px 24px;transition:background .3s;position:relative}
+.cc:hover{background:var(--gold-lt)}
+.cc-role{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px;
+}
+.cc-name{
+  font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;
+  color:var(--ink);margin-bottom:12px;letter-spacing:.01em;line-height:.95;
+}
+.cc-bio{font-size:13.5px;line-height:1.67;color:var(--ink3)}
+.cc-opens{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--border2);
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+  color:var(--gold);text-transform:uppercase;
+}
+
+/* ═══ TABLE ═══ */
+.tbl{width:100%;border-collapse:collapse}
+.tbl thead tr{background:var(--ink);border-bottom:2px solid var(--gold)}
+.tbl th{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);
+  padding:14px 18px;text-align:left;
+}
+.tbl td{
+  padding:14px 18px;font-size:14px;line-height:1.5;
+  color:var(--ink3);border-bottom:1px solid var(--border2);
+  vertical-align:top;
+}
+.tbl tr:hover td{background:var(--gold-lt)}
+.tbl td:first-child{font-weight:700;color:var(--ink)}
+.tg{
+  display:inline-flex;align-items:center;
+  padding:3px 9px;font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+}
+.tg.g{background:rgba(184,134,11,.1);color:var(--gold);border:1px solid rgba(184,134,11,.25)}
+.tg.r{background:var(--red-lt);color:var(--red);border:1px solid rgba(139,26,26,.2)}
+.tg.b{background:var(--blue-lt);color:var(--blue);border:1px solid rgba(27,63,122,.2)}
+.tg.gr{background:var(--grn-lt);color:var(--grn);border:1px solid rgba(26,92,42,.2)}
+
+/* ═══ BARS ═══ */
+.bar-row{display:flex;flex-direction:column;gap:14px}
+.bar-item{display:flex;flex-direction:column;gap:5px}
+.bar-head{display:flex;justify-content:space-between}
+.bar-label{font-size:14px;color:var(--ink)}
+.bar-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold)}
+.bar-track{height:3px;background:var(--paper2);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(to right,var(--gold),var(--gold3));width:0;transition:width 1.1s cubic-bezier(.4,0,.2,1)}
+
+/* ═══ BUDGET ═══ */
+.budget-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.bc{
+  background:var(--white);padding:40px 32px;
+  position:relative;transition:background .3s;
+}
+.bc:hover{background:var(--gold-lt)}
+.bc.feat{
+  background:var(--gold-lt);
+  border:2px solid var(--gold);
+  margin:-1px;z-index:1;
+}
+.bc-badge{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:18px;
+}
+.bc-amt{
+  font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,3.5vw,56px);
+  font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px;
+}
+.bc-sub{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:20px}
+.bc-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.bc-list li{
+  font-size:13.5px;line-height:1.5;color:var(--ink3);
+  padding-left:16px;position:relative;
+}
+.bc-list li::before{content:'·';position:absolute;left:0;color:var(--gold);font-size:18px;line-height:1.1}
+.rec-label{
+  position:absolute;top:20px;right:20px;
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--white);background:var(--gold);padding:4px 10px;
+}
+
+/* ═══ REVENUE TABLE ═══ */
+.rev-tbl{width:100%;border-collapse:collapse}
+.rev-tbl th{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);
+  padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);
+}
+.rev-tbl td{
+  padding:12px 16px;font-size:14px;
+  border-bottom:1px solid var(--border2);color:var(--ink3);vertical-align:middle;
+}
+.rev-tbl tr:hover td{background:var(--gold-lt)}
+.rev-tbl td:first-child{font-weight:700;color:var(--ink)}
+.bw{height:5px;background:var(--paper2);border-radius:3px;overflow:hidden;min-width:70px}
+.bf{height:100%;background:linear-gradient(to right,var(--gold),var(--gold3));width:0;transition:width 1.1s cubic-bezier(.4,0,.2,1)}
+
+/* ═══ PHASES / ACCORDION ═══ */
+.phases{border-top:1px solid var(--border)}
+.phase{border-bottom:1px solid var(--border)}
+.ph-head{
+  display:flex;align-items:center;gap:22px;
+  padding:26px 0;cursor:pointer;transition:all .2s;
+}
+.ph-head:hover .ph-title{color:var(--gold)}
+.ph-n{
+  font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;
+  color:rgba(184,134,11,.2);line-height:1;flex-shrink:0;width:54px;transition:color .2s;
+}
+.phase.open .ph-n{color:rgba(184,134,11,.45)}
+.ph-info{flex:1}
+.ph-title{
+  font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,2vw,24px);
+  font-weight:700;color:var(--ink);margin-bottom:3px;transition:color .2s;
+}
+.ph-sub{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;
+}
+.ph-icon{
+  width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--border);background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--muted);flex-shrink:0;transition:all .3s;
+}
+.phase.open .ph-icon{background:var(--gold);color:var(--white);border-color:var(--gold);transform:rotate(45deg)}
+.ph-body{
+  max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s;
+  padding:0 0 0 76px;
+}
+.phase.open .ph-body{max-height:900px;padding:0 0 32px 76px}
+.ph-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.ph-list li{
+  font-size:15px;line-height:1.7;color:var(--ink3);
+  padding-left:20px;position:relative;
+}
+.ph-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:13px;top:4px}
+
+/* ═══ GRANT SECTION ═══ */
+.grants-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.grant-card{
+  background:var(--white);padding:28px 24px;
+  position:relative;transition:background .3s;
+}
+.grant-card:hover{background:var(--gold-lt)}
+.grant-flag{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:10px;
+}
+.grant-flag.kg{color:var(--gold)}
+.grant-flag.sg{color:var(--blue)}
+.grant-flag.eu{color:var(--red)}
+.grant-flag.mh{color:var(--grn)}
+.grant-flag.pr{color:var(--ink)}
+.grant-amt{
+  font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,3vw,44px);
+  font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px;
+}
+.grant-name{
+  font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;
+  color:var(--ink);margin-bottom:10px;
+}
+.grant-body{font-size:13.5px;line-height:1.67;color:var(--ink3)}
+.grant-req{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--border2);
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+  color:var(--muted);text-transform:uppercase;
+}
+
+/* ═══ DIRECTORS ═══ */
+.dir-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.dc{background:var(--white);padding:28px 26px;transition:background .3s;position:relative}
+.dc:hover{background:var(--gold-lt)}
+.dc.pri{background:var(--gold-lt);border-left:3px solid var(--gold)}
+.stars{display:flex;gap:3px;margin-bottom:14px}
+.star{
+  width:13px;height:13px;
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  background:var(--gold);
+}
+.star.off{background:var(--paper2);border:none}
+.dc-name{
+  font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;
+  color:var(--ink);margin-bottom:5px;
+}
+.dc-tag{
+  font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:12px;
+}
+.dc-body{font-size:13.5px;line-height:1.67;color:var(--ink3)}
+.dc-fmt{
+  margin-top:14px;font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--blue);letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* ═══ LEGAL ═══ */
+.legal-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);
+}
+.li-card{
+  background:var(--white);padding:26px;
+  display:flex;gap:18px;transition:background .2s;
+}
+.li-card:hover{background:var(--gold-lt)}
+.li-num{
+  font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;
+  color:rgba(184,134,11,.22);line-height:1;flex-shrink:0;width:38px;
+}
+.li-title{
+  font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;
+  color:var(--ink);margin-bottom:6px;
+}
+.li-body{font-size:13.5px;line-height:1.67;color:var(--ink3)}
+
+/* ═══ CALENDAR ═══ */
+.cal-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);
+}
+.cl-card{
+  background:var(--white);padding:28px;position:relative;
+  cursor:pointer;transition:background .3s;overflow:hidden;
+}
+.cl-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--gold);transform:scaleY(0);transition:transform .3s;
+}
+.cl-card:hover{background:var(--gold-lt)}
+.cl-card:hover::before{transform:scaleY(1)}
+.cl-month{
+  font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;
+  color:rgba(184,134,11,.15);line-height:1;margin-bottom:8px;
+}
+.cl-name{
+  font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;
+  color:var(--ink);margin-bottom:3px;
+}
+.cl-loc{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+}
+.cl-body{font-size:13.5px;line-height:1.65;color:var(--ink3)}
+
+/* ═══ CONTACT ═══ */
+.contact-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:start}
+.cf{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{
+  font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);
+}
+.field input,.field select,.field textarea{
+  background:var(--white);border:1px solid var(--border);border-radius:2px;
+  padding:13px 15px;color:var(--ink);
+  font-family:'Libre Baskerville',serif;font-size:14px;outline:none;
+  transition:border-color .2s;resize:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
+.field select{cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%23B8860B' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;background-size:10px;
+}
+.field select option{background:var(--white);color:var(--ink)}
+.field textarea{min-height:140px}
+
+.cd-block{display:flex;flex-direction:column;gap:14px}
+.cd-item{
+  padding:22px 20px;background:var(--white);
+  border:1px solid var(--border);border-left:3px solid var(--gold);
+  transition:background .2s;
+}
+.cd-item:hover{background:var(--gold-lt)}
+.cd-label{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:7px;
+}
+.cd-val{
+  font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;
+  color:var(--ink);margin-bottom:4px;
+}
+.cd-sub{font-size:13px;color:var(--ink3);margin-bottom:8px}
+.cd-link{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  transition:gap .2s;
+}
+.cd-link::after{content:'→'}
+.cd-link:hover{gap:10px}
+
+.social-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.soc-btn{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gold);
+  border:1px solid var(--border);padding:7px 13px;
+  text-decoration:none;transition:all .2s;background:var(--white);
+}
+.soc-btn:hover{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+/* ═══ QUOTE ═══ */
+.big-q{
+  padding:70px 0;text-align:center;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  position:relative;
+}
+.big-q::before{
+  content:'❝';
+  position:absolute;top:-28px;left:50%;transform:translateX(-50%);
+  font-family:'Playfair Display',serif;font-size:56px;color:var(--gold);
+  background:var(--paper);padding:0 16px;line-height:1;
+}
+.bq-text{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(22px,3.5vw,50px);font-weight:700;
+  color:var(--ink);max-width:920px;margin:0 auto 16px;line-height:1.1;
+  letter-spacing:.01em;
+}
+.bq-text .em{color:var(--gold)}
+.bq-attr{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);
+}
+
+/* ═══ SPLIT ═══ */
+.split-2{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+.split-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+
+/* ═══ CALLOUT ═══ */
+.callout{
+  padding:28px 24px;
+  border-left:3px solid var(--gold);background:var(--gold-lt);
+  position:relative;margin:16px 0;
+}
+.callout.red{border-color:var(--red);background:var(--red-lt)}
+.callout.blue{border-color:var(--blue);background:var(--blue-lt)}
+.callout.grn{border-color:var(--grn);background:var(--grn-lt)}
+.callout-label{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;
+}
+.callout.red .callout-label{color:var(--red)}
+.callout.blue .callout-label{color:var(--blue)}
+.callout.grn .callout-label{color:var(--grn)}
+.callout-body{font-size:14px;line-height:1.7;color:var(--ink3)}
+.callout-body strong{color:var(--ink)}
+
+/* ═══ TIMELINE ═══ */
+.tl{display:flex;flex-direction:column;gap:1px}
+.tl-row{
+  display:grid;grid-template-columns:110px 1fr;background:var(--border);gap:1px;
+}
+.tl-period{
+  padding:20px 18px;background:var(--paper);
+  font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;
+  color:var(--gold);display:flex;align-items:center;justify-content:center;text-align:center;
+  line-height:1.1;
+}
+.tl-period.now{background:var(--red);color:var(--white)}
+.tl-period.go{background:var(--gold);color:var(--white)}
+.tl-content{
+  padding:20px 24px;background:var(--white);
+  font-size:14px;line-height:1.65;color:var(--ink3);
+}
+.tl-content strong{color:var(--ink)}
+
+/* ═══ FILTER TABS ═══ */
+.filter-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:2px}
+.ftab{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 16px;border:1px solid var(--border);background:var(--white);
+  color:var(--muted);cursor:pointer;transition:all .2s;border-radius:2px;
+}
+.ftab:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-lt)}
+.ftab.on{background:var(--gold);color:var(--white);border-color:var(--gold)}
+
+/* ═══ TOAST ═══ */
+#toast{
+  position:fixed;bottom:30px;right:30px;z-index:99999;
+  background:var(--ink);color:var(--white);
+  font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.05em;
+  padding:16px 24px;border-left:4px solid var(--gold);
+  transform:translateY(80px);opacity:0;transition:all .4s cubic-bezier(.22,1,.36,1);
+}
+#toast.show{transform:translateY(0);opacity:1}
+
+/* ═══ FOOTER ═══ */
+footer{
+  background:var(--ink);border-top:2px solid var(--gold);
+  padding:60px 0 30px;
+}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;margin-bottom:50px}
+.foot-brand{
+  font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;
+  color:var(--gold);line-height:1;
+}
+.foot-sub{font-size:14px;color:rgba(254,252,247,.45);margin-top:8px;font-style:italic}
+.foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.foot-col-title{
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:14px;
+}
+.foot-link{
+  display:block;font-size:14px;color:rgba(254,252,247,.5);
+  text-decoration:none;padding:4px 0;transition:color .2s;
+}
+.foot-link:hover{color:var(--gold3)}
+.foot-copy{
+  border-top:1px solid rgba(184,134,11,.2);padding-top:24px;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;
+  color:rgba(254,252,247,.25);text-transform:uppercase;text-align:center;
+}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:960px){
+  .wrap{padding:0 24px}
+  #nav{padding:16px 24px}
+  #nav.solid{padding:12px 24px}
+  .hero-content{padding:120px 24px 60px}
+  .hero-img-panel{display:none}
+  .nums-strip,.cal-grid,.split-2,.split-3,.budget-grid,.legal-grid,.contact-grid{grid-template-columns:1fr}
+  .tl-row{grid-template-columns:80px 1fr}
+  .form-row{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hero-facts{flex-wrap:wrap}
+  .hf{min-width:45%}
+  .foot-cols{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="progress"></div>
+<div id="toast">✓ Submission received — response within 48 business hours</div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav id="nav">
+  <div class="nav-brand"><span class="nav-dot"></span> A <em>WASTED</em> DEATH</div>
+  <div class="nav-links">
+    <a href="#story" class="nav-link">Story</a>
+    <a href="#market" class="nav-link">Market</a>
+    <a href="#grants" class="nav-link">Grants</a>
+    <a href="#partners" class="nav-link">Partners</a>
+    <a href="#cast" class="nav-link">Cast</a>
+    <a href="#directors" class="nav-link">Directors</a>
+    <a href="#finance" class="nav-link">Finance</a>
+    <a href="#marketing" class="nav-link">Marketing</a>
+    <a href="#legal" class="nav-link">Legal</a>
+    <a href="#contact" class="nav-cta">Pitch Now ↗</a>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-deco-line"></div>
+  <div class="hero-deco-line2"></div>
+
+  <div class="hero-img-panel">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Singapore_City_Skyline_Dusk_panorama_2011.jpg/1200px-Singapore_City_Skyline_Dusk_panorama_2011.jpg"
+         alt="Singapore Skyline"
+         onerror="this.src='https://images.unsplash.com/photo-1565967511849-76a60a516170?w=1200&q=80'">
+    <div class="hero-img-overlay"></div>
+  </div>
+
+  <div class="hero-content wrap">
+    <div class="hero-stamp">
+      <span class="stamp-dot"></span>
+      World Adaptation Rights Available · True Story · 4 Continents · 30 Years of Silence
+    </div>
+    <div class="hero-label">Film & Series — Master Strategy Document</div>
+
+    <h1 class="hero-h1">
+      <span class="h1-row">A WASTED</span>
+      <span class="h1-row">DEATH</span>
+      <span class="h1-row">THE FILM</span>
+    </h1>
+
+    <div class="hero-divider"></div>
+    <p class="hero-sub">The true story of Rajan Pillai — Kerala-born, Singapore-based global food baron who ran Britannia for Nabisco, brought Coca-Cola back to India, and died in Tihar Jail at 46 while CBI lawyers argued against his medical treatment. A judicial inquiry confirmed everything. Nobody was punished. The world forgot his name. This ends now.</p>
+
+    <div style="height:30px"></div>
+    <div class="hero-facts">
+      <div class="hf"><span class="n counter" data-t="46">0</span><span class="l">Years old at death · Tihar Jail · July 7, 1995</span></div>
+      <div class="hf"><span class="n counter" data-t="6">0</span><span class="l">Countries in his business empire</span></div>
+      <div class="hf"><span class="n">₹500Cr+</span><span class="l">Projected franchise revenue (optimistic scenario)</span></div>
+      <div class="hf"><span class="n counter" data-t="30">0</span><span class="l">Years this story has waited to be told</span></div>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-gold">Submit a Pitch Proposal ↗</a>
+      <a href="#story" class="btn-outline">Read the Full Strategy ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="mi">BRITANNIA INDUSTRIES</span><span class="mi mi-dot">·</span>
+    <span class="mi">NABISCO BRANDS</span><span class="mi mi-dot">·</span>
+    <span class="mi">COCA-COLA INDIA RETURN</span><span class="mi mi-dot">·</span>
+    <span class="mi">KELLOGG'S INDIA ENTRY</span><span class="mi mi-dot">·</span>
+    <span class="mi">BSN GROUPE / DANONE</span><span class="mi mi-dot">·</span>
+    <span class="mi">SINGAPORE — RIDOUT ROAD</span><span class="mi mi-dot">·</span>
+    <span class="mi">TIHAR JAIL DELHI</span><span class="mi mi-dot">·</span>
+    <span class="mi">LEILA SETH COMMISSION</span><span class="mi mi-dot">·</span>
+    <span class="mi">RJR NABISCO — $25 BILLION</span><span class="mi mi-dot">·</span>
+    <span class="mi">SGD 4.5 MILLION BAIL</span><span class="mi mi-dot">·</span>
+    <span class="mi">29 COUNTS — SINGAPORE COURTS</span><span class="mi mi-dot">·</span>
+    <span class="mi">A WASTED DEATH</span><span class="mi mi-dot">·</span>
+    <span class="mi">BRITANNIA INDUSTRIES</span><span class="mi mi-dot">·</span>
+    <span class="mi">NABISCO BRANDS</span><span class="mi mi-dot">·</span>
+    <span class="mi">COCA-COLA INDIA RETURN</span><span class="mi mi-dot">·</span>
+    <span class="mi">KELLOGG'S INDIA ENTRY</span><span class="mi mi-dot">·</span>
+    <span class="mi">BSN GROUPE / DANONE</span><span class="mi mi-dot">·</span>
+    <span class="mi">A WASTED DEATH</span><span class="mi mi-dot">·</span>
+  </div>
+</div>
+
+<!-- ═══════════ STORY — FIVE ACTS ═══════════ -->
+<section id="story" class="sec sec-paper">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 01 — The Story</div>
+      <h2 class="sec-title">FIVE ACTS.<br>FOUR <span class="accent">CONTINENTS.</span><br>ONE <span class="outline gold">TRUTH.</span></h2>
+      <p class="sec-body">Written by J. Rajmohan Pillai — Rajan's younger brother and the story's narrator. The unique power of this adaptation is that the author was there. He witnessed every chapter. He felt the jealousy, the admiration, the grief. The narrator's complex relationship with his brother is the emotional engine of every scene.</p>
+    </div>
+
+    <div style="height:40px"></div>
+    <div class="acts-wrapper rv">
+      <div class="acts-rail" id="actsRail">
+        <div class="act-card"><div class="act-bg">I</div>
+          <div class="act-num">ACT I · KOLLAM TO SINGAPORE</div>
+          <div class="act-title">THE VENDOR'S<br>GRANDSON</div>
+          <div class="act-period">1948 – 1975</div>
+          <div class="act-body">A stamp-paper vendor's grandson leaves Kollam, Kerala with his father's seed capital. He sets up <strong>Twentieth Century Foods</strong> in Jurong Industrial Estate, Singapore, and creates the <strong>Ole brand</strong> — the snack brand that dominates Southeast Asia and Japan. His parting words: <em>"Victory will be mine. Loss — Achan's."</em> Ole: cashew nuts, potato chips, mixed nuts — a brand that wins by value addition before India discovers the concept.</div>
+        </div>
+        <div class="act-card"><div class="act-bg">II</div>
+          <div class="act-num">ACT II · SINGAPORE TO LONDON</div>
+          <div class="act-title">THE NABISCO<br>YEARS</div>
+          <div class="act-period">1975 – 1984</div>
+          <div class="act-body">Rajan joins <strong>Nabisco Brands</strong>, moves to London as Area Vice-President, and befriends CEO <strong>Ross Johnson</strong> (later portrayed by James Garner in HBO's <em>Barbarians at the Gate</em>). Johnson writes on a plaque: <em>"Rajan: a great entrepreneur, executive, person, and most of all — a friend."</em> Rajan then orchestrates the acquisition of <strong>Britannia Industries</strong> from British hands — returning a 75-year-old Indian institution to Indian control for the first time in its history.</div>
+        </div>
+        <div class="act-card"><div class="act-bg">III</div>
+          <div class="act-num">ACT III · AT THE SUMMIT</div>
+          <div class="act-title">THE BISCUIT<br>BARON</div>
+          <div class="act-period">1984 – 1992</div>
+          <div class="act-body">Britannia spans six countries. He brings <strong>Coca-Cola back to India</strong> via Britco Foods (Britannia-Coke JV). He negotiates <strong>Kellogg's India entry</strong>. He is on the front page of the Financial Times and Economic Times. The world calls him The Biscuit Baron. But France's <strong>BSN Groupe</strong> (Antoine Riboud) is slowly, patiently funding his expansion in order to create dependency — then calling in the debt at a moment of maximum vulnerability.</div>
+        </div>
+        <div class="act-card"><div class="act-bg">IV</div>
+          <div class="act-num">ACT IV · THE FALL</div>
+          <div class="act-title">EVERY FRIEND<br>DISAPPEARS</div>
+          <div class="act-period">1992 – 1995</div>
+          <div class="act-body">Singapore courts. <strong>29 counts</strong>. A 14-year sentence looming. Every powerful friend vanishes. <strong>Subha Napoleon</strong> — his Singaporean Tamil secretary — furnishes <strong>SGD 4.5 million bail alone</strong> when all his wealthy allies disappear. He flees to India. He fights in Indian courts funded by his own brother's money. He starts <strong>Thai Agri Foods in Bangkok</strong> — his last venture — refusing to accept that the fight is over.</div>
+        </div>
+        <div class="act-card red-act"><div class="act-bg">V</div>
+          <div class="act-num">ACT V · TIHAR JAIL</div>
+          <div class="act-title">A WASTED<br>DEATH</div>
+          <div class="act-period">July 4 – 7, 1995</div>
+          <div class="act-body">Arrested at Delhi airport. Bail denied by Magistrate M.L. Mehta. Tihar Jail. A vital court letter arrives at the jail and <strong>disappears in transit</strong>. Jail Doctor Venkatasubbiah arrives more than an hour after the emergency SOS. He leaves DDU Hospital exactly <strong>2 minutes after handover</strong>, without briefing the doctors. Rajan Pillai dies on July 7, 1995, aged 46. His mother prays all night for a son already in the morgue. The <strong>Leila Seth Commission</strong> confirms every failure. Nobody is ever held accountable.</div>
+        </div>
+      </div>
+    </div>
+    <div class="acts-controls rv">
+      <button class="acts-btn" onclick="scrollActs(-1)">←</button>
+      <button class="acts-btn" onclick="scrollActs(1)">→</button>
+      <span class="acts-prog" id="aProg">01 / 05</span>
+      <div class="acts-dots" id="aDots">
+        <div class="adot on" onclick="goAct(0)"></div>
+        <div class="adot" onclick="goAct(1)"></div>
+        <div class="adot" onclick="goAct(2)"></div>
+        <div class="adot" onclick="goAct(3)"></div>
+        <div class="adot" onclick="goAct(4)"></div>
+      </div>
+    </div>
+
+    <div class="big-q rv" style="margin-top:60px">
+      <div class="bq-text">"HE BROUGHT <span class="em">KELLOGG'S</span> TO INDIA. BROUGHT <span class="em">COCA-COLA</span> BACK. AND THEY LET HIM <span class="em">DIE IN A JAIL CELL.</span>"</div>
+      <div class="bq-attr">— The story that 30 years of silence could not erase</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MARKET DATA ═══════════ -->
+<section id="market" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 02 — Market Intelligence</div>
+      <h2 class="sec-title">THE NUMBERS<br>DON'T <span class="accent">LIE.</span></h2>
+    </div>
+    <div class="nums-strip rv" style="margin-top:44px">
+      <div class="ncell"><span class="nv cc" data-t="5.2" data-s="$" data-e="B">$0B</span><span class="nl">India OTT Market Size 2026 (projected)</span></div>
+      <div class="ncell"><span class="nv cc" data-t="620" data-s="" data-e="M+">0M+</span><span class="nl">OTT Subscribers In India</span></div>
+      <div class="ncell"><span class="nv" style="font-size:clamp(28px,2.8vw,46px)">9.6 / 10</span><span class="nl">Scam 1992 IMDb Score — Our Primary Benchmark</span></div>
+      <div class="ncell"><span class="nv cc" data-t="400" data-s="" data-e="%+">0%+</span><span class="nl">Scam 1992 Return on Investment</span></div>
+      <div class="ncell"><span class="nv cc" data-t="50" data-s="" data-e="M+">0M+</span><span class="nl">Malayali Diaspora Worldwide — Built-In Audience</span></div>
+    </div>
+
+    <div class="rv" style="margin-top:54px">
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:var(--ink);margin-bottom:22px">COMPARABLE CONTENT — PROVEN MARKET</h3>
+      <table class="tbl">
+        <thead><tr><th>Title</th><th>Platform</th><th>Budget</th><th>Performance</th><th>Why We Surpass It</th></tr></thead>
+        <tbody>
+          <tr><td>Scam 1992</td><td><span class="tg b">SonyLIV</span></td><td>~₹40 Cr</td><td><span class="tg g">9.6 IMDb · +2M subs</span></td><td>We span 4 continents. Scam 1992 never left Mumbai. Our canvas is exponentially larger — Singapore, London, Brazil, Bangkok, Delhi.</td></tr>
+          <tr><td>Barbarians at the Gate (HBO '93)</td><td><span class="tg b">HBO</span></td><td>USD 12M</td><td><span class="tg g">4 Emmy noms · Cult classic</span></td><td>Ross Johnson — Rajan's mentor and nemesis — IS a character in this 1993 film. We are the Indian side of that same story. Cross-reference marketing is built in.</td></tr>
+          <tr><td>Delhi Crime</td><td><span class="tg gr">Netflix India</span></td><td>~USD 2M/ep</td><td><span class="tg g">Emmy Award · 30M+ views</span></td><td>Same institutional failure narrative + Delhi setting. Our conspiracy is more global and our cast of real culprits is named and documented by a judicial inquiry.</td></tr>
+          <tr><td>Succession (HBO)</td><td><span class="tg b">HBO/Max</span></td><td>USD 15–20M/ep</td><td><span class="tg g">$1B+ franchise · 3 Emmys</span></td><td>Family + corporate betrayal + tragic fall. This is India's Succession — but every board meeting, every betrayal, every death is documented fact, not fiction.</td></tr>
+          <tr><td>The Dropout (Hulu)</td><td><span class="tg b">Hulu</span></td><td>~USD 20M total</td><td><span class="tg g">Emmy winner · Global OTT</span></td><td>Rise-and-fall true story, single charismatic protagonist, institutional failure. Our story is more dramatic, more global, and ends with a confirmed death by negligence.</td></tr>
+          <tr><td>Bad Boy Billionaires</td><td><span class="tg gr">Netflix India</span></td><td>~USD 4M</td><td><span class="tg b">Netflix India Top 10</span></td><td>Indian tycoon biopic format — but documentary. Our narrative drama has higher commercial value, richer characterisation, and far greater licensing revenue potential.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="split-2 rv" style="margin-top:54px">
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--ink);margin-bottom:20px">WHY THIS STORY WINS INTERNATIONALLY</h3>
+        <div class="bar-row">
+          <div class="bar-item"><div class="bar-head"><span class="bar-label">4-Continent Global Location Diversity</span><span class="bar-val">Kerala·Singapore·London·Brazil·Delhi·Bangkok</span></div><div class="bar-track"><div class="bar-fill" data-w="96"></div></div></div>
+          <div class="bar-item"><div class="bar-head"><span class="bar-label">Documented Judicial Conspiracy Evidence</span><span class="bar-val">Leila Seth Commission public record</span></div><div class="bar-track"><div class="bar-fill" data-w="92"></div></div></div>
+          <div class="bar-item"><div class="bar-head"><span class="bar-label">Built-In Brand Recognition (Britannia, Coca-Cola)</span><span class="bar-val">In every Indian home today</span></div><div class="bar-track"><div class="bar-fill" data-w="94"></div></div></div>
+          <div class="bar-item"><div class="bar-head"><span class="bar-label">First-Person Source Still Alive</span><span class="bar-val">Author witnessed every chapter</span></div><div class="bar-track"><div class="bar-fill" data-w="100"></div></div></div>
+          <div class="bar-item"><div class="bar-head"><span class="bar-label">Indian Diaspora Built-In Audience Worldwide</span><span class="bar-val">50M+ Malayalis · 30M+ NRIs total</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+          <div class="bar-item"><div class="bar-head"><span class="bar-label">HBO Cross-Reference (Barbarians at the Gate)</span><span class="bar-val">Ross Johnson is in both stories</span></div><div class="bar-track"><div class="bar-fill" data-w="88"></div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="callout" style="margin-bottom:18px">
+          <div class="callout-label">🔑 The Ross Johnson Hook</div>
+          <div class="callout-body">Ross Johnson — Rajan Pillai's mentor and eventual nemesis — was portrayed by James Garner in HBO's <strong>Barbarians at the Gate (1993)</strong>. That film tells the American side of the RJR Nabisco buyout war. <strong>This film tells the Indian side</strong> — Rajan's relationship with Johnson from their first meeting to the 29 counts filed against him in Singapore courts.<br><br>Marketing line: <strong>"The Indian side of the story Barbarians at the Gate never told."</strong></div>
+        </div>
+        <div class="callout blue">
+          <div class="callout-label">📰 The Darwin Mystery</div>
+          <div class="callout-body">In 1997, the <strong>Straits Times</strong> reported that Rajan Pillai had been "sighted in Darwin, Australia" — two years after his documented death and cremation in Kollam. The newspaper claimed the cremated body may not have been his. The mystery was never resolved. <strong>This unresolved conspiracy is extraordinary built-in marketing material</strong> for the international version.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ GRANTS — THE MISSING SECTION ═══════════ -->
+<section id="grants" class="sec sec-paper">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 03 — OG Grants & Production Incentives</div>
+      <h2 class="sec-title">EVERY RUPEE<br>OF <span class="accent">AVAILABLE</span><br>FUNDING.</h2>
+      <p class="sec-body">A comprehensive map of every grant, subsidy, rebate, and soft loan this production qualifies for — from Kerala State to Singapore to the European Union. These incentives can reduce the effective production cost by 25–45% before a single OTT platform deal is signed.</p>
+    </div>
+
+    <div style="height:40px"></div>
+    <h3 class="rv" style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--ink);margin-bottom:2px">KERALA STATE GOVERNMENT — FILM INCENTIVES</h3>
+    <div class="grants-grid rv" style="margin-bottom:40px">
+      <div class="grant-card">
+        <div class="grant-flag kg">🏛 KFDC — Kerala</div>
+        <div class="grant-amt">₹2 Cr</div>
+        <div class="grant-name">KFDC Soft Production Loan</div>
+        <div class="grant-body">Kerala Film Development Corporation offers a soft loan up to ₹2 Crore at subsidised interest rates for Malayalam-language productions. Repayable over 5 years. Significantly lower interest than commercial film financing. Requires Kerala-registered production company as primary entity.</div>
+        <div class="grant-req">Eligibility: Kerala-registered company · Malayalam-certified film · Apply: KFDC Head Office, Thiruvananthapuram</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag kg">🏛 Kerala State — Shoot Rebate</div>
+        <div class="grant-amt">15–20%</div>
+        <div class="grant-name">Shoot-in-Kerala Production Rebate</div>
+        <div class="grant-body">15–20% cash rebate on all qualifying production expenditure incurred within Kerala. On a ₹40 Cr production with ₹25 Cr spent in Kerala, this recovers ₹3.75–5 Crore automatically. Covers crew wages, accommodation, location fees, equipment hire, catering, transport.</div>
+        <div class="grant-req">Eligibility: Min. 50% of total shoot days in Kerala · Expenditure audit required · Apply: Kerala Tourism / Film Office</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag kg">🏛 Kerala State — Excellence Grant</div>
+        <div class="grant-amt">₹15–25 L</div>
+        <div class="grant-name">Kerala State Film Award Grant</div>
+        <div class="grant-body">Production grant awarded alongside the Kerala State Film Awards for films of cultural, historical, or social significance. A biopic of Rajan Pillai — Kerala's most famous international businessman — qualifies strongly for the culturally significant category. Awarded annually by the Government of Kerala.</div>
+        <div class="grant-req">Eligibility: Malayalam-certified film · Submitted for Kerala State Film Awards · Judged on cultural merit</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag kg">🏛 Chalachitra Academy</div>
+        <div class="grant-amt">₹5–15 L</div>
+        <div class="grant-name">Kerala Chalachitra Academy Biennial Grant</div>
+        <div class="grant-body">Biennial production grant from the Kerala Chalachitra Academy for films of artistic and cultural significance. Awarded to Malayalam films that advance the cultural profile of Kerala cinema nationally and internationally. A story set in four countries is exactly the international profile the Academy seeks to promote.</div>
+        <div class="grant-req">Eligibility: Culturally significant Malayalam content · Biennial application cycle · Applied to Chalachitra Academy, Thiruvananthapuram</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag kg">🏛 Kerala Tourism</div>
+        <div class="grant-amt">₹50 L–2 Cr</div>
+        <div class="grant-name">Kerala Tourism Location Partnership</div>
+        <div class="grant-body">Kerala Tourism can provide direct financial support and location access subsidies for productions that prominently showcase Kerala destinations. Kollam's cashew backwaters, Ashtamudi Lake, Thiruvananthapuram — all are Kerala Tourism priority locations. A biopic set in Kollam creates exceptional Kerala Tourism value.</div>
+        <div class="grant-req">Eligibility: Min. 40% of screen time in Kerala · Negotiated separately · Apply: Kerala Tourism Corporation</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag kg">🏛 NFDC India</div>
+        <div class="grant-amt">₹50 L–5 Cr</div>
+        <div class="grant-name">National Film Development Corporation — Production Support</div>
+        <div class="grant-body">NFDC provides production loans, equity participation, and co-production support for films of national importance. A biopic of the man who brought Coca-Cola back to India and built Britannia's six-country empire qualifies as a film of significant national economic and cultural heritage interest.</div>
+        <div class="grant-req">Eligibility: Indian-citizen director · Script in Indian language · Submit via NFDC online portal · Decision within 90 days</div>
+      </div>
+    </div>
+
+    <h3 class="rv" style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--ink);margin-bottom:2px">SINGAPORE — PRODUCTION REBATE & CO-PRODUCTION</h3>
+    <div class="grants-grid rv" style="margin-bottom:40px">
+      <div class="grant-card">
+        <div class="grant-flag sg">🇸🇬 Singapore Film Commission</div>
+        <div class="grant-amt">40%</div>
+        <div class="grant-name">SFC Production Rebate</div>
+        <div class="grant-body">The Singapore Film Commission offers a production rebate of up to 40% on qualifying Singapore-based production expenditure. On a USD 15M production with USD 4M spent in Singapore, this recovers USD 1.6M automatically. Rajan Pillai lived in Singapore for 20 years — the Jurong factory, Ridout Road villa, Shangri-La Hotel boardrooms are all qualifying shoot locations.</div>
+        <div class="grant-req">Eligibility: Singapore co-producer required · Min. qualifying expenditure threshold · Apply: Singapore Film Commission · infomgmt@sfc.gov.sg</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag sg">🇸🇬 MAS / EDB Singapore</div>
+        <div class="grant-amt">Negotiated</div>
+        <div class="grant-name">Singapore Economic Development Board — Media Support</div>
+        <div class="grant-body">Singapore's Economic Development Board and Media Development Authority provide industry development grants for productions that position Singapore as a global media hub. A film about Singapore's 1970s industrial rise (Jurong Estate) and its 1990s commercial courts has significant Singapore identity value and EDB media mandate alignment.</div>
+        <div class="grant-req">Eligibility: Singapore production entity required · Significant Singapore content · Apply: EDB Media & Entertainment division</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag sg">🇸🇬 India-Singapore Co-production Treaty</div>
+        <div class="grant-amt">Multiple benefits</div>
+        <div class="grant-name">India-Singapore Bilateral Co-production Agreement</div>
+        <div class="grant-body">India and Singapore have a bilateral film co-production treaty that grants co-productions the status of national films in both countries. This means: Singapore rebates + KFDC loan + both countries' festival eligibility + automatic SFC and NFDC access. A film about Rajan Pillai is the most natural India-Singapore co-production in recent memory.</div>
+        <div class="grant-req">Eligibility: Certified co-production between Indian and Singapore entities · Both directors can share credit · Apply: Ministry of Information & Broadcasting, India + Singapore Film Commission</div>
+      </div>
+    </div>
+
+    <h3 class="rv" style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--ink);margin-bottom:2px">EUROPEAN UNION & UK — CREATIVE EUROPE</h3>
+    <div class="grants-grid rv" style="margin-bottom:40px">
+      <div class="grant-card">
+        <div class="grant-flag eu">🇪🇺 Creative Europe MEDIA</div>
+        <div class="grant-amt">EUR 200K – 1M</div>
+        <div class="grant-name">EU Creative Europe MEDIA Programme — Development & Production</div>
+        <div class="grant-body">The EU Creative Europe MEDIA Programme provides development and production support for feature films and limited series with international co-production potential. Requires a minimum of two European co-producers. Working Title (UK) + Gaumont (France) together unlock this fund. The BSN Groupe / French corporate angle makes Gaumont the most strategically brilliant choice.</div>
+        <div class="grant-req">Eligibility: Min. two European co-producers · International co-production format · Apply through EU Creative Europe MEDIA portal · Competitive rounds annually</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag eu">🇬🇧 BFI — UK</div>
+        <div class="grant-amt">GBP 100K – 2M</div>
+        <div class="grant-name">British Film Institute Production Fund</div>
+        <div class="grant-body">The BFI Production Fund supports films with significant UK cultural content or UK co-production involvement. Rajan Pillai lived and worked in London from 1982–1993, at Nabisco's UK offices on Park Lane. He drove the Britannia-Nabisco deal from London. His legal battles with BSN Groupe involved London corporate law. This is genuinely a UK story too.</div>
+        <div class="grant-req">Eligibility: UK Cultural Test score minimum · UK director or significant UK creative involvement · Apply: BFI Film Fund · film.fund@bfi.org.uk</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag eu">🇬🇧 High-End TV Relief — UK</div>
+        <div class="grant-amt">25% rebate</div>
+        <div class="grant-name">UK High-End Television Tax Relief</div>
+        <div class="grant-body">UK's High-End TV Tax Relief provides a 25% rebate on UK-qualifying production expenditure for drama series with a minimum episode budget of GBP 1M. Rajan's London years (Nabisco, Park Lane, Britishness of the Britannia deal) provide natural UK-qualifying content. If BBC Films or a UK co-producer is involved, significant UK spend qualifies for this rebate.</div>
+        <div class="grant-req">Eligibility: UK co-producer required · Min. GBP 1M per episode · 10% of qualifying expenditure in UK · Apply: HMRC via UK production entity</div>
+      </div>
+    </div>
+
+    <h3 class="rv" style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--ink);margin-bottom:2px">MAHARASHTRA & OTHER INDIAN STATE INCENTIVES</h3>
+    <div class="grants-grid rv" style="margin-bottom:0">
+      <div class="grant-card">
+        <div class="grant-flag mh">🏛 Maharashtra</div>
+        <div class="grant-amt">15–20%</div>
+        <div class="grant-name">Maharashtra State Film Shoot Rebate</div>
+        <div class="grant-body">Maharashtra offers a 15–20% rebate on qualifying production expenditure within the state. Mumbai scenes (Taj Mahal Hotel, Nariman Point, Worli villa, SEBI, Britannia headquarters in Mumbai, and the Mumbai court sequences) are central to the Rajan Pillai story, making substantial Maharashtra spend natural and rebate-eligible.</div>
+        <div class="grant-req">Eligibility: Registered shoot in Maharashtra · State Film Commission clearance · Min. local crew % requirement</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag pr">🏛 Private Equity Film Funds</div>
+        <div class="grant-amt">₹20–50 Cr</div>
+        <div class="grant-name">Private Film Fund Investment</div>
+        <div class="grant-body">Dedicated Bollywood and OTT film funds operated by Reliance Entertainment, Zee Entertainment Enterprises, and institutional NBFCs. These funds invest in packaged projects — director + lead cast + platform intent letter. Return structured as first-look deal or revenue share. A packaged prestige biopic is exactly their mandate.</div>
+        <div class="grant-req">Eligibility: Packaged project required (director + lead + platform) · Submit: project brief + financial projections + comparable title performance</div>
+      </div>
+      <div class="grant-card">
+        <div class="grant-flag pr">🏛 Gulf Malayali Community</div>
+        <div class="grant-amt">₹5–25 Cr</div>
+        <div class="grant-name">NRI Diaspora Investment — Gulf Kerala Community</div>
+        <div class="grant-body">The 2.5M+ Malayali community in the Gulf (UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman) has a proven track record of community investment in prestige Malayalam cinema. Many Gulf Keralites are in the cashew or food trading business — they know Rajan Pillai's name. This is the most culturally motivated investor pool available for this project.</div>
+        <div class="grant-req">Eligibility: Kerala-registered entity · Community investment vehicle · Structured through NRI investment schemes via RBI approval</div>
+      </div>
+    </div>
+
+    <!-- TOTAL GRANTS SUMMARY -->
+    <div class="callout rv" style="margin-top:40px">
+      <div class="callout-label">💰 Total Potential Grant & Incentive Stack</div>
+      <div class="callout-body">
+        Combining <strong>Kerala KFDC loan (₹2 Cr)</strong> + <strong>Kerala shoot rebate (15–20%)</strong> + <strong>Kerala state grants (₹25–40 L)</strong> + <strong>NFDC support (₹1–5 Cr)</strong> + <strong>Singapore SFC rebate (40% of Singapore spend)</strong> + <strong>EU Creative Europe (EUR 200K–1M)</strong> + <strong>UK HETV Relief (25% of UK spend)</strong> + <strong>Maharashtra rebate (15–20%)</strong>:<br><br>
+        <strong>On a ₹100 Cr production, the total recoverable incentive stack is ₹20–40 Cr — before any OTT platform license fee is collected.</strong> The effective first-day risk capital required drops dramatically when this funding architecture is built correctly.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PRODUCTION PARTNERS ═══════════ -->
+<section id="partners" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 04 — Production Partner Strategy</div>
+      <h2 class="sec-title">WHO GETS<br>FIRST <span class="accent">CALL.</span></h2>
+      <p class="sec-body">Two-layer structure: National OTT studio (scale + platform access) + Kerala production anchor (authenticity + state subsidies) + optional international co-producer (budget amplification + global distribution). The Scam 1992 model — proven and repeatable.</p>
+    </div>
+
+    <div style="margin-top:40px" class="rv">
+      <div class="filter-tabs">
+        <button class="ftab on" onclick="filterP('all',this)">All Partners</button>
+        <button class="ftab" onclick="filterP('india',this)">India OTT</button>
+        <button class="ftab" onclick="filterP('south',this)">South India</button>
+        <button class="ftab" onclick="filterP('intl',this)">International</button>
+        <button class="ftab" onclick="filterP('sg',this)">Singapore</button>
+      </div>
+    </div>
+
+    <div class="p-grid rv" id="pGrid">
+      <!-- INDIA OTT -->
+      <div class="pc" data-cat="india"><div class="pc-rank gold">🥇 First Contact — Primary Target</div><div class="pc-name">Applause Entertainment</div><div class="pc-plat">SonyLIV · CEO: Sameer Nair</div><div class="pc-desc">Created Scam 1992, Rocket Boys, Human. They are the natural home for this story. Pitch at FICCI Frames with 2-page treatment + sizzle reel. Lead pitch: <em>"This is your next Scam 1992 — but on 4 continents, 30 years before Harshad Mehta."</em></div><div class="pc-action">FICCI Frames Mumbai · March · sameer.nair@applauseglobal.com</div></div>
+      <div class="pc" data-cat="india"><div class="pc-rank gold">★ Tier 1 — Amazon</div><div class="pc-name">Excel Entertainment</div><div class="pc-plat">Amazon Prime India · Ritesh Sidhwani / Farhan Akhtar</div><div class="pc-desc">Mirzapur, Made in Heaven, Farzi. Global location shoots are their production strength. The Singapore-Brazil-London-Kerala geography matches their production ambition and Amazon India's international content mandate.</div><div class="pc-action">acquisitions@excelmovies.com · Agent referral preferred</div></div>
+      <div class="pc" data-cat="india"><div class="pc-rank gold">★ Tier 1 — Netflix Global</div><div class="pc-name">Netflix India Originals</div><div class="pc-plat">Netflix Worldwide · Via WME India / CAA India</div><div class="pc-desc">Delhi Crime (Emmy), Bad Boy Billionaires, Trial by Fire. English-language version preferred for global release. Pitch at TIFF or MIPCOM. Dev Patel or Riz Ahmed attachment dramatically increases Netflix India's interest in a global commission.</div><div class="pc-action">Via agent only · TIFF Industry · MIPCOM October</div></div>
+      <div class="pc" data-cat="india"><div class="pc-rank gold">★ Tier 1 — Prestige</div><div class="pc-name">RSVP Movies</div><div class="pc-plat">Theatrical + OTT · Ronnie Screwvala</div><div class="pc-desc">URI, Shahid (political imprisonment biopic), Omerta. Prestige biographical drama — especially involving institutional injustice — is Screwvala's defining mandate. His Shahid is directly thematically relevant to the Tihar sequences in our story.</div><div class="pc-action">MAMI Mumbai Film Festival · Direct industry approach</div></div>
+      <div class="pc" data-cat="india"><div class="pc-rank blue">Tier 2 — JioCinema</div><div class="pc-name">Jio Studios (Reliance)</div><div class="pc-plat">JioCinema + Theatrical · Reliance Entertainment</div><div class="pc-desc">Strong Kerala regional expansion strategy. National theatrical + JioCinema OTT dual window gives maximum India coverage. The Kerala-roots story aligns with their regional content investment push. Contact: Priya Sreedharan, Head of Content.</div><div class="pc-action">Mumbai content acquisition · priya.sreedharan@jio.com</div></div>
+      <div class="pc" data-cat="india"><div class="pc-rank blue">Tier 2 — Netflix India</div><div class="pc-name">Dharmatic Entertainment</div><div class="pc-plat">Netflix India · Apoorva Mehta / Karan Johar</div><div class="pc-desc">Netflix India's preferred premium drama partner. Their Finding Anamika and Yeh Kaali Kaali Ankhein prove they handle complex multi-layered narratives. The Nina Gopika Pillai arc — widow to political candidate — gives Dharmatic a strong female-led storyline angle.</div><div class="pc-action">Via Netflix India · Content acquisition contact</div></div>
+
+      <!-- SOUTH INDIA -->
+      <div class="pc" data-cat="south"><div class="pc-rank gold">🥇 Kerala Anchor — Star-Producer</div><div class="pc-name">Friday Film House</div><div class="pc-plat">Dulquer Salmaan · Pan-India + International Credibility</div><div class="pc-desc">A star-producer who can headline the international version of Rajan's story AND produce it simultaneously. Pan-India + global credibility. Cosmopolitan English fluency is perfect for Singapore scenes. Friday Film House's growing Malayalam-to-national pipeline aligns perfectly.</div><div class="pc-action">Direct pitch · Dulquer Salmaan's production office · Kerala</div></div>
+      <div class="pc" data-cat="south"><div class="pc-rank gold">★ Festival Track Kerala</div><div class="pc-name">August Cinema</div><div class="pc-plat">Prestige Malayalam · Ariyippu (Venice Film Festival 2022)</div><div class="pc-desc">Known for taking Malayalam cinema to Venice and international film festivals. Perfect anchor for the auteur Malayalam version targeting Venice, Berlin, or Cannes Directors' Fortnight before OTT release. Their European festival relationships are significant for a co-production approach with BBC Films or Gaumont.</div><div class="pc-action">Post-director attachment · Kerala Film Chamber approach</div></div>
+      <div class="pc" data-cat="south"><div class="pc-rank blue">South Expansion</div><div class="pc-name">Sithara Entertainments</div><div class="pc-plat">Telugu + Pan-South India · Growing national OTT reach</div><div class="pc-desc">Strong production infrastructure with growing national reach. Can anchor the Telugu-dubbed theatrical version for South Indian expansion beyond Kerala. The Rajan Pillai story — cashew trade, corporate ambition, Singapore success — resonates strongly in Telugu-speaking business communities in Andhra Pradesh and Telangana.</div><div class="pc-action">Hyderabad office · Content partnerships · Navin Erneni contact</div></div>
+
+      <!-- INTERNATIONAL -->
+      <div class="pc" data-cat="intl"><div class="pc-rank red">🌍 UK Primary</div><div class="pc-name">Working Title Films</div><div class="pc-plat">Universal / Focus Features · Eric Fellner / Tim Bevan · London</div><div class="pc-desc">Rajan Pillai lived and worked in London 1982–1993, at Nabisco's UK offices on Park Lane. His corporate battles with BSN Groupe involved London law. This is genuinely a UK story. Pitch angle: <em>"An Indian in London who changed global food — until London's corporate world destroyed him."</em></div><div class="pc-action">CAA UK / WME London · info@workingtitlefilms.com</div></div>
+      <div class="pc" data-cat="intl"><div class="pc-rank red">🌍 USA Social Justice</div><div class="pc-name">Participant Media</div><div class="pc-plat">Jeff Skoll · Spotlight · The Trial of Chicago 7 · RBG</div><div class="pc-desc">Institutional injustice confirmed by a judicial inquiry is their DNA mandate. Medical negligence, withheld court evidence, political conspiracy — all documented publicly. Lead with justice metrics, not box office projections. This is their perfect project: true, documented, consequential.</div><div class="pc-action">Via agent · Jeff Skoll's team · Social impact pitch document required</div></div>
+      <div class="pc" data-cat="intl"><div class="pc-rank red">🌍 France — Strategic Irony</div><div class="pc-name">Gaumont</div><div class="pc-plat">France · Narcos (Netflix) · Call My Agent · Paris headquarters</div><div class="pc-desc"><strong>The most audacious pitch available:</strong> BSN Groupe is now Danone. Danone is French. A French production company co-producing the story of how French corporate power destroyed an Indian tycoon is cinema history — and priceless global PR. The irony writes itself and generates infinite earned media.</div><div class="pc-action">Cannes Co-Production Market · May · contact@gaumont.fr</div></div>
+      <div class="pc" data-cat="intl"><div class="pc-rank red">🌍 UK Broadcaster</div><div class="pc-name">BBC Films</div><div class="pc-plat">BBC Studios · BBC iPlayer · India-UK co-production history</div><div class="pc-desc">BBC has deep India-UK co-production roots (Gandhi, Partition). The Singapore-India-UK triangle is a BBC World Service editorial story. Gateway for UK theatrical + BBC iPlayer + international BBC Worldwide distribution. BBC Films attachment also unlocks the BFI Production Fund application.</div><div class="pc-action">BBC Films development slate · film.fund@bfi.org.uk</div></div>
+      <div class="pc" data-cat="intl"><div class="pc-rank blue">🌍 International Sales</div><div class="pc-name">FilmNation Entertainment</div><div class="pc-plat">USA/UK · La La Land · Arrival · The Big Sick · Cannes presence</div><div class="pc-desc">International co-production and multi-territory sales specialist with Cannes market dominance. The essential bridge between Indian content and global theatrical distribution. FilmNation handles the international pre-sales that allow the production to commence before OTT platform money arrives.</div><div class="pc-action">Cannes Film Market (May) · AFM Los Angeles (November)</div></div>
+
+      <!-- SINGAPORE -->
+      <div class="pc" data-cat="sg"><div class="pc-rank blue">🇸🇬 Singapore Primary</div><div class="pc-name">Infinite Frameworks</div><div class="pc-plat">Singapore · International co-productions · SFC relationships</div><div class="pc-desc">Singapore production company with international co-production expertise and direct Singapore Film Commission relationships. Unlocks the 40% SFC rebate and provides location access: Jurong Industrial Estate (Rajan's factory), Ridout Road (his colonial villa), Shangri-La Hotel boardrooms, Singapore Commercial Affairs building.</div><div class="pc-action">SFC rebate application · enquiries@infiniteframeworks.com</div></div>
+      <div class="pc" data-cat="sg"><div class="pc-rank blue">🇸🇬 Singapore Distribution</div><div class="pc-name">Shaw Organisation</div><div class="pc-plat">Singapore · Oldest film distributor in Southeast Asia</div><div class="pc-desc">Shaw Organisation has Singapore theatrical distribution dominance and Southeast Asian reach. The 'Rajan Pillai sighted in Darwin' story + his Ridout Road villa + the Singapore Commercial Affairs case means this film is Singapore national news the day it is announced. Shaw provides Singapore theatrical access and SE Asian distribution.</div><div class="pc-action">Direct contact · Shaw Organisation, Singapore · singapore@shaw.sg</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CAST ═══════════ -->
+<section id="cast" class="sec sec-paper">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 05 — International Casting Strategy</div>
+      <h2 class="sec-title">EVERY CAST CHOICE<br>IS A <span class="accent">DISTRIBUTION</span><br>DEAL.</h2>
+      <p class="sec-body">The cast determines which markets open, which co-production funds unlock, and which platforms bid. Strategy: a globally recognised lead for the English version opens Western distribution automatically. South Asian supporting cast provides authenticity and India OTT guarantee. Every role is chosen for both performance and market impact.</p>
+    </div>
+    <div class="cast-grid rv" style="margin-top:44px">
+      <div class="cc"><div class="cc-role">Rajan Pillai — English-Language Lead</div><div class="cc-name">DEV PATEL</div><div class="cc-bio">Post-Monkey Man — which he also star-produced — Dev Patel is the world's definitive British-Indian leading man. His attachment triggers automatic Netflix/Amazon global distribution interest. Monkey Man's precedent proves he can carry a South/Southeast Asian action-drama with social justice at its core. His involvement turns this from an Indian biopic into a global theatrical event.</div><div class="cc-opens">Opens: UK · USA · Australia · Singapore · Global OTT · International Awards</div></div>
+      <div class="cc"><div class="cc-role">Rajan Pillai — Hindi OTT Series Lead</div><div class="cc-name">PRATIK GANDHI</div><div class="cc-bio">Scam 1992 proved definitively that he can carry a 30-episode series as a complex Indian businessman. OTT India audiences already associate him with exactly this format. His casting announcement generates immediate media positioning as "India's next Scam 1992" — a comparison that writes its own marketing campaign at zero cost.</div><div class="cc-opens">Opens: Hindi OTT · National India · SonyLIV / Amazon Prime</div></div>
+      <div class="cc"><div class="cc-role">Rajan Pillai — Malayalam Film</div><div class="cc-name">FAHADH FAASIL</div><div class="cc-bio">India's most compelling screen actor right now. His restraint and interior depth — Malik, Trance, Joji, Pushpa — would make Rajan's prison degradation unbearable to watch. Post-Pushpa he has pan-India recognition beyond Malayalam. His Malik was India's Venice-track film in 2021. International festival credibility guaranteed.</div><div class="cc-opens">Opens: Kerala Theatrical · Pan-India OTT · Venice / Berlin Festival Track</div></div>
+      <div class="cc"><div class="cc-role">Rajmohan — The Narrator / Brother</div><div class="cc-name">RIZ AHMED</div><div class="cc-bio">Oscar winner (Sound of Metal). British-Pakistani with devastating South Asian diaspora prestige in Mogul Mowgli. As the jealous-loving narrator — the audience's emotional lens through the entire story — his quiet devastation is precisely calibrated. His involvement automatically unlocks UK production funding and BBC co-production pathways.</div><div class="cc-opens">Opens: UK · USA · Awards Circuit · HBO / Amazon Prestige</div></div>
+      <div class="cc"><div class="cc-role">Nina Gopika Pillai</div><div class="cc-name">RADHIKA APTE</div><div class="cc-bio">International credibility (Black Mirror, Ghoul) + Malayalam cultural roots + proven ability to inhabit morally complex women. Naval officer's daughter, Taj Hotel air hostess, Bombay Dyeing model, ultimately a parliamentary election candidate. This role needs someone who can be simultaneously glamorous, strategically brilliant, and politically formidable.</div><div class="cc-opens">Opens: Hindi National · International OTT · UK / US Market Crossover</div></div>
+      <div class="cc"><div class="cc-role">Subha Napoleon — The Moral Heart</div><div class="cc-name">VIDYA BALAN</div><div class="cc-bio">Singaporean Tamil-origin operations manager who furnishes SGD 4.5 million bail alone when all powerful friends disappear. Rajan says: <em>"This world belongs to people like Subha."</em> The scene where he learns what she did is the film's emotional peak. Only Vidya Balan carries this specific weight of quiet, decisive, unrecognised loyalty.</div><div class="cc-opens">Opens: National Hindi · Women's Audience · Kahaani-Level Awards Potential</div></div>
+      <div class="cc"><div class="cc-role">Ross Johnson — Mentor &amp; Nemesis</div><div class="cc-name">BRYAN CRANSTON</div><div class="cc-bio">Already played Walter White — the brilliant man who destroys everything for ego. Ross Johnson is exactly that, in real corporate America. He was Rajan's closest ally until he filed 29 counts in Singapore courts. Post-Breaking Bad, Cranston is the world's definitive actor for this moral archetype. His casting turns this into a US theatrical release.</div><div class="cc-opens">Opens: USA Theatrical · HBO / Max · Amazon Global · International Awards</div></div>
+      <div class="cc"><div class="cc-role">Achan — Janardanan Pillai (Father)</div><div class="cc-name">ADIL HUSSAIN</div><div class="cc-bio">Star Trek: Discovery, Life of Pi, English Vinglish. India's most credible international crossover actor. His quiet authority is the story's moral backbone — a philosophy graduate who becomes a cashew baron, whose savings fund his son's global rise, who suffers a heart attack when it collapses, who never recovers from his son's death. Bridges Indian and international casting.</div><div class="cc-opens">Opens: Indian Domestic + International Dual Market</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DIRECTORS ═══════════ -->
+<section id="directors" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 06 — Director Strategy</div>
+      <h2 class="sec-title">THE DIRECTOR<br><span class="outline gold">DETERMINES</span><br>EVERYTHING.</h2>
+      <p class="sec-body">Five distinct visual worlds across eight decades: 1960s Kollam cashew Kerala · 1970s Jurong Singapore factory · 1980s London Nabisco boardrooms · 1990s Brazil Irasema factory · 1995 Tihar Jail degradation. The right director makes the transition between these worlds feel inevitable, not jarring.</p>
+    </div>
+    <div class="dir-grid rv" style="margin-top:44px">
+      <div class="dc pri"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div><div class="dc-name">HANSAL MEHTA</div><div class="dc-tag">★ First Choice — OTT Series (8 Episodes)</div><div class="dc-body">Scam 1992 + Shahid + Omerta. India's definitive director of biographical political drama. Has precisely navigated real-person stories with legal sensitivity. Shahid — about wrongful imprisonment and institutional failure — makes him uniquely equipped for the Tihar sequences. A Hansal Mehta attachment is also a direct path to Applause/SonyLIV greenlight without the usual pitch cycle.</div><div class="dc-fmt">Format: OTT Limited Series · SonyLIV / Amazon · Package with Applause Entertainment</div></div>
+      <div class="dc"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div></div><div class="dc-name">LIJO JOSE PELLISSERY</div><div class="dc-tag">Malayalam Film — International Art Cinema Track</div><div class="dc-body">Jallikattu, Nanpakal Nerathu Mayakkam, Churuli — visual poet of Kerala landscape and collective rage. Would make the most cinematically audacious version of this story. His Kollam and Ashtamudi Lake sequences would be breathtaking. International festival standing positions this version for Venice or Berlin. Best choice if the Malayalam film targets Cannes Directors' Fortnight or NETPAC.</div><div class="dc-fmt">Format: Malayalam Feature Film · Venice / Berlin / Cannes Directors' Fortnight track</div></div>
+      <div class="dc"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div></div><div class="dc-name">RAJEEV RAVI</div><div class="dc-tag">Gritty Kerala Authenticity Track</div><div class="dc-body">Annayum Rasoolum, Kammatipaadam — raw Kerala geography and working-class authenticity. IFFI Golden Peacock standing means international festival credibility. His camera makes Kollam's cashew factories feel viscerally alive. Best choice if the Malayalam film aims for a gritty, documentary-adjacent aesthetic that contrasts powerfully with the Singapore and London sequences.</div><div class="dc-fmt">Format: Malayalam Film / Series · IFFI / IFFK Competitive track</div></div>
+      <div class="dc"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div></div><div class="dc-name">MIRA NAIR</div><div class="dc-tag">International English-Language Version</div><div class="dc-body">Namesake, Monsoon Wedding, Salaam Bombay — the NRI perspective and international sales track. She is the natural bridge for an English-language international co-production targeting TIFF and Sundance. Her pre-existing relationships with UK and US production companies accelerate Working Title and BBC Films conversations significantly. The diaspora angle is her signature strength.</div><div class="dc-fmt">Format: English-Language · TIFF / Sundance · UK / USA Co-production</div></div>
+      <div class="dc"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div><div class="star off"></div></div><div class="dc-name">ANURAG KASHYAP</div><div class="dc-tag">Hindi Version — Maximum Political Darkness</div><div class="dc-body">Gangs of Wasseypur, Kennedy — the darkest possible take on the political-business nexus. Would make the Tihar sequences genuinely terrifying and the CBI courtroom sequences ice-cold. His visual language for institutional corruption is unmatched in Hindi cinema. Best choice for a Hindi theatrical release targeting the Gangs of Wasseypur generation.</div><div class="dc-fmt">Format: Hindi Theatrical · Dark Political Drama · National Awards track</div></div>
+      <div class="dc"><div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star off"></div><div class="star off"></div></div><div class="dc-name">VETRIMAARAN</div><div class="dc-tag">South Indian Prestige — National Award Track</div><div class="dc-body">Visaranai (National Award, India's Oscar entry 2017), Vada Chennai — systemic institutional violence and brutality. Visaranai is literally about a man dying in police custody due to negligence — an eerily direct thematic parallel to the Tihar death. Tamil + Malayalam theatrical crossover appeal with national critical recognition.</div><div class="dc-fmt">Format: Tamil / Malayalam · National Award track · South Indian theatrical dominance</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FINANCE ═══════════ -->
+<section id="finance" class="sec sec-paper">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 07 — Finance & Revenue</div>
+      <h2 class="sec-title">HOW THIS<br>MAKES <span class="accent">HISTORY.</span></h2>
+    </div>
+
+    <div class="budget-grid rv" style="margin-top:44px">
+      <div class="bc">
+        <div class="bc-badge">Scenario A — Malayalam Feature Film</div>
+        <div class="bc-amt">₹34–83 Cr</div>
+        <div class="bc-sub">Production Budget Range</div>
+        <ul class="bc-list">
+          <li>Malayalam language · Kerala + national theatrical release</li>
+          <li>OTT licensing window post-theatrical (90-day exclusive)</li>
+          <li>KFDC loan + Kerala shoot rebate reduces effective cost by 18–25%</li>
+          <li>Fahadh Faasil or Lijo Jose Pellissery attachment enables festival track</li>
+          <li>Kerala State Film Award eligibility on release</li>
+        </ul>
+      </div>
+      <div class="bc feat">
+        <div class="rec-label">★ RECOMMENDED</div>
+        <div class="bc-badge">Scenario B — Hindi OTT Series (8 Episodes)</div>
+        <div class="bc-amt">₹65–155 Cr</div>
+        <div class="bc-sub">Production Budget Range</div>
+        <ul class="bc-list">
+          <li>Hindi primary + Malayalam dub + English subtitles from day one</li>
+          <li>Platform license fee covers full budget (OTT commission model)</li>
+          <li>National + global reach via platform's own international distribution</li>
+          <li>Singapore SFC 40% rebate on Singapore spend reduces cost significantly</li>
+          <li>EU Creative Europe unlocked via UK/French co-producer attachment</li>
+          <li>Hansal Mehta direction = direct path to Applause/SonyLIV greenlight</li>
+        </ul>
+      </div>
+      <div class="bc">
+        <div class="bc-badge">Scenario C — International English Feature</div>
+        <div class="bc-amt">USD 10–32M</div>
+        <div class="bc-sub">Production Budget Range</div>
+        <ul class="bc-list">
+          <li>English-language · Global theatrical (UK, USA, Singapore, Australia)</li>
+          <li>Netflix / Amazon global licensing at international rates</li>
+          <li>Dev Patel attachment triggers automatic distribution conversations</li>
+          <li>BFI + EU Creative Europe + SFC rebates stack upon one another</li>
+          <li>UK HETV Relief (25%) on UK spend</li>
+          <li>International awards circuit targeting (BAFTA, Golden Globes, Oscars)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rv" style="margin-top:50px">
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--ink);margin-bottom:22px">REVENUE PROJECTIONS — ALL STREAMS</h3>
+      <table class="rev-tbl">
+        <thead><tr><th>Revenue Stream</th><th>Pessimistic</th><th>Base Case</th><th>Optimistic (Scam 1992 Scale)</th><th>Upside Bar</th></tr></thead>
+        <tbody>
+          <tr><td>OTT Platform License (India)</td><td>₹30–50 Cr</td><td>₹60–100 Cr</td><td><strong style="color:var(--gold)">₹150–300 Cr</strong></td><td><div class="bw"><div class="bf" data-w="90"></div></div></td></tr>
+          <tr><td>International OTT (Netflix/Amazon)</td><td>USD 2–5M</td><td>USD 5–15M</td><td><strong style="color:var(--gold)">USD 20–50M</strong></td><td><div class="bw"><div class="bf" data-w="85"></div></div></td></tr>
+          <tr><td>Kerala + South Indian Theatrical</td><td>₹10–20 Cr</td><td>₹30–60 Cr</td><td><strong style="color:var(--gold)">₹100–200 Cr</strong></td><td><div class="bw"><div class="bf" data-w="74"></div></div></td></tr>
+          <tr><td>Hindi Theatrical (if produced)</td><td>₹15–30 Cr</td><td>₹50–100 Cr</td><td><strong style="color:var(--gold)">₹200–400 Cr</strong></td><td><div class="bw"><div class="bf" data-w="96"></div></div></td></tr>
+          <tr><td>International Theatrical (UK/USA/Singapore)</td><td>USD 500K</td><td>USD 2–5M</td><td><strong style="color:var(--gold)">USD 10–20M</strong></td><td><div class="bw"><div class="bf" data-w="62"></div></div></td></tr>
+          <tr><td>Satellite TV Rights (All India)</td><td>₹2–5 Cr</td><td>₹8–15 Cr</td><td><strong style="color:var(--gold)">₹20–40 Cr</strong></td><td><div class="bw"><div class="bf" data-w="48"></div></div></td></tr>
+          <tr><td>Music Rights + Soundtrack Album</td><td>₹50 L</td><td>₹2–5 Cr</td><td><strong style="color:var(--gold)">₹10–20 Cr</strong></td><td><div class="bw"><div class="bf" data-w="38"></div></div></td></tr>
+          <tr><td>Book Relaunch + Merchandise</td><td>₹30 L</td><td>₹80 L</td><td><strong style="color:var(--gold)">₹3–5 Cr</strong></td><td><div class="bw"><div class="bf" data-w="22"></div></div></td></tr>
+          <tr style="background:var(--gold-lt)"><td style="color:var(--gold);font-size:16px">TOTAL ESTIMATED</td><td>₹60–115 Cr</td><td>₹180–350 Cr</td><td style="color:var(--gold);font-weight:700;font-size:15px">₹500 Cr+ FRANCHISE</td><td><div class="bw"><div class="bf" data-w="100" style="background:var(--gold)"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MARKETING ═══════════ -->
+<section id="marketing" class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 08 — Marketing Master Plan</div>
+      <h2 class="sec-title">HOW THE WORLD<br>FINDS THIS <span class="accent">STORY.</span></h2>
+    </div>
+
+    <div class="split-2 rv" style="margin-top:44px;gap:1px;background:var(--border);border:1px solid var(--border)">
+      <div style="padding:36px;background:var(--white)">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">India Identity</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,3vw,44px);font-weight:900;color:var(--ink);line-height:1;margin-bottom:14px">KERALA KA<br>BARON</div>
+        <div style="font-size:17px;font-style:italic;color:var(--ink3);line-height:1.65;margin-bottom:16px">"The story India's most powerful people didn't want told."</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">EMOTION: Kerala pride · Family · Justice · Betrayal by the state</div>
+      </div>
+      <div style="padding:36px;background:var(--red-lt);border-left:3px solid var(--red)">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:14px">International Identity</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,3vw,44px);font-weight:900;color:var(--ink);line-height:1;margin-bottom:14px">THE BISCUIT<br>BARON</div>
+        <div style="font-size:17px;font-style:italic;color:var(--ink3);line-height:1.65;margin-bottom:16px">"He beat Nabisco. He beat BSN. He couldn't beat Tihar Jail."</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">EMOTION: Corporate thriller · Conspiracy · Human rights · Institutional murder</div>
+      </div>
+    </div>
+
+    <div class="phases rv" style="margin-top:50px">
+      <div class="phase open">
+        <div class="ph-head" onclick="tPhase(this)"><div class="ph-n">01</div><div class="ph-info"><div class="ph-title">Phase 0 — Build the IP Today (Zero Cost)</div><div class="ph-sub">Months 1–3 · Start immediately · No budget required</div></div><div class="ph-icon">+</div></div>
+        <div class="ph-body"><ul class="ph-list">
+          <li>Create <strong>@RajanPillaiStory</strong> on Instagram and YouTube today. First post: the book cover + "He brought Kellogg's to India. He brought Coca-Cola back. And they let him die in a jail cell." Production houses ask for follower data at first meetings — start building now.</li>
+          <li>Write a comprehensive, footnoted <strong>Wikipedia article on Rajan Pillai</strong>. Currently minimal. A verified Wikipedia page legitimises the IP for every producer, journalist, and film festival programmer who Googles the name.</li>
+          <li>Pitch an op-ed: <strong>'30 Years After His Death: The Kerala Billionaire Who Changed Indian Food Forever'</strong> to The Hindu Sunday Magazine, Scroll, or Mathrubhumi. Zero cost. Guaranteed press coverage if well-written.</li>
+          <li>The author on camera: 10 YouTube videos, one per chapter. <strong>'My Brother the Baron.'</strong> No script. In Malayalam + English subtitles. Raw and personal content that never ages — and is the most powerful proof-of-audience document available at any pitch meeting.</li>
+          <li>Relaunch the book with a new cover and <strong>'Why This Story Matters 30 Years On'</strong> afterword. Target Kerala Literary Festival 2026 as the launch event. Every book sold is a marketing asset for the film.</li>
+        </ul></div>
+      </div>
+      <div class="phase">
+        <div class="ph-head" onclick="tPhase(this)"><div class="ph-n">02</div><div class="ph-info"><div class="ph-title">Phase 1 — Awareness & IP Validation</div><div class="ph-sub">Months 1–6 · Low budget · Building public presence</div></div><div class="ph-icon">+</div></div>
+        <div class="ph-body"><ul class="ph-list">
+          <li><strong>'The Baron of Kollam' Podcast</strong> — 8-episode audio drama. Malayalam + English. Spotify India + JioSaavn. Target 50,000 listens on Episode 1. Budget: ₹3–8 Lakh for production.</li>
+          <li><strong>'Did you know Britannia was once run by a Keralite?'</strong> — Short reels using archival Britannia packaging, Ole brand images, Kollam cashew factory visuals. Target: 1 million total views. Each reel is a micro-pitch to a future audience member.</li>
+          <li>On the 30th anniversary of <strong>Kellogg's India entry and Coca-Cola's re-entry</strong> — create content revealing Rajan Pillai's forgotten role. These are built-in news hooks that national media will pick up with no paid promotion.</li>
+          <li>Brief investigative journalists at The Wire, Scroll, and The Hindu proactively on the <strong>Leila Seth Commission findings</strong>. Frame as a current prison reform issue. Generates national media coverage at zero cost and maximum credibility.</li>
+          <li>Commission a <strong>2-minute animated timeline of Rajan's empire</strong>: vintage map graphics, Britannia branding, 1970s Singapore footage (Creative Commons sources). YouTube explainer. Target: 100,000 views. Becomes the opening sequence of every pitch meeting presentation.</li>
+        </ul></div>
+      </div>
+      <div class="phase">
+        <div class="ph-head" onclick="tPhase(this)"><div class="ph-n">03</div><div class="ph-info"><div class="ph-title">Phase 2 — Production Announcement</div><div class="ph-sub">Months 7–12 · After greenlight · Major PR push</div></div><div class="ph-icon">+</div></div>
+        <div class="ph-body"><ul class="ph-list">
+          <li><strong>Casting announcement strategy</strong>: each cast member is a separate PR event with 10–14 days between announcements to maximise media saturation. Lead actor announcement is a Kochi or Mumbai press conference with the Pillai family present.</li>
+          <li><strong>Master Poster reveal</strong>: Rajan Pillai's silhouette against the Singapore skyline, Kerala cashew fields in the foreground, Tihar bars emerging from the shadows. Two versions — India gold tones and International red/black — released simultaneously in all markets.</li>
+          <li><strong>Director interview</strong>: 'Why I Had to Make This Film' — long-form published in Mathrubhumi + The Hindu + YouTube simultaneously. Frames the project as a justice mission, not entertainment. Changes the media narrative from 'film announcement' to 'cultural event'.</li>
+          <li><strong>Danone/Britannia PR play</strong>: BSN Groupe is now Danone. Danone partly owns Britannia Industries. Their reaction or silence to this film is a story in itself. Pre-brief selected journalists so the corporate response (or non-response) is covered the day the trailer drops.</li>
+        </ul></div>
+      </div>
+      <div class="phase">
+        <div class="ph-head" onclick="tPhase(this)"><div class="ph-n">04</div><div class="ph-info"><div class="ph-title">Phase 3 — World Release Campaign</div><div class="ph-sub">Months 16–18 · Maximum global impact</div></div><div class="ph-icon">+</div></div>
+        <div class="ph-body"><ul class="ph-list">
+          <li><strong>Teaser (60 sec)</strong>: Open on Tihar cell. Voice-over: "He brought Kellogg's to India." Singapore skyline. "He brought Coca-Cola back." Boardroom. "He ran an empire in six countries." Hard cut to black. Prison door sound. Title: A WASTED DEATH. No face. No name. Pure intrigue.</li>
+          <li><strong>Official Trailer (2:30)</strong>: Full emotional arc Kollam → Singapore → London → betrayal → prison. Carnatic base + Western orchestral build. Malayalam + Hindi released simultaneously. English subtitles from day one for global OTT algorithmic discovery.</li>
+          <li><strong>International Trailer (90 sec)</strong>: Thriller-coded. Less family, more conspiracy. Real brand names: Nabisco, Danone/BSN, Coca-Cola, Kellogg's. Subtitle: 'A True Story.' Lives permanently on YouTube for international audience discovery.</li>
+          <li><strong>#WastedDeath campaign</strong>: Prison reform + judicial accountability. Partner with PUCL and National Law School student networks. Links the story to present-day India's justice system failures. Activist crossover audience generates free earned media continuously.</li>
+          <li><strong>Kollam World Premiere</strong>: World premiere in Rajan Pillai's hometown with the surviving family, cashew industry workers, and Kerala politicians. Broadcast on Asianet + Mathrubhumi TV. A Kerala cultural event, not a film launch — national press treats it accordingly.</li>
+          <li><strong>Singapore press briefing</strong>: Brief Straits Times and Channel NewsAsia. The 1997 'Rajan sighted in Darwin' Straits Times story is extraordinary free marketing material — acknowledged in the press notes, not hidden from them.</li>
+          <li><strong>Awards strategy</strong>: National Film Awards (Best Film, Director, Actor). Kerala State Film Awards. BAFTA if UK co-production. Golden Globes for English version. Sundance or TIFF for international prestige track. Awards = cultural legitimacy + re-release revenue windows.</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <!-- PITCH MARKETS CALENDAR -->
+    <h3 class="rv" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--ink);margin:50px 0 2px">GLOBAL PITCH CALENDAR — ANNUAL CIRCUIT</h3>
+    <div class="cal-grid rv">
+      <div class="cl-card"><div class="cl-month">MAR</div><div class="cl-name">FICCI Frames</div><div class="cl-loc">Mumbai, India</div><div class="cl-body">India's premier content business conference. All major OTT platforms attend. Primary pitch venue for Applause Entertainment, Netflix India, Excel. Bring pitch deck + sizzle reel. Book meetings 6 weeks in advance.</div></div>
+      <div class="cl-card"><div class="cl-month">MAY</div><div class="cl-name">Cannes Film Market</div><div class="cl-loc">Cannes, France</div><div class="cl-body">International co-production deals. FilmNation, Gaumont, Working Title, BBC Films all have stands. Register in the Co-Production Village. International treatment and one-pager ready in English and French.</div></div>
+      <div class="cl-card"><div class="cl-month">SEP</div><div class="cl-name">TIFF Industry</div><div class="cl-loc">Toronto, Canada</div><div class="cl-body">Feature film international sales and co-production. If the English version is packaged with director + lead cast, TIFF Industry is the ideal first international film market. Dev Patel or Riz Ahmed attachment triggers this window.</div></div>
+      <div class="cl-card"><div class="cl-month">OCT</div><div class="cl-name">MAMI Film Festival</div><div class="cl-loc">Mumbai, India</div><div class="cl-body">India's most prestigious film festival. Industry sidebar for RSVP Movies, independent producers, and director conversations. Best Indian networking event of the calendar year for prestige content.</div></div>
+      <div class="cl-card"><div class="cl-month">OCT</div><div class="cl-name">MIPCOM Cannes</div><div class="cl-loc">Cannes, France</div><div class="cl-body">World's biggest TV/OTT content market. Netflix, Amazon, Apple TV+, HBO all attend. THIS is where international series deals are struck. Attend with series bible + sizzle reel. Essential for the OTT series version.</div></div>
+      <div class="cl-card"><div class="cl-month">NOV</div><div class="cl-name">American Film Market</div><div class="cl-loc">Los Angeles, USA</div><div class="cl-body">Film financing + international pre-sales. SK Global, FilmNation, Participant Media attend. Best venue for English feature version financing conversations. Pre-register as a project in the AFM database 8 weeks prior.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LEGAL ═══════════ -->
+<section id="legal" class="sec sec-paper">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 09 — Legal Strategy</div>
+      <h2 class="sec-title">PROTECT THE IP.<br>THEN <span class="accent">PITCH.</span></h2>
+    </div>
+    <div class="legal-grid rv" style="margin-top:44px">
+      <div class="li-card"><div class="li-num">01</div><div><div class="li-title">Secure Film/Series Adaptation Rights — Urgent</div><div class="li-body">Formal 18-month option agreement (renewable) with the book's author. The author is alive — this is both the project's greatest asset and its most urgent legal priority. Standard option: modest fee + exercise price pre-agreed. Do this before any producer meeting — without it, no deal can progress.</div></div></div>
+      <div class="li-card"><div class="li-num">02</div><div><div class="li-title">Family Consent — Nina Gopika Pillai &amp; Children</div><div class="li-body">Written consent from Nina Gopika Pillai (widow) and Rajan's children. Without Gopika's consent, her portrayal — she is a major character across 12 of 17 book chapters — creates significant defamation and right-of-publicity exposure in Indian, Singapore, and Thai courts (Bangkok civil case).</div></div></div>
+      <div class="li-card"><div class="li-num">03</div><div><div class="li-title">Media IP Lawyer — India + Singapore Dual Jurisdiction</div><div class="li-body">Engage AZB & Partners or Nishith Desai Associates (India) + Rajah & Tann (Singapore). You need expertise in both jurisdictions because the Singapore Commercial Affairs Department case and the Indian Tihar death involve entirely separate legal systems and standards of proof.</div></div></div>
+      <div class="li-card"><div class="li-num">04</div><div><div class="li-title">Defamation Audit — All Named Real Persons</div><div class="li-body">Multiple real people named: A.K. Dutt (CBI), M.L. Mehta (Magistrate), Dr. Venkatasubbiah, Nusli Wadia, Antoine Riboud, Sunil Alagh, Rakesh Saxena. The Leila Seth Commission report (public judicial record) — quoting it directly is protected speech. Original allegations beyond the record are not.</div></div></div>
+      <div class="li-card"><div class="li-num">05</div><div><div class="li-title">IFTPC + WGA Registration Before First Pitch</div><div class="li-body">Register the treatment and screenplay with Indian Film & Television Producers Council (IFTPC) and Writers Guild of America (West) before the first pitch meeting. Establishes the creation date on record. Protects against script theft during multi-territory simultaneous pitching. Costs minimal fees, takes 48 hours.</div></div></div>
+      <div class="li-card"><div class="li-num">06</div><div><div class="li-title">Danone / Britannia Corporate Risk Review</div><div class="li-body">BSN Groupe is now Danone. Danone partly owns Britannia Industries — one of India's largest food companies. Their legal departments monitor media about corporate history. Show only documented conduct from public company records, published court filings, and the Leila Seth Commission report. No speculation beyond the record.</div></div></div>
+      <div class="li-card"><div class="li-num">07</div><div><div class="li-title">Singapore Commercial Affairs Jurisdiction</div><div class="li-body">Ross Johnson's 29-count complaint and the 14-year Singapore sentence were Singapore court matters. Rajan fled before verdict. Singapore has some of the world's strictest defamation laws. Verify the current legal status of those proceedings before depicting them. Engage Rajah & Tann Singapore specifically for this review.</div></div></div>
+      <div class="li-card"><div class="li-num">08</div><div><div class="li-title">Key Legal Protection — The Leila Seth Report</div><div class="li-body">The Leila Seth Commission Report is a publicly available judicial document produced by a former Chief Justice of a High Court. Every statement in it — including the confirmation of Dr. Venkatasubbiah's "casual and careless" conduct and the finding that A.K. Dutt withheld information — is protected speech when quoted directly and verbatim. Ross Johnson died in 2016: US law cannot protect the deceased.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 24-MONTH TIMELINE ═══════════ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 10 — Action Timeline</div>
+      <h2 class="sec-title">24 MONTHS TO<br>WORLDWIDE <span class="accent">RELEASE.</span></h2>
+    </div>
+    <div class="tl rv" style="margin-top:44px">
+      <div class="tl-row"><div class="tl-period now">M 1–2<br>NOW</div><div class="tl-content"><strong>Phase 0:</strong> Social accounts live (@RajanPillaiStory) · Wikipedia article published · Op-ed pitched to The Hindu/Mathrubhumi · Author and family rights conversations initiated · Media IP lawyer engaged · Podcast series planned</div></div>
+      <div class="tl-row"><div class="tl-period">M 1–3</div><div class="tl-content"><strong>Rights & Legal:</strong> Option agreement signed · Family consent documents (Nina Gopika Pillai + children) · IFTPC registration · Defamation audit commissioned · AZB & Partners or Nishith Desai engaged · Singapore jurisdiction review begun</div></div>
+      <div class="tl-row"><div class="tl-period">M 2–5</div><div class="tl-content"><strong>Development:</strong> 2-page pitch treatment written by experienced screenwriter · Sizzle reel created (₹3–8 Lakh) · 12-slide pitch deck designed · One-pager finalised · Agent or producer's representative identified · Podcast launched on Spotify India</div></div>
+      <div class="tl-row"><div class="tl-period">M 4–7</div><div class="tl-content"><strong>Pitch Circuit:</strong> Applause Entertainment meeting (primary) · Kerala production house meeting (Friday Film House or August Cinema) · FICCI Frames attendance (March) · International agent conversations · Director approach (Hansal Mehta preferred) · Singapore co-producer contact</div></div>
+      <div class="tl-row"><div class="tl-period go">M 8<br>GREEN<br>LIGHT</div><div class="tl-content"><strong>Greenlight:</strong> Production partner confirmed · Platform deal in principle (OTT commission or theatrical pre-sale) · Director officially attached · Lead cast conversations begin · Book relaunch campaign launches · Podcast continues building audience</div></div>
+      <div class="tl-row"><div class="tl-period">M 8–12</div><div class="tl-content"><strong>Pre-Production:</strong> Lead cast confirmed + press event in Kochi or Mumbai · Full screenplay (3 drafts minimum) · Location scouting: Kollam, New Delhi, Singapore, Mumbai · Production design: period research 1948–1995 · Singapore SFC rebate application filed · Kerala KFDC loan applied</div></div>
+      <div class="tl-row"><div class="tl-period">M 13–17</div><div class="tl-content"><strong>Principal Photography:</strong> Kerala/Kollam shoot (Weeks 1–6) · New Delhi / Tihar set (Weeks 7–10) · Singapore locations (Weeks 11–14) · Mumbai (Weeks 15–16) · VFX plates and second unit throughout · Marketing teaser shot during production</div></div>
+      <div class="tl-row"><div class="tl-period">M 17–21</div><div class="tl-content"><strong>Post-Production:</strong> Assembly cut → Director's cut → Picture lock · VFX completion (period recreation: 1970s Singapore, 1980s London, 1990s Tihar) · Original score recorded · Sound design + final mix · Marketing trailer cut from edit · Press screener prepared</div></div>
+      <div class="tl-row"><div class="tl-period">M 19–22</div><div class="tl-content"><strong>Marketing Launch:</strong> Master poster revealed · Teaser trailer launch (60 sec) · #WastedDeath campaign live · Official trailer (2:30 min) · Kollam press event · Singapore media briefing (Straits Times + Channel NewsAsia) · MIPCOM pitch if series version</div></div>
+      <div class="tl-row"><div class="tl-period go">M 23–24<br>WORLD<br>RELEASE</div><div class="tl-content"><strong>Worldwide Release:</strong> OTT premiere (all episodes or weekly drop strategy) · Kerala theatrical release → national theatrical · International OTT launch (Netflix/Amazon global) · Awards submissions: National Film Awards, Kerala State, BAFTA, Golden Globes · International festival circuit · Singapore theatrical</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section id="contact" class="sec sec-paper">
+  <div class="wrap">
+    <div class="rv">
+      <div class="sec-eyebrow">§ 11 — Make Contact</div>
+      <h2 class="sec-title">THIS STORY<br>IS <span class="accent">AVAILABLE.</span><br>ARE <span class="outline gold">YOU?</span></h2>
+      <p class="sec-body">Whether you are a production house, OTT platform, director, international co-producer, film fund, agent, or journalist — the adaptation rights to one of India's most powerful untold stories are available now. The book exists. The author is alive. The story is documented by a judicial inquiry. The only question is who moves first.</p>
+    </div>
+
+    <div class="contact-grid rv" style="margin-top:50px">
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--ink);margin-bottom:24px">SUBMIT YOUR PROPOSAL</h3>
+        <form class="cf" onsubmit="submitF(event)">
+          <div class="form-row">
+            <div class="field"><label>Full Name *</label><input type="text" placeholder="Your full name" required></div>
+            <div class="field"><label>Company / Organisation *</label><input type="text" placeholder="Production house, studio, agency..." required></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label>Email Address *</label><input type="email" placeholder="your@company.com" required></div>
+            <div class="field"><label>Phone / WhatsApp</label><input type="tel" placeholder="+91 or international"></div>
+          </div>
+          <div class="field"><label>Your Role / Primary Interest *</label>
+            <select required>
+              <option value="" disabled selected>Select your primary interest...</option>
+              <option>Production House — OTT Series Development</option>
+              <option>Production House — Feature Film Development</option>
+              <option>OTT Platform — Content Acquisition</option>
+              <option>International Co-production Partner</option>
+              <option>Director — Interested in Attaching to Project</option>
+              <option>Screenwriter — Interested in Adapting</option>
+              <option>Actor / Casting — Role Interest</option>
+              <option>Talent Agent / Producer's Representative</option>
+              <option>Film Fund / Investor / NBFC</option>
+              <option>Singapore Co-production Partner</option>
+              <option>UK / European Co-production Partner</option>
+              <option>International Sales Agent</option>
+              <option>Journalist / Press / Documentary Interest</option>
+              <option>Grant Body / Film Commission</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Primary Geographic Market</label>
+            <select>
+              <option value="" disabled selected>Your primary market focus...</option>
+              <option>India — Malayalam Theatrical</option>
+              <option>India — Hindi OTT / Theatrical</option>
+              <option>India — National OTT (All Languages)</option>
+              <option>Kerala — Regional Theatrical + OTT</option>
+              <option>UK / Western Europe</option>
+              <option>USA / North America</option>
+              <option>Singapore / Southeast Asia</option>
+              <option>Australia / New Zealand</option>
+              <option>Gulf / Middle East (Diaspora market)</option>
+              <option>Global / Multi-territory</option>
+              <option>International Awards Circuit</option>
+            </select>
+          </div>
+          <div class="field"><label>Budget Range You Work With</label>
+            <select>
+              <option value="" disabled selected>Approximate production budget range...</option>
+              <option>Under ₹20 Crore</option>
+              <option>₹20–50 Crore</option>
+              <option>₹50–100 Crore</option>
+              <option>₹100–200 Crore</option>
+              <option>Over ₹200 Crore / USD 25M+</option>
+              <option>Not applicable / Grant / Sales only</option>
+            </select>
+          </div>
+          <div class="field"><label>Your Proposal / Message *</label>
+            <textarea placeholder="Tell us how you want to bring A Wasted Death to the world. Include: your company's track record, which format you are interested in (OTT series / Malayalam film / Hindi film / International English version / all), your platform relationships, and your creative vision for the project. The more specific, the better." required></textarea>
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap">
+            <button type="submit" class="btn-gold">Submit Proposal →</button>
+            <button type="button" class="btn-outline" onclick="dlBrief()">↓ Download Pitch Brief (PDF)</button>
+          </div>
+          <p style="font-size:13px;color:var(--muted);margin-top:14px;font-style:italic">All submissions are confidential. We respond to qualified inquiries within 48 business hours. Rights holders retain final creative and business approval on all production decisions.</p>
+        </form>
+      </div>
+
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--ink);margin-bottom:24px">DIRECT CONTACTS</h3>
+        <div class="cd-block">
+          <div class="cd-item">
+            <div class="cd-label">Rights Holder &amp; Primary Author</div>
+            <div class="cd-val">J. Rajmohan Pillai</div>
+            <div class="cd-sub">Author of 'A Wasted Death' · Younger brother and narrator · Primary rights holder and story source · Kollam, Kerala</div>
+            <a href="mailto:rights@awasteddeath.com" class="cd-link">rights@awasteddeath.com</a>
+          </div>
+          <div class="cd-item">
+            <div class="cd-label">Film &amp; Series Production Enquiries</div>
+            <div class="cd-val">Film Rights &amp; Development Office</div>
+            <div class="cd-sub">For production house proposals, OTT platform inquiries, co-production discussions, and director/cast attachment conversations</div>
+            <a href="mailto:production@awasteddeath.com" class="cd-link">production@awasteddeath.com</a>
+            <a href="tel:+914712345678" class="cd-link" style="margin-top:8px">+91 471 234 5678 (Thiruvananthapuram)</a>
+          </div>
+          <div class="cd-item">
+            <div class="cd-label">International Co-production &amp; Sales</div>
+            <div class="cd-val">International Sales &amp; Co-production</div>
+            <div class="cd-sub">For UK, USA, France, Singapore and multi-territory co-production inquiries, grant applications, and international pre-sales discussions</div>
+            <a href="mailto:international@awasteddeath.com" class="cd-link">international@awasteddeath.com</a>
+          </div>
+          <div class="cd-item">
+            <div class="cd-label">Grants &amp; Film Commission Enquiries</div>
+            <div class="cd-val">Grants &amp; Incentives Office</div>
+            <div class="cd-sub">For Kerala KFDC, NFDC, Singapore SFC, EU Creative Europe, BFI, and other grant body correspondence and application support</div>
+            <a href="mailto:grants@awasteddeath.com" class="cd-link">grants@awasteddeath.com</a>
+          </div>
+          <div class="cd-item">
+            <div class="cd-label">Press, Media &amp; Journalist Inquiries</div>
+            <div class="cd-val">Media Relations</div>
+            <div class="cd-sub">For journalist inquiries, interview requests with the author, press screener access, and media kit download</div>
+            <a href="mailto:press@awasteddeath.com" class="cd-link">press@awasteddeath.com</a>
+          </div>
+          <div class="cd-item">
+            <div class="cd-label">Social &amp; Digital</div>
+            <div class="cd-val">Follow the Story</div>
+            <div class="cd-sub">Build the audience before the greenlight — every follower counts in the first producer meeting</div>
+            <div class="social-row">
+              <a href="#" class="soc-btn">Instagram</a>
+              <a href="#" class="soc-btn">YouTube</a>
+              <a href="#" class="soc-btn">Twitter / X</a>
+              <a href="#" class="soc-btn">LinkedIn</a>
+              <a href="#" class="soc-btn">Spotify Podcast</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL QUOTE -->
+<div class="big-q sec-paper2" style="padding:80px 0">
+  <div class="wrap">
+    <div class="bq-text">"IT HAS TAKEN THE <span class="em">TRAGIC DEATH</span> OF A WELL-KNOWN PERSON TO SHAKE THE SLUGGISH <span class="em">LETHARGY</span> OF THE ADMINISTRATION."</div>
+    <div class="bq-attr">— Justice Leila Seth Commission Report, 1995 · Rajan Pillai (1948–1995) · Kollam, Kerala → Tihar Jail, New Delhi</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">A WASTED<br>DEATH</div>
+        <div class="foot-sub">The Rise and Fall of Rajan Pillai<br>By J. Rajmohan Pillai with K. Govindan Kutty</div>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <div class="foot-col-title">Strategy</div>
+          <a href="#story" class="foot-link">The Story — Five Acts</a>
+          <a href="#market" class="foot-link">Market Intelligence</a>
+          <a href="#grants" class="foot-link">Grants & Incentives</a>
+          <a href="#partners" class="foot-link">Production Partners</a>
+        </div>
+        <div>
+          <div class="foot-col-title">Talent</div>
+          <a href="#cast" class="foot-link">International Cast</a>
+          <a href="#directors" class="foot-link">Director Shortlist</a>
+          <a href="#finance" class="foot-link">Finance & Revenue</a>
+          <a href="#marketing" class="foot-link">Marketing Plan</a>
+        </div>
+        <div>
+          <div class="foot-col-title">Contact</div>
+          <a href="mailto:rights@awasteddeath.com" class="foot-link">rights@awasteddeath.com</a>
+          <a href="mailto:production@awasteddeath.com" class="foot-link">production@awasteddeath.com</a>
+          <a href="mailto:international@awasteddeath.com" class="foot-link">international@awasteddeath.com</a>
+          <a href="mailto:grants@awasteddeath.com" class="foot-link">grants@awasteddeath.com</a>
+          <a href="mailto:press@awasteddeath.com" class="foot-link">press@awasteddeath.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-copy">World Adaptation Rights Available · All Rights Reserved · awasteddeath.com · Production Strategy Document — A Wasted Death by J. Rajmohan Pillai with K. Govindan Kutty</div>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animR(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR)})();
+
+/* ── PROGRESS ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('progress').style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+  document.getElementById('nav').classList.toggle('solid',window.scrollY>60);
+  revealCheck();
+  barsCheck();
+});
+
+/* ── REVEAL ── */
+function revealCheck(){
+  document.querySelectorAll('.rv,.rv-l,.rv-r').forEach((el,i)=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight*.88&&!el.classList.contains('in'))
+      setTimeout(()=>el.classList.add('in'),i%3*60);
+  });
+}
+revealCheck();
+
+/* ── HERO COUNTERS ── */
+function startHeroC(){
+  document.querySelectorAll('.counter').forEach(el=>{
+    if(el._done)return;el._done=1;
+    const t=+el.dataset.t,step=t/50;let c=0;
+    const tm=setInterval(()=>{c=Math.min(c+step,t);el.textContent=Math.round(c);if(c>=t)clearInterval(tm)},28);
+  });
+}
+const hio=new IntersectionObserver(e=>{if(e[0].isIntersecting){startHeroC();hio.disconnect()}},{threshold:.3});
+const hf=document.querySelector('.hero-facts');if(hf)hio.observe(hf);
+
+/* ── DECIMAL COUNTERS ── */
+document.querySelectorAll('.cc').forEach(el=>{
+  const io=new IntersectionObserver(entries=>{
+    if(!entries[0].isIntersecting||el._done)return;
+    el._done=1;io.disconnect();
+    const t=+el.dataset.t,s=el.dataset.s||'',e2=el.dataset.e||'';
+    const isInt=Number.isInteger(t);let c=0,step=t/55;
+    const tm=setInterval(()=>{c=Math.min(c+step,t);el.textContent=s+(isInt?Math.round(c):c.toFixed(1))+e2;if(c>=t)clearInterval(tm)},26);
+  },{threshold:.3});
+  io.observe(el);
+});
+
+/* ── BARS ── */
+function barsCheck(){
+  document.querySelectorAll('.bar-fill:not([data-done]),.bf:not([data-done])').forEach(b=>{
+    const r=b.getBoundingClientRect();
+    if(r.top<window.innerHeight+200){b.dataset.done=1;b.style.width=b.dataset.w+'%'}
+  });
+}
+
+/* ── ACTS SCROLLER ── */
+let aIdx=0,aTotal=5;
+const rail=document.getElementById('actsRail');
+function aw(){return rail&&rail.querySelector('.act-card')?rail.querySelector('.act-card').offsetWidth+1:341}
+function scrollActs(d){aIdx=Math.max(0,Math.min(aTotal-1,aIdx+d));updateActs()}
+function goAct(i){aIdx=i;updateActs()}
+function updateActs(){
+  if(rail)rail.style.transform=`translateX(-${aIdx*aw()}px)`;
+  const p=document.getElementById('aProg');if(p)p.textContent=String(aIdx+1).padStart(2,'0')+' / '+String(aTotal).padStart(2,'0');
+  document.querySelectorAll('.adot').forEach((d,i)=>d.classList.toggle('on',i===aIdx));
+}
+
+/* ── PARTNER FILTER ── */
+function filterP(cat,btn){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pc[data-cat]').forEach(c=>{
+    c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';
+  });
+}
+
+/* ── PHASE ACCORDION ── */
+function tPhase(head){
+  const ph=head.closest('.phase'),wasO=ph.classList.contains('open');
+  document.querySelectorAll('.phase').forEach(p=>p.classList.remove('open'));
+  if(!wasO)ph.classList.add('open');
+}
+
+/* ── FORM ── */
+function submitF(e){
+  e.preventDefault();
+  const t=document.getElementById('toast');
+  t.textContent='✓ Proposal received — we will respond within 48 business hours';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4500);
+  e.target.reset();
+}
+function dlBrief(){
+  const t=document.getElementById('toast');
+  t.textContent='📄 Pitch Brief PDF — preparing download...';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>

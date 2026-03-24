@@ -1,0 +1,3700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Wasted Death — Rajan Pillai 1947–1995</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #030201;
+            --deep: #070503;
+            --charcoal: #110d08;
+            --bark: #1c1208;
+            --gold: #c9a84c;
+            --gold-dim: #7a5c1e;
+            --gold-bright: #e8c96a;
+            --ivory: #f0e8d5;
+            --paper: #e8dcc0;
+            --rust: #8b2e10;
+            --blood: #6b1010;
+            --blood-mid: #8a1515;
+            --ash: #8e8070;
+            --fog: #c0b498;
+            --mist: #9e9080;
+            --fade: rgba(5, 4, 2, 0)
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--black);
+            color: var(--ivory);
+            font-family: 'Libre Baskerville', serif;
+            overflow-x: hidden;
+            cursor: none
+        }
+
+        /* ── CURSOR ── */
+        #cur {
+            width: 10px;
+            height: 10px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width .3s, height .3s, background .3s;
+            mix-blend-mode: difference
+        }
+
+        #cur2 {
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(201, 168, 76, .18);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: none
+        }
+
+        #cur.big {
+            width: 22px;
+            height: 22px;
+            background: rgba(201, 168, 76, .1)
+        }
+
+        /* ── GRAIN ── */
+        .grain {
+            position: fixed;
+            inset: -200px;
+            width: calc(100% + 400px);
+            height: calc(100% + 400px);
+            pointer-events: none;
+            z-index: 1000;
+            opacity: .042;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: grain .4s steps(3) infinite
+        }
+
+        @keyframes grain {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            25% {
+                transform: translate(-3%, -2%)
+            }
+
+            50% {
+                transform: translate(2%, 3%)
+            }
+
+            75% {
+                transform: translate(-1%, 1%)
+            }
+        }
+
+        /* ── PROGRESS ── */
+        #prog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--gold-dim), var(--gold), var(--gold-bright));
+            z-index: 2000;
+            width: 0;
+            box-shadow: 0 0 12px rgba(201, 168, 76, .6)
+        }
+
+        /* ════════════════════════
+   CINEMATIC SPLASH SCREEN
+════════════════════════ */
+        #splash {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: default
+        }
+
+        #splash.exit {
+            animation: splashOut 1.8s cubic-bezier(.77, 0, .18, 1) forwards
+        }
+
+        @keyframes splashOut {
+            to {
+                opacity: 0;
+                transform: scale(1.04);
+                pointer-events: none
+            }
+        }
+
+        #splashCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .splash-bars {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: #000;
+            z-index: 2;
+            transition: height 2s cubic-bezier(.77, 0, .18, 1)
+        }
+
+        .splash-bars.top {
+            top: 0
+        }
+
+        .splash-bars.bot {
+            bottom: 0
+        }
+
+        .splash-bars.open {
+            height: 0
+        }
+
+        .splash-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px
+        }
+
+        .splash-eyebrow {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(.55rem, .9vw, .7rem);
+            letter-spacing: .55em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            opacity: 0;
+            margin-bottom: 3rem
+        }
+
+        .splash-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(30px)
+        }
+
+        .splash-line.l1 {
+            font-size: clamp(1.2rem, 3.5vw, 2.6rem);
+            color: var(--fog);
+            font-weight: 300;
+            margin-bottom: 1.8rem
+        }
+
+        .splash-line.l2 {
+            font-size: clamp(1rem, 2.8vw, 2.1rem);
+            color: var(--ash);
+            font-weight: 300;
+            margin-bottom: 1.8rem
+        }
+
+        .splash-line.l3 {
+            font-size: clamp(.9rem, 2.2vw, 1.7rem);
+            color: rgba(139, 46, 16, .9);
+            font-weight: 300;
+            margin-bottom: 4rem
+        }
+
+        .splash-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4.5rem, 14vw, 13rem);
+            font-weight: 300;
+            line-height: .85;
+            opacity: 0;
+            transform: translateY(40px) scale(.96)
+        }
+
+        .splash-title .sw {
+            color: var(--ivory);
+            display: block
+        }
+
+        .splash-title .sd {
+            color: var(--blood);
+            display: block;
+            font-style: italic;
+            text-shadow: 0 0 80px rgba(107, 16, 16, .8), 0 0 160px rgba(80, 10, 10, .4)
+        }
+
+        .splash-divider {
+            width: 1px;
+            height: 0;
+            background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+            margin: 2.5rem auto;
+            transition: height 1.4s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .splash-enter {
+            font-family: 'Special Elite', cursive;
+            font-size: .62rem;
+            letter-spacing: .55em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            opacity: 0;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--gold-dim);
+            padding: .8rem 2rem;
+            border: 1px solid rgba(201, 168, 76, .2);
+            transition: all .4s;
+            position: relative
+        }
+
+        .splash-enter:hover {
+            border-color: var(--gold-dim);
+            color: var(--gold)
+        }
+
+        .splash-enter::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform .5s
+        }
+
+        .splash-enter:hover::after {
+            transform: scaleX(1)
+        }
+
+        .splash-dates {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(.9rem, 2vw, 1.4rem);
+            color: var(--fog);
+            letter-spacing: .1em;
+            opacity: 0;
+            margin-top: 1.4rem
+        }
+
+        .splash-dates .sep {
+            color: var(--blood);
+            margin: 0 1rem
+        }
+
+        .splash-vign {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 0%, rgba(0, 0, 0, .85) 100%);
+            z-index: 1;
+            pointer-events: none
+        }
+
+        .splash-streak {
+            position: absolute;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, .25), transparent);
+            z-index: 1;
+            animation: streakAnim linear infinite;
+            opacity: 0
+        }
+
+        @keyframes streakAnim {
+            0% {
+                transform: translateY(-100vh)
+            }
+
+            100% {
+                transform: translateY(100vh)
+            }
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all .5s
+        }
+
+        nav.s {
+            background: rgba(3, 2, 1, .96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 168, 76, .06)
+        }
+
+        .nlogo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .9rem;
+            font-style: italic;
+            color: var(--gold-dim);
+            letter-spacing: .12em
+        }
+
+        .nlinks {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center
+        }
+
+        .nlinks a,
+        .ch-trigger {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .35em;
+            color: var(--ash);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color .3s;
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0
+        }
+
+        .nlinks a::after,
+        .ch-trigger::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform .3s
+        }
+
+        .nlinks a:hover,
+        .ch-trigger:hover {
+            color: var(--gold)
+        }
+
+        .nlinks a:hover::after,
+        .ch-trigger:hover::after {
+            transform: scaleX(1)
+        }
+
+        @media(max-width:700px) {
+            .nlinks {
+                display: none
+            }
+        }
+
+        /* ── CHAPTER DOTS ── */
+        .cdots {
+            position: fixed;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: .55rem;
+            z-index: 400
+        }
+
+        .cd {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--ash);
+            opacity: .25;
+            cursor: pointer;
+            transition: all .4s
+        }
+
+        .cd.active {
+            background: var(--gold);
+            opacity: 1;
+            transform: scale(1.7)
+        }
+
+        @media(max-width:700px) {
+            .cdots {
+                display: none
+            }
+        }
+
+        /* ── CHAPTER OVERLAY ── */
+        #chOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 2, 1, .98);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .5s cubic-bezier(.22, 1, .36, 1);
+            backdrop-filter: blur(20px)
+        }
+
+        #chOverlay.open {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .ch-close {
+            position: absolute;
+            top: 2rem;
+            right: 2.5rem;
+            font-family: 'Special Elite', cursive;
+            font-size: .65rem;
+            color: var(--gold-dim);
+            cursor: pointer;
+            letter-spacing: .4em;
+            text-transform: uppercase
+        }
+
+        .ch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            padding: 2rem
+        }
+
+        @media(max-width:800px) {
+            .ch-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:500px) {
+            .ch-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .ch-item {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .28em;
+            color: var(--ash);
+            text-transform: uppercase;
+            padding: 1rem;
+            border: 1px solid rgba(201, 168, 76, .1);
+            text-decoration: none;
+            transition: all .35s;
+            text-align: center
+        }
+
+        .ch-item:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(201, 168, 76, .05);
+            transform: translateY(-3px)
+        }
+
+        /* ════════════ HERO ════════════ */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        #hc {
+            position: absolute;
+            inset: 0;
+            z-index: 0
+        }
+
+        .hvign {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 75% 75% at 50% 50%, transparent 0%, rgba(3, 2, 1, .75) 100%);
+            z-index: 1
+        }
+
+        .hcon {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            max-width: 960px
+        }
+
+        .hey {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(.58rem, 1.1vw, .75rem);
+            letter-spacing: .48em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: rU 1.2s .5s cubic-bezier(.22, 1, .36, 1) forwards
+        }
+
+        .htitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 11vw, 10rem);
+            font-weight: 300;
+            line-height: .88;
+            letter-spacing: -.025em;
+            opacity: 0;
+            animation: rU 1.5s .8s cubic-bezier(.22, 1, .36, 1) forwards
+        }
+
+        .hw {
+            display: block;
+            color: var(--ivory);
+            position: relative
+        }
+
+        .hw::after {
+            content: '';
+            position: absolute;
+            bottom: .07em;
+            left: -.03em;
+            right: -.03em;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--rust), var(--blood), var(--rust), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: st 1.2s 2.5s cubic-bezier(.22, 1, .36, 1) forwards
+        }
+
+        .hd {
+            display: block;
+            font-style: italic;
+            color: var(--gold);
+            filter: drop-shadow(0 0 40px rgba(201, 168, 76, .3))
+        }
+
+        .hsub {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.3vw, 1.5rem);
+            color: var(--ash);
+            margin-top: 1.8rem;
+            letter-spacing: .06em;
+            opacity: 0;
+            animation: rU 1.4s 1.2s cubic-bezier(.22, 1, .36, 1) forwards
+        }
+
+        .htag {
+            font-family: 'Special Elite', cursive;
+            font-size: .65rem;
+            letter-spacing: .38em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: 3rem;
+            opacity: 0;
+            animation: rU 1.4s 1.6s cubic-bezier(.22, 1, .36, 1) forwards
+        }
+
+        .hline {
+            width: 1px;
+            height: 70px;
+            background: linear-gradient(to bottom, var(--gold-dim), transparent);
+            margin: 2.5rem auto 0;
+            opacity: 0;
+            animation: rF 1.4s 2s ease forwards
+        }
+
+        .hdates {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+            opacity: 0;
+            animation: rF 1.4s 2.2s ease forwards
+        }
+
+        .hdn {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.4rem, 4vw, 2.3rem);
+            font-weight: 300;
+            color: var(--fog)
+        }
+
+        .hds {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(to right, var(--ash), transparent)
+        }
+
+        .scue {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+            opacity: 0;
+            animation: rF 1s 3s ease forwards;
+            z-index: 2
+        }
+
+        .scue span {
+            font-family: 'Special Elite', cursive;
+            font-size: .56rem;
+            letter-spacing: .4em;
+            color: var(--gold-dim);
+            text-transform: uppercase
+        }
+
+        .scuel {
+            width: 1px;
+            height: 2.5rem;
+            background: linear-gradient(to bottom, var(--gold-dim), transparent);
+            animation: sd 2s ease-in-out infinite
+        }
+
+        @keyframes sd {
+
+            0%,
+            100% {
+                transform: scaleY(.4);
+                opacity: .5
+            }
+
+            50% {
+                transform: scaleY(1);
+                opacity: 1
+            }
+        }
+
+        @keyframes rU {
+            from {
+                opacity: 0;
+                transform: translateY(26px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes rF {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes st {
+            to {
+                transform: scaleX(1)
+            }
+        }
+
+        /* ════════════ EPIGRAPH ════════════ */
+        .epig-block {
+            background: var(--charcoal);
+            padding: 7rem 0;
+            text-align: center
+        }
+
+        .epig-inner {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 0 2rem
+        }
+
+        .epig-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            line-height: 1.7;
+            color: var(--fog);
+            margin-bottom: 3rem
+        }
+
+        .epig-attr {
+            font-family: 'Special Elite', cursive;
+            font-size: .6rem;
+            letter-spacing: .38em;
+            color: var(--gold-dim);
+            text-transform: uppercase
+        }
+
+        .opening-stat {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .3rem;
+            margin: 0 2rem
+        }
+
+        .opening-stat .n {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            color: var(--gold)
+        }
+
+        .opening-stat .l {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .3em;
+            color: var(--ash);
+            text-transform: uppercase
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 3.5rem;
+            padding-top: 3.5rem;
+            border-top: 1px solid rgba(201, 168, 76, .08)
+        }
+
+        /* ════════════ LAYOUT ════════════ */
+        .cnt {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 2.5rem
+        }
+
+        .two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start
+        }
+
+        @media(max-width:820px) {
+            .two {
+                grid-template-columns: 1fr;
+                gap: 3rem
+            }
+        }
+
+        section {
+            position: relative
+        }
+
+        .sec-pad {
+            padding: 10rem 0
+        }
+
+        .sec-bg-dark {
+            background: var(--black)
+        }
+
+        .sec-bg-char {
+            background: var(--charcoal)
+        }
+
+        .sec-bg-grad {
+            background: linear-gradient(to bottom, var(--charcoal), var(--black))
+        }
+
+        .sec-bg-deep {
+            background: linear-gradient(160deg, var(--charcoal) 0%, var(--bark) 50%, var(--charcoal) 100%)
+        }
+
+        /* ── IMAGE FRAMES ── */
+        .img-frame {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 168, 76, .14);
+            background: var(--charcoal)
+        }
+
+        .img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: sepia(.35) brightness(.72) contrast(1.1);
+            transition: filter .8s
+        }
+
+        .img-frame:hover img {
+            filter: sepia(.2) brightness(.82) contrast(1.05)
+        }
+
+        .img-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 55%, rgba(3, 2, 1, .7) 100%);
+            pointer-events: none
+        }
+
+        .img-cap {
+            font-family: 'Special Elite', cursive;
+            font-size: .58rem;
+            letter-spacing: .28em;
+            color: var(--gold-dim);
+            text-align: center;
+            margin-top: .8rem;
+            text-transform: uppercase
+        }
+
+        .img-full {
+            width: 100%;
+            height: 420px;
+            position: relative;
+            overflow: hidden;
+            margin: 3rem 0
+        }
+
+        .img-full img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(.4) brightness(.55) contrast(1.2)
+        }
+
+        .img-full::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(3, 2, 1, .7), transparent 30%, transparent 70%, rgba(3, 2, 1, .7));
+            z-index: 1;
+            pointer-events: none
+        }
+
+        .img-full::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(3, 2, 1, .4), transparent 25%, transparent 75%, rgba(3, 2, 1, .4));
+            z-index: 1;
+            pointer-events: none
+        }
+
+        .img-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 2.5rem 0
+        }
+
+        .img-col .img-frame {
+            height: 280px
+        }
+
+        @media(max-width:600px) {
+            .img-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* ── CHAPTER LABELS ── */
+        .ch-label {
+            font-family: 'Special Elite', cursive;
+            font-size: .58rem;
+            letter-spacing: .5em;
+            color: var(--gold);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 1.4rem
+        }
+
+        .ch-label::after {
+            content: '';
+            flex: 0 0 40px;
+            height: 1px;
+            background: var(--gold-dim);
+            opacity: .4
+        }
+
+        .ch-num-bg {
+            position: absolute;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(8rem, 22vw, 20rem);
+            font-weight: 700;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(201, 168, 76, .03);
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+            top: 3rem;
+            right: -.02em
+        }
+
+        h2.sh {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 4.5vw, 4rem);
+            font-weight: 300;
+            line-height: 1.05;
+            margin-bottom: 1.8rem;
+            color: var(--ivory)
+        }
+
+        h2.sh em {
+            font-style: italic;
+            color: var(--gold)
+        }
+
+        .bt {
+            font-size: clamp(.88rem, 1.1vw, 1rem);
+            line-height: 2.05;
+            color: var(--fog);
+            margin-bottom: 1.4rem;
+            letter-spacing: .01em
+        }
+
+        .bt strong {
+            color: var(--ivory);
+            font-weight: 700
+        }
+
+        .bt em {
+            font-style: italic;
+            color: var(--paper)
+        }
+
+        /* ── PULL QUOTES ── */
+        .pq {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+            line-height: 1.55;
+            color: var(--gold);
+            border-left: 2px solid var(--rust);
+            padding: .5rem 0 .5rem 1.8rem;
+            margin: 2.5rem 0;
+            position: relative
+        }
+
+        .pq::before {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            color: rgba(201, 168, 76, .07);
+            position: absolute;
+            top: -1rem;
+            left: -.5rem;
+            line-height: 1;
+            pointer-events: none
+        }
+
+        /* ── QUOTED PANELS ── */
+        .qp {
+            background: rgba(17, 13, 8, .8);
+            border-left: 3px solid var(--rust);
+            padding: 2.2rem 2.8rem;
+            position: relative;
+            margin: 2.5rem 0;
+            overflow: hidden
+        }
+
+        .qp::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(139, 46, 16, .05), transparent 50%)
+        }
+
+        .qp blockquote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(.95rem, 1.8vw, 1.2rem);
+            line-height: 1.75;
+            color: var(--fog);
+            position: relative
+        }
+
+        .qp cite {
+            font-family: 'Special Elite', cursive;
+            font-size: .58rem;
+            letter-spacing: .3em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: .9rem;
+            display: block;
+            font-style: normal
+        }
+
+        /* ── QUOTE WALL ── */
+        .qwall {
+            background: linear-gradient(135deg, rgba(26, 16, 8, .9), rgba(7, 5, 3, .95));
+            border: 1px solid rgba(201, 168, 76, .07);
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            margin: 4rem 0;
+            overflow: hidden
+        }
+
+        .qwall-t {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.3vw, 1.55rem);
+            line-height: 1.7;
+            color: var(--fog)
+        }
+
+        .qwall-a {
+            font-family: 'Special Elite', cursive;
+            font-size: .58rem;
+            letter-spacing: .38em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: 1.5rem
+        }
+
+        /* ── ORNAMENTS ── */
+        .ornament {
+            text-align: center;
+            padding: 4rem 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .9rem;
+            color: var(--gold-dim);
+            letter-spacing: 1.2em;
+            opacity: .28
+        }
+
+        .hrg {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(201, 168, 76, .12), transparent);
+            margin: 0
+        }
+
+        /* ── REVEAL ── */
+        .rv {
+            opacity: 0;
+            transform: translateY(34px);
+            transition: opacity .9s ease, transform .9s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .rv.vis {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .rvL {
+            opacity: 0;
+            transform: translateX(-34px);
+            transition: opacity .9s ease, transform .9s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .rvL.vis {
+            opacity: 1;
+            transform: translateX(0)
+        }
+
+        .rvR {
+            opacity: 0;
+            transform: translateX(34px);
+            transition: opacity .9s ease, transform .9s cubic-bezier(.22, 1, .36, 1)
+        }
+
+        .rvR.vis {
+            opacity: 1;
+            transform: translateX(0)
+        }
+
+        /* ════════════ TIMELINE ════════════ */
+        .tl {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-top: 2.5rem
+        }
+
+        .tl::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: .4em;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--gold-dim), rgba(201, 168, 76, .03))
+        }
+
+        .ti {
+            position: relative;
+            padding-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateX(-26px);
+            transition: opacity .8s ease, transform .8s ease
+        }
+
+        .ti.vis {
+            opacity: 1;
+            transform: translateX(0)
+        }
+
+        .ti::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: .45em;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 14px rgba(201, 168, 76, .7), 0 0 40px rgba(201, 168, 76, .2);
+            transition: box-shadow .4s
+        }
+
+        .ti:hover::before {
+            box-shadow: 0 0 22px rgba(201, 168, 76, 1), 0 0 60px rgba(201, 168, 76, .4)
+        }
+
+        .ty {
+            font-family: 'Special Elite', cursive;
+            font-size: .68rem;
+            letter-spacing: .25em;
+            color: var(--gold-dim);
+            margin-bottom: .35rem
+        }
+
+        .tt {
+            font-size: .92rem;
+            line-height: 1.78;
+            color: var(--fog)
+        }
+
+        .tt strong {
+            color: var(--ivory)
+        }
+
+        /* ════════════ EMPIRE GRID ════════════ */
+        .egrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(201, 168, 76, .06);
+            margin-top: 4rem
+        }
+
+        @media(max-width:700px) {
+            .egrid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .ec {
+            background: var(--charcoal);
+            padding: 2.6rem 2rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .7s ease, transform .7s ease, background .4s
+        }
+
+        .ec.vis {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .ec::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            transform: scaleX(0);
+            transition: transform .6s
+        }
+
+        .ec:hover::before {
+            transform: scaleX(1)
+        }
+
+        .ec:hover {
+            background: rgba(20, 14, 6, .96)
+        }
+
+        .ec-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: block
+        }
+
+        .ec h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--ivory);
+            margin-bottom: .7rem
+        }
+
+        .ec p {
+            font-size: .84rem;
+            line-height: 1.82;
+            color: var(--ash)
+        }
+
+        /* ════════════ BETRAYAL CARDS ════════════ */
+        .bmap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 3rem 0
+        }
+
+        @media(max-width:700px) {
+            .bmap {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .bm-card {
+            border: 1px solid rgba(139, 46, 16, .15);
+            padding: 2rem;
+            cursor: pointer;
+            transition: all .4s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .bm-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--rust), var(--blood));
+            transition: width .5s
+        }
+
+        .bm-card:hover::before,
+        .bm-card.open::before {
+            width: 100%
+        }
+
+        .bm-card:hover,
+        .bm-card.open {
+            border-color: rgba(139, 46, 16, .4);
+            background: rgba(12, 8, 4, .7)
+        }
+
+        .bm-agent {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .38em;
+            color: var(--rust);
+            text-transform: uppercase;
+            margin-bottom: .5rem
+        }
+
+        .bm-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--ivory);
+            margin-bottom: .5rem
+        }
+
+        .bm-preview {
+            font-size: .8rem;
+            color: var(--ash);
+            line-height: 1.6
+        }
+
+        .bm-detail {
+            display: none;
+            font-size: .85rem;
+            color: var(--fog);
+            line-height: 1.85;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(139, 46, 16, .2)
+        }
+
+        .bm-card.open .bm-detail {
+            display: block
+        }
+
+        .bm-toggle {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .3em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .bm-toggle::after {
+            content: '▼';
+            font-size: .5rem;
+            transition: transform .3s
+        }
+
+        .bm-card.open .bm-toggle::after {
+            transform: rotate(180deg)
+        }
+
+        /* ════════════ NEWS CLIPPINGS ════════════ */
+        .clip {
+            background: #e8dcc0;
+            color: #1a120a;
+            padding: 2rem 2.6rem;
+            position: relative;
+            transform: rotate(-.7deg);
+            box-shadow: 10px 12px 50px rgba(0, 0, 0, .7);
+            margin: 1.8rem 0;
+            font-family: 'Special Elite', cursive;
+            font-size: .82rem;
+            line-height: 1.65;
+            transition: transform .4s, box-shadow .4s;
+            cursor: default
+        }
+
+        .clip:hover {
+            transform: rotate(0deg) scale(1.01);
+            box-shadow: 16px 20px 60px rgba(0, 0, 0, .8);
+            z-index: 10
+        }
+
+        .clip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(to bottom, transparent, transparent 1.4rem, rgba(0, 0, 0, .03) 1.4rem, rgba(0, 0, 0, .03) 1.45rem);
+            pointer-events: none
+        }
+
+        .clip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .12) 0%, transparent 40%, rgba(0, 0, 0, .06) 100%);
+            pointer-events: none
+        }
+
+        .clip .hl {
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-bottom: 2px solid #1a120a;
+            padding-bottom: .4rem;
+            margin-bottom: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .04em
+        }
+
+        .clip .dl {
+            font-size: .6rem;
+            letter-spacing: .22em;
+            color: #5a4030;
+            margin-bottom: .6rem;
+            text-transform: uppercase
+        }
+
+        .clip.rr {
+            transform: rotate(.9deg)
+        }
+
+        .clip.rr:hover {
+            transform: rotate(0deg) scale(1.01)
+        }
+
+        .clip.rl {
+            transform: rotate(-1.3deg)
+        }
+
+        .clip.rl:hover {
+            transform: rotate(0deg) scale(1.01)
+        }
+
+        /* ════════════ STATS ════════════ */
+        .sg {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.4rem;
+            margin: 2.5rem 0
+        }
+
+        .si {
+            padding: 1.8rem;
+            border: 1px solid rgba(201, 168, 76, .09);
+            position: relative;
+            overflow: hidden;
+            transition: border-color .4s, background .4s
+        }
+
+        .si:hover {
+            border-color: rgba(201, 168, 76, .22);
+            background: rgba(201, 168, 76, .02)
+        }
+
+        .si::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold-dim);
+            transition: width .5s
+        }
+
+        .si:hover::before {
+            width: 100%
+        }
+
+        .si .n {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.3rem;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1
+        }
+
+        .si .l {
+            font-family: 'Special Elite', cursive;
+            font-size: .58rem;
+            letter-spacing: .28em;
+            color: var(--ash);
+            text-transform: uppercase;
+            margin-top: .5rem;
+            line-height: 1.5
+        }
+
+        /* ════════════ PORTRAIT FRAME ════════════ */
+        .pframe {
+            width: 100%;
+            height: 540px;
+            background: var(--charcoal);
+            border: 1px solid rgba(201, 168, 76, .14);
+            position: relative;
+            overflow: hidden
+        }
+
+        .pframe::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 55%, rgba(3, 2, 1, .55) 100%);
+            pointer-events: none
+        }
+
+        .pcap {
+            font-family: 'Special Elite', cursive;
+            font-size: .6rem;
+            letter-spacing: .28em;
+            color: var(--gold-dim);
+            text-align: center;
+            margin-top: 1rem;
+            text-transform: uppercase
+        }
+
+        /* ════════════ DEATH SECTION ════════════ */
+        #death {
+            background: var(--black);
+            padding: 12rem 0;
+            overflow: hidden
+        }
+
+        #death::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 55% at 50% 30%, rgba(107, 16, 16, .22) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(80, 10, 10, .1) 0%, transparent 60%)
+        }
+
+        .death-hl {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 700;
+            line-height: .95;
+            text-align: center;
+            color: var(--blood);
+            letter-spacing: -.025em;
+            text-shadow: 0 0 100px rgba(107, 16, 16, .6), 0 0 200px rgba(80, 10, 10, .3)
+        }
+
+        .death-date {
+            font-family: 'Special Elite', cursive;
+            text-align: center;
+            font-size: .76rem;
+            letter-spacing: .5em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin: 2rem 0 5rem
+        }
+
+        .dfacts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid rgba(139, 46, 16, .22);
+            margin: 4rem 0
+        }
+
+        @media(max-width:700px) {
+            .dfacts {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .df {
+            padding: 2.8rem 2rem;
+            border-right: 1px solid rgba(139, 46, 16, .22);
+            text-align: center;
+            opacity: 0;
+            transition: opacity .9s ease
+        }
+
+        .df:last-child {
+            border-right: none
+        }
+
+        .df.vis {
+            opacity: 1
+        }
+
+        .df .n {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 5.5vw, 4.5rem);
+            font-weight: 700;
+            color: var(--blood-mid);
+            display: block;
+            line-height: 1;
+            text-shadow: 0 0 40px rgba(160, 21, 21, .4)
+        }
+
+        .df .l {
+            font-family: 'Special Elite', cursive;
+            font-size: .6rem;
+            letter-spacing: .3em;
+            color: var(--ash);
+            text-transform: uppercase;
+            margin-top: .5rem;
+            display: block;
+            line-height: 1.5
+        }
+
+        .verdict {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            color: var(--fog);
+            max-width: 760px;
+            margin: 4rem auto 0;
+            line-height: 1.85;
+            padding: 3.5rem 2rem;
+            border-top: 1px solid rgba(201, 168, 76, .09);
+            border-bottom: 1px solid rgba(201, 168, 76, .09);
+            position: relative
+        }
+
+        .verdict::before {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 7rem;
+            color: rgba(201, 168, 76, .05);
+            position: absolute;
+            top: -2rem;
+            left: 1rem;
+            line-height: 1
+        }
+
+        .vattr {
+            font-family: 'Special Elite', cursive;
+            font-size: .58rem;
+            letter-spacing: .38em;
+            color: var(--gold-dim);
+            margin-top: 1.2rem;
+            text-transform: uppercase;
+            display: block
+        }
+
+        /* ════════════ INTERACTIVE TIMELINE ════════════ */
+        .htimeline {
+            position: relative;
+            overflow: hidden;
+            padding: 5rem 0
+        }
+
+        .htl-track {
+            display: flex;
+            gap: 0;
+            position: relative
+        }
+
+        .htl-track::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+            transform: translateY(-50%)
+        }
+
+        .htl-node {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 0 1rem;
+            position: relative
+        }
+
+        .htl-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--charcoal);
+            border: 1px solid var(--gold-dim);
+            z-index: 1;
+            transition: all .3s;
+            flex-shrink: 0
+        }
+
+        .htl-node:hover .htl-dot,
+        .htl-node.act .htl-dot {
+            background: var(--gold);
+            box-shadow: 0 0 16px rgba(201, 168, 76, .7)
+        }
+
+        .htl-year {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .2em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: .8rem;
+            text-align: center
+        }
+
+        .htl-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: .78rem;
+            text-align: center;
+            color: var(--ash);
+            margin-top: .3rem;
+            line-height: 1.4;
+            max-width: 80px
+        }
+
+        .htl-panel {
+            display: none;
+            background: rgba(17, 13, 8, .95);
+            border: 1px solid rgba(201, 168, 76, .12);
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative
+        }
+
+        .htl-panel.show {
+            display: block
+        }
+
+        .htl-panel-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--ivory);
+            margin-bottom: 1rem
+        }
+
+        .htl-panel-text {
+            font-size: .9rem;
+            line-height: 1.9;
+            color: var(--fog)
+        }
+
+        @media(max-width:700px) {
+            .htl-track {
+                flex-wrap: wrap;
+                gap: 1rem
+            }
+
+            .htl-track::before {
+                display: none
+            }
+
+            .htl-node {
+                flex: 0 0 45%
+            }
+        }
+
+        /* ════════════ TRIAL SECTION ════════════ */
+        .trial-box {
+            background: rgba(7, 5, 3, .9);
+            border: 1px solid rgba(139, 46, 16, .2);
+            padding: 3rem;
+            margin: 2.5rem 0;
+            position: relative
+        }
+
+        .trial-box::before {
+            content: 'SINGAPORE · 1994–1995';
+            font-family: 'Special Elite', cursive;
+            font-size: .52rem;
+            letter-spacing: .4em;
+            color: var(--rust);
+            text-transform: uppercase;
+            position: absolute;
+            top: -1px;
+            left: 2rem;
+            background: var(--black);
+            padding: 0 .8rem;
+            transform: translateY(-50%)
+        }
+
+        .charge-list {
+            list-style: none;
+            margin: 1.5rem 0
+        }
+
+        .charge-list li {
+            font-size: .88rem;
+            line-height: 1.8;
+            color: var(--fog);
+            padding: .4rem 0;
+            border-bottom: 1px solid rgba(201, 168, 76, .04);
+            display: flex;
+            gap: 1rem
+        }
+
+        .charge-list li::before {
+            content: '—';
+            color: var(--rust);
+            flex-shrink: 0
+        }
+
+        /* ════════════ FIVE DAYS ════════════ */
+        .fivedays {
+            margin: 3rem 0
+        }
+
+        .fd-title {
+            font-family: 'Special Elite', cursive;
+            font-size: .6rem;
+            letter-spacing: .45em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-bottom: 2rem
+        }
+
+        .fd-item {
+            display: flex;
+            gap: 2rem;
+            padding: 1.8rem 0;
+            border-bottom: 1px solid rgba(139, 46, 16, .12);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all .7s ease
+        }
+
+        .fd-item.vis {
+            opacity: 1;
+            transform: translateX(0)
+        }
+
+        .fd-day {
+            flex-shrink: 0;
+            width: 90px;
+            text-align: right
+        }
+
+        .fd-day-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--blood-mid);
+            line-height: 1
+        }
+
+        .fd-day-label {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .22em;
+            color: var(--ash);
+            text-transform: uppercase;
+            margin-top: .2rem
+        }
+
+        .fd-content {
+            flex: 1
+        }
+
+        .fd-event {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ivory);
+            margin-bottom: .4rem
+        }
+
+        .fd-desc {
+            font-size: .84rem;
+            line-height: 1.8;
+            color: var(--fog)
+        }
+
+        .fd-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: .9rem;
+            color: var(--gold-dim);
+            margin-top: .6rem;
+            padding-left: 1rem;
+            border-left: 1px solid var(--rust)
+        }
+
+        /* ════════════ LEGACY ════════════ */
+        .final-epig {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative
+        }
+
+        .final-epig::before,
+        .final-epig::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 3rem;
+            background: linear-gradient(to bottom, transparent, var(--gold-dim))
+        }
+
+        .final-epig::after {
+            bottom: 0;
+            top: auto;
+            background: linear-gradient(to top, transparent, var(--gold-dim))
+        }
+
+        .fe-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.4rem, 3.2vw, 2.6rem);
+            line-height: 1.38;
+            color: var(--ivory)
+        }
+
+        .fe-attr {
+            font-family: 'Special Elite', cursive;
+            font-size: .62rem;
+            letter-spacing: .38em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: 1.5rem
+        }
+
+        .afterword {
+            background: rgba(17, 13, 8, .9);
+            border: 1px solid rgba(201, 168, 76, .08);
+            padding: 4rem 3rem;
+            margin: 5rem 0;
+            text-align: center;
+            position: relative
+        }
+
+        .afterword::before {
+            content: '✦';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--gold-dim);
+            position: absolute;
+            top: -.65rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--charcoal);
+            padding: 0 1rem
+        }
+
+        .aw-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.5vw, 1.9rem);
+            line-height: 1.5;
+            color: var(--ivory)
+        }
+
+        .aw-attr {
+            font-family: 'Special Elite', cursive;
+            font-size: .6rem;
+            letter-spacing: .4em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-top: 1.2rem
+        }
+
+        /* ── AFTERMATH TABLE ── */
+        .aftermath {
+            margin: 4rem 0
+        }
+
+        .aftermath-title {
+            font-family: 'Special Elite', cursive;
+            font-size: .6rem;
+            letter-spacing: .45em;
+            color: var(--gold-dim);
+            text-transform: uppercase;
+            margin-bottom: 2rem
+        }
+
+        .am-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(201, 168, 76, .06);
+            gap: 2rem
+        }
+
+        .am-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ivory);
+            min-width: 180px
+        }
+
+        .am-fate {
+            font-size: .85rem;
+            line-height: 1.7;
+            color: var(--fog);
+            flex: 1
+        }
+
+        @media(max-width:700px) {
+            .am-row {
+                flex-direction: column;
+                gap: .5rem
+            }
+
+            .am-name {
+                min-width: auto
+            }
+        }
+
+        /* ── GOPIKA SECTION ── */
+        .gopika-intro {
+            background: rgba(20, 14, 8, .85);
+            border: 1px solid rgba(201, 168, 76, .08);
+            padding: 3rem;
+            margin: 2.5rem 0;
+            position: relative;
+            overflow: hidden
+        }
+
+        .gopika-intro::before {
+            content: 'Chapter Ten';
+            font-family: 'Special Elite', cursive;
+            font-size: .5rem;
+            letter-spacing: .4em;
+            color: var(--gold-dim);
+            position: absolute;
+            top: -1px;
+            left: 2rem;
+            background: var(--charcoal);
+            padding: 0 .8rem;
+            transform: translateY(-50%);
+            text-transform: uppercase
+        }
+
+        /* ── GOSPEL SECTION ── */
+        .gospel-box {
+            background: linear-gradient(135deg, rgba(7, 5, 3, .95), rgba(20, 14, 8, .9));
+            border: 1px solid rgba(139, 46, 16, .15);
+            padding: 3rem;
+            margin: 2.5rem 0;
+            position: relative
+        }
+
+        .gospel-box::before {
+            content: 'Chapter Seventeen — Gospel of Fear';
+            font-family: 'Special Elite', cursive;
+            font-size: .5rem;
+            letter-spacing: .35em;
+            color: var(--rust);
+            position: absolute;
+            top: -1px;
+            left: 2rem;
+            background: var(--charcoal);
+            padding: 0 .8rem;
+            transform: translateY(-50%);
+            text-transform: uppercase
+        }
+
+        /* ── SEARCH FOR TRUTH ── */
+        .leila-box {
+            background: rgba(7, 5, 3, .9);
+            border-top: 2px solid var(--blood-mid);
+            padding: 3rem;
+            margin: 2.5rem 0;
+            position: relative
+        }
+
+        .leila-box .label {
+            font-family: 'Special Elite', cursive;
+            font-size: .55rem;
+            letter-spacing: .4em;
+            color: var(--blood-mid);
+            text-transform: uppercase;
+            margin-bottom: 1rem
+        }
+
+        /* READING BAR */
+        .rbar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--gold) var(--p, 0%), rgba(201, 168, 76, .04) var(--p, 0%));
+            z-index: 300
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(201, 168, 76, .05);
+            padding: 4rem 2rem;
+            text-align: center
+        }
+
+        footer p {
+            font-family: 'Special Elite', cursive;
+            font-size: .58rem;
+            letter-spacing: .38em;
+            color: var(--ash);
+            text-transform: uppercase;
+            line-height: 2.5
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grain"></div>
+    <div id="prog"></div>
+    <div class="rbar" id="rbar"></div>
+    <div id="cur"></div>
+    <div id="cur2"></div>
+
+    <!-- ══════════════════════════════════════
+     CINEMATIC SPLASH SCREEN
+══════════════════════════════════════ -->
+    <div id="splash">
+        <canvas id="splashCanvas"></canvas>
+        <div class="splash-vign"></div>
+        <div class="splash-bars top" id="barTop"></div>
+        <div class="splash-bars bot" id="barBot"></div>
+        <div class="splash-content" id="splashContent">
+            <p class="splash-eyebrow" id="sey">Kerala · Singapore · New Delhi · 1947–1995</p>
+            <p class="splash-line l1" id="sl1">He built a biscuit empire across six nations.</p>
+            <p class="splash-line l2" id="sl2">He brought Coca-Cola back to India.<br>He slept in Singapore's grandest
+                colonial mansion.</p>
+            <p class="splash-line l3" id="sl3">On 8 July 1995, he died in Tihar Jail —<br>his legs blue, his bail denied
+                three times.</p>
+            <div class="splash-title" id="stitle">
+                <span class="sw">A Wasted</span>
+                <span class="sd">Death</span>
+            </div>
+            <div class="splash-divider" id="sdiv"></div>
+            <div class="splash-dates" id="sdates">
+                <span>1947</span><span class="sep">—</span><span>1995</span>
+            </div>
+            <button class="splash-enter" id="senter" onclick="exitSplash()">Enter the Story</button>
+        </div>
+    </div>
+
+    <!-- CHAPTER OVERLAY -->
+    <div id="chOverlay">
+        <div class="ch-close" id="chClose">Close</div>
+        <div class="ch-grid">
+            <a class="ch-item" href="#origins">Four Inches Shorter</a>
+            <a class="ch-item" href="#origins">Vendors and Barons</a>
+            <a class="ch-item" href="#origins">A Theft in School</a>
+            <a class="ch-item" href="#empire">Future on Preview</a>
+            <a class="ch-item" href="#empire">Changing Times</a>
+            <a class="ch-item" href="#empire">Brand of Victory</a>
+            <a class="ch-item" href="#empire">A Pinch of Ash</a>
+            <a class="ch-item" href="#betrayal">In Crocodile Country</a>
+            <a class="ch-item" href="#betrayal">Aiming for the Best</a>
+            <a class="ch-item" href="#gopika">Enter Nina Gopika Pillai</a>
+            <a class="ch-item" href="#saturn">The Strike of Saturn</a>
+            <a class="ch-item" href="#saturn">God's Crooked Shadow</a>
+            <a class="ch-item" href="#trial">Trial for Law, Test for Lawyer</a>
+            <a class="ch-item" href="#flight">Flight into Captivity</a>
+            <a class="ch-item" href="#death">A Wasted Death</a>
+            <a class="ch-item" href="#truth">A Search for Truth</a>
+            <a class="ch-item" href="#gospel">Gospel of Fear</a>
+        </div>
+    </div>
+
+    <!-- CHAPTER DOTS -->
+    <div class="cdots" id="cdots">
+        <div class="cd active" data-s="hero"></div>
+        <div class="cd" data-s="origins"></div>
+        <div class="cd" data-s="empire"></div>
+        <div class="cd" data-s="baron"></div>
+        <div class="cd" data-s="betrayal"></div>
+        <div class="cd" data-s="gopika"></div>
+        <div class="cd" data-s="saturn"></div>
+        <div class="cd" data-s="trial"></div>
+        <div class="cd" data-s="flight"></div>
+        <div class="cd" data-s="death"></div>
+        <div class="cd" data-s="truth"></div>
+        <div class="cd" data-s="legacy"></div>
+    </div>
+
+    <nav id="nav">
+        <div class="nlogo">A Wasted Death</div>
+        <ul class="nlinks">
+            <li><a href="#origins">Origins</a></li>
+            <li><a href="#empire">Empire</a></li>
+            <li><a href="#betrayal">Betrayal</a></li>
+            <li><a href="#trial">Trial</a></li>
+            <li><a href="#flight">Flight</a></li>
+            <li><a href="#death">Death</a></li>
+            <li><a href="#legacy">Legacy</a></li>
+            <li><button class="ch-trigger" id="chTrigger">Chapters</button></li>
+        </ul>
+    </nav>
+
+    <!-- ══════════════════════════════════════ HERO ══════════════════════════════════════ -->
+    <section id="hero">
+        <canvas id="hc"></canvas>
+        <div class="hvign"></div>
+        <div class="hcon">
+            <p class="hey">J. Rajmohan Pillai &nbsp;·&nbsp; K. Govindan Kutty</p>
+            <h1 class="htitle">
+                <span class="hw">A Wasted</span>
+                <span class="hd">Death</span>
+            </h1>
+            <p class="hsub">The Rise and Fall of Rajan Pillai</p>
+            <p class="htag">A True Story of Empire, Betrayal &amp; Judicial Murder</p>
+            <div class="hline"></div>
+            <div class="hdates">
+                <span class="hdn">1947</span>
+                <div class="hds"></div>
+                <span class="hdn" style="color:var(--blood)">1995</span>
+            </div>
+        </div>
+        <div class="scue">
+            <span>Read the Story</span>
+            <div class="scuel"></div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════ EPIGRAPH ══════════════════════════════════════ -->
+    <div class="epig-block">
+        <div class="epig-inner rv">
+            <p class="epig-text">He was a man who arrived at airports and parted queues. He built a biscuit empire
+                across six nations and brought Coca-Cola back to India. He slept in Singapore's grandest colonial
+                mansion and dined in the Dorchester. He never truly lost his temper, and he never fired anyone without
+                regret.<br><br>On 8 July 1995, he died in Tihar Jail. His legs were blue and swollen. His bail had been
+                denied three times. His Queen's Counsel had walked out of the trial in protest. His permanent address,
+                as written on his death certificate by a municipal clerk, was <em>Gate No. 4, Tihar Jail, New
+                    Delhi.</em><br><br>He had not been convicted by a single Indian court.</p>
+            <div class="stats-row">
+                <div class="opening-stat"><span class="n">6</span><span class="l">Nations in his empire</span></div>
+                <div class="opening-stat"><span class="n">29</span><span class="l">Criminal counts against him</span>
+                </div>
+                <div class="opening-stat"><span class="n">5</span><span class="l">Days in Tihar before death</span>
+                </div>
+                <div class="opening-stat"><span class="n">0</span><span class="l">Indian guilty verdicts</span></div>
+                <div class="opening-stat"><span class="n">$44M</span><span class="l">Paid for Britannia buyout</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ornament">✦ ✦ ✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER ONE: ORIGINS ══════════════════════════════════════ -->
+    <section id="origins" class="sec-pad sec-bg-char">
+        <div class="ch-num-bg" style="top:2rem;right:-.02em;">I</div>
+        <div class="cnt">
+            <div class="img-full rv">
+                <img src="E:\web westd\bg.png" alt="Kerala coastal landscape" loading="lazy">
+            </div>
+            <div class="two">
+                <div class="rvL">
+                    <div class="ch-label">Chapter One — Origins</div>
+                    <h2 class="sh">From <em>Vendor's Corner</em><br>to the World</h2>
+                    <p class="bt">Thomas Aquino was sure of it the moment he looked at him: "Oh, you are so much like
+                        him. But I guess he is even taller than you." He was not. He was four inches shorter. But
+                        Rajmohan did not tell Aquino that. <strong>Height is not, after all, merely a physical
+                            attribute.</strong></p>
+                    <p class="bt">In the coastal town of <strong>Kollam, Kerala</strong>, a stamp-paper seller named
+                        Krishna Pillai became known simply as "Vendor." By the time he graduated from a horse-carriage
+                        to a Ford, no one called him a baron — but his grandson, Rajan Pillai, would earn that title
+                        across three continents. The cashew nut — brought to India by Portuguese colonizers from Brazil
+                        four centuries earlier — was the engine of this family's ascent.</p>
+                    <p class="bt">Rajannan was sixteen years older than Rajmohan, closer to a father figure than a
+                        sibling. A stocky, dark man who arrived from Singapore and was mistaken for nobody special. Yet
+                        his name could part airport queues, summon locked immigration doors to open. When Rajmohan was
+                        stopped at Chennai airport without a tax clearance certificate, the mention of Rajannan's name —
+                        waiting at Changi — had him rushed to a plane seconds before the doors closed.</p>
+                    <div class="pq">"What matters is not how tall you are, but how tall you stand."<br><small
+                            style="font-size:.8em;color:var(--ash);font-style:normal;">— Rajan Pillai's own realization,
+                            told to Rajmohan</small></div>
+                    <p class="bt">He was born almost exactly when India won independence — India on 15 August 1947,
+                        Rajannan four months later. The family astrologer made his horoscope and declared a new star was
+                        on the ascendant. Every subsequent astrologer endorsed the prediction vigorously. They were
+                        fortunate, Rajmohan writes: <em>they did not live long enough to see his run of luck coming to
+                            an abrupt end.</em></p>
+                    <div class="qp rv">
+                        <blockquote>"I was not a whit impressed when I first saw Rajannan. 'Is this stocky, dark man
+                            really my big, celebrated brother who lives in Singapore?' I wondered as I received him at
+                            the airport. I refused to accept that my brother who stood like a titan in all of Amma's
+                            stories could be this dark man who could easily merge in any suburban crowd in Kerala."
+                        </blockquote>
+                        <cite>— Rajmohan Pillai, Chapter 1</cite>
+                    </div>
+                    <p class="bt">Years later, when those pretty girls in Marco Polo, Singapore's glitzy discotheque,
+                        fell all over Rajmohan and hugged him — he realized then that they knew him only as Rajan's
+                        brother. <em>Rajannan's shadow was long enough to shelter even those who stood in it
+                            unwillingly.</em></p>
+                </div>
+                <div class="rvR">
+                    <div class="tl">
+                        <div class="ti">
+                            <div class="ty">1920s — Kollam, Kerala</div>
+                            <div class="tt">Vendor Krishna Pillai transforms stamp-paper dealing into cashew export. The
+                                wild nut begins its journey from roadside to global commodity.</div>
+                        </div>
+                        <div class="ti">
+                            <div class="ty">1930s–40s — The Philosophy Baron</div>
+                            <div class="tt"><strong>Janardhanan Pillai (Achan)</strong> — philosophy student — takes
+                                command of the cashew dynasty. He becomes India's largest cashew exporter. When a
+                                Naxalite map of his home is found, he does not bend.</div>
+                        </div>
+                        <div class="ti">
+                            <div class="ty">December 1947 — Birth</div>
+                            <div class="tt">Janardanan Mohandas Rajan Pillai is born into a family already larger than
+                                Kollam. Amma names him after Gandhi; Rajannan's life will honour none of Gandhi's
+                                asceticism.</div>
+                        </div>
+                        <div class="ti">
+                            <div class="ty">School — The Appam Thief</div>
+                            <div class="tt">St. Joseph's Anglo-Indian School lasts one day. Rajannan takes four appams
+                                instead of two. When nuns confront him, he is not angered by the reprimand — he is
+                                devastated that someone else went without. He never returns to boarding school.</div>
+                        </div>
+                        <div class="ti">
+                            <div class="ty">College — The Orator</div>
+                            <div class="tt">At Fatima Mata and TKM Engineering Colleges, Rajannan finds his true gift:
+                                the spoken word. Rev. Rozario teaches him to convert, not confront. When Rozario later
+                                needed a lakh of rupees for his college project, Rajannan gave it without a blink.</div>
+                        </div>
+                        <div class="ti">
+                            <div class="ty">Early 1970s — Failed Ventures</div>
+                            <div class="tt">Paint factory. Leather goods. Meat export. Blue Star shoe factory. A
+                                shipping company that sinks. Every failure is handed back to Achan. "Turn it over to
+                                Achan when in the red" is Rajannan's style — and Achan's silent burden.</div>
+                        </div>
+                        <div class="ti">
+                            <div class="ty">1973 — Singapore</div>
+                            <div class="tt">Rajannan departs for Singapore, touching Achan's feet. His parting words:
+                                <em>"Let us hope I win. Victory will be mine. Loss Achan's."</em> Even Achan laughed.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sg rv" style="margin-top:3rem;">
+                        <div class="si">
+                            <div class="n">75</div>
+                            <div class="l">Years old, Britannia when he took it for India</div>
+                        </div>
+                        <div class="si">
+                            <div class="n">Rs 40cr</div>
+                            <div class="l">Combined losses from Mtwara cashew crisis, 1981</div>
+                        </div>
+                        <div class="si">
+                            <div class="n">30,000</div>
+                            <div class="l">Hectares — his Australian cashew plantation on Wildman River</div>
+                        </div>
+                        <div class="si">
+                            <div class="n">£11M</div>
+                            <div class="l">Annual household expenses in London, per P.C.D. Nambiar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="hrg"></div>
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER TWO: EMPIRE ══════════════════════════════════════ -->
+    <section id="empire" class="sec-pad sec-bg-dark">
+        <div class="ch-num-bg" style="top:2rem;right:auto;left:-.02em;">II</div>
+        <div class="cnt">
+            <div class="rv" style="text-align:center;max-width:680px;margin:0 auto 0;">
+                <div class="ch-label" style="justify-content:center;">Chapter Two — The Empire</div>
+                <h2 class="sh" style="text-align:center;font-size:clamp(2.5rem,5.5vw,4.5rem);">The <em>Biscuit
+                        Baron</em><br>of Six Nations</h2>
+                <p class="bt" style="text-align:center;">When Rajannan was allotted land in Jurong, Singapore in 1973,
+                    he knew he was not going to remain a mere cashew trader. The factory at Jurong became so beautiful
+                    that workers called it their region's <em>"Taj Mahal."</em> Its hallmark product —
+                    <strong>Ole</strong> (Spanish for victory) — became the rallying cry of an empire.
+                </p>
+            </div>
+
+            <div class="img-col rv" style="margin-top:3rem;">
+                <div class="img-frame"><img src="E:\web westd\piv.png" alt="Singapore old colonial building"
+                        loading="lazy">
+                    <div
+                        style="position:absolute;bottom:1rem;left:1rem;z-index:3;font-family:'Special Elite',cursive;font-size:.55rem;letter-spacing:.2em;color:var(--fog);text-transform:uppercase">
+                        The Appam </div>
+                </div>
+                <div class="img-frame"><img src="E:\web westd\piv2.png" alt="Factory industrial" loading="lazy">
+                    <div
+                        style="position:absolute;bottom:1rem;left:1rem;z-index:3;font-family:'Special Elite',cursive;font-size:.55rem;letter-spacing:.2em;color:var(--fog);text-transform:uppercase">
+                        College Time</div>
+                </div>
+            </div>
+
+            <div class="htimeline rv" id="htl" style="margin-top:5rem;">
+                <div class="fd-title">Interactive Timeline — The Rise</div>
+                <div class="htl-track" id="htltrack">
+                    <div class="htl-node act" data-idx="0">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1973</div>
+                        <div class="htl-label">Singapore arrival</div>
+                    </div>
+                    <div class="htl-node" data-idx="1">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1975</div>
+                        <div class="htl-label">Ole brand born</div>
+                    </div>
+                    <div class="htl-node" data-idx="2">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1982</div>
+                        <div class="htl-label">Nabisco London</div>
+                    </div>
+                    <div class="htl-node" data-idx="3">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1983</div>
+                        <div class="htl-label">Britannia stake</div>
+                    </div>
+                    <div class="htl-node" data-idx="4">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1985</div>
+                        <div class="htl-label">Chairman</div>
+                    </div>
+                    <div class="htl-node" data-idx="5">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1989</div>
+                        <div class="htl-label">$44M buyout</div>
+                    </div>
+                    <div class="htl-node" data-idx="6">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1990</div>
+                        <div class="htl-label">BSN alliance</div>
+                    </div>
+                    <div class="htl-node" data-idx="7">
+                        <div class="htl-dot"></div>
+                        <div class="htl-year">1993</div>
+                        <div class="htl-label">Forced out</div>
+                    </div>
+                </div>
+                <div class="htl-panel show" id="htlpanel">
+                    <div class="htl-panel-title" id="htlptitle">1973 — Singapore Arrival</div>
+                    <div class="htl-panel-text" id="htlptext">Rajannan lands in a city that was literally eliminating
+                        its crows — discipline made visible. He is given land in Jurong industrial estate for a factory.
+                        He sets himself two rules: the factory will be beautiful, and no one will reach the office
+                        before him. He arrives an hour before staff every morning. Anyone who beats him knows he is out
+                        of town.</div>
+                </div>
+            </div>
+
+            <div class="egrid" style="margin-top:5rem;">
+                <div class="ec"><span class="ec-icon">🌰</span>
+                    <h3>Ole — Brand of Victory</h3>
+                    <p>Branded, roasted, elegantly packaged cashew nuts sold across Japan, Thailand, West Asia. The
+                        humble Kerala kernel transformed into a premium identity. Twentieth Century Foods' Jurong
+                        factory becomes a tourist attraction — workers call it their region's "Taj Mahal."</p>
+                </div>
+                <div class="ec"><span class="ec-icon">🍪</span>
+                    <h3>Britannia — The Crown Jewel</h3>
+                    <p>A 75-year-old Indian biscuit firm — passed from British (Huntley &amp; Palmer) to American
+                        (Nabisco/RJR) hands — reclaimed and resurrected for India. At its platinum jubilee, he gives its
+                        seventh and last annual address: <em>"From a small bakery in Dum Dum in 1918 to one of India's
+                            largest food companies — we have come a long way."</em></p>
+                </div>
+                <div class="ec"><span class="ec-icon">🥤</span>
+                    <h3>Coca-Cola's Return</h3>
+                    <p>After George Fernandes banned Coke in 1977, Rajan finds the re-entry. Through Britco Foods (60%
+                        his, 40% Coke), Coca-Cola re-enters India. A glittering Mumbai party celebrates — Gopikachechi
+                        ensures every detail dazzles. Then Coke's consultant finds a direct route, and they take it.
+                        Rajan flies to Atlanta to plead. He is turned away.</p>
+                </div>
+                <div class="ec"><span class="ec-icon">🏭</span>
+                    <h3>Six-Nation Biscuit Empire</h3>
+                    <p>After the $44M RJR Nabisco buyout in 1989, Britannia spans India, Pakistan, New Zealand,
+                        Malaysia, Hong Kong, Singapore. He defeats Arnott's of Australia for Griffin of New Zealand —
+                        Arnott's spokesman says: "Extremely disappointed." A bid that astonishes the region.</p>
+                </div>
+                <div class="ec"><span class="ec-icon">🌍</span>
+                    <h3>Thai Agri Foods — The Last Dream</h3>
+                    <p>A $103M Bangkok food company takeover — conceived while fighting criminal charges in Singapore.
+                        He paid 80–103 baht per share against a market price of 20 baht. Never-say-die. Shares crash the
+                        day he dies. Rajmohan spends two years putting it back on rails — for someone else's dream.</p>
+                </div>
+                <div class="ec"><span class="ec-icon">🏨</span>
+                    <h3>The Life of a Baron</h3>
+                    <p>Ridout Road mansion — Singapore's former British Resident's seat, 5 acres. Fort Aguada Hermitage.
+                        Holland Park, London (£11M p.a. household). Wimbledon marquee with politicians and players.
+                        Presidential suite, Shangri-La. Dorchester, London. His tips were often larger than the bill. He
+                        once hired a Learjet for Achan's 70th birthday.</p>
+                </div>
+            </div>
+
+            <div class="qwall rv" style="margin-top:4rem;">
+                <div class="qwall-t">"Singapore's Business Times headline: <em>TRANSACTION MAKES LOCAL BUSINESSMAN
+                        BISCUIT KING OF INDIA AND PAKISTAN: US$44m deal with Nabisco.</em> For years many people called
+                    him Biscuit King, on all kinds of occasions: when he rose, when he fell, when he was prosecuted,
+                    when he fled Singapore, when he was arrested in New Delhi and, on that most inappropriate occasion,
+                    when he died in Tihar Jail. That was no way for a king to die. Nor for a commoner."</div>
+                <div class="qwall-a">— J. Rajmohan Pillai, Chapter 8</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ BARON PORTRAIT ══════════════════════════════════════ -->
+    <section id="baron" class="sec-pad sec-bg-deep">
+        <div class="cnt">
+            <div class="two" style="align-items:center;">
+                <div class="rvL">
+                    <div class="pframe">
+                        <img src="E:\web westd\Raja.png" alt="Silhouette portrait"
+                            style="width:100%;height:100%;object-fit:cover;filter:sepia(.6) brightness(.4) contrast(1.3) grayscale(.3)">
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(3,2,1,.1) 40%,rgba(3,2,1,.75) 100%);z-index:1">
+                        </div>
+                        <div
+                            style="position:absolute;bottom:2rem;left:2rem;z-index:2;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--fog)">
+                            Janardanan Mohandas Rajan Pillai</div>
+                        <div
+                            style="position:absolute;bottom:.8rem;left:2rem;z-index:2;font-family:'Special Elite',cursive;font-size:.55rem;letter-spacing:.28em;color:var(--gold-dim);text-transform:uppercase">
+                            1947 — 1995</div>
+                    </div>
+                    <p class="pcap">The Biscuit Baron · Built empires. Never fired anyone.</p>
+                </div>
+                <div class="rvR">
+                    <div class="ch-label">The Man Behind the Legend</div>
+                    <h2 class="sh">A Man Who <em>Never Fired</em> Anyone — And Never Let Anyone See Him Weep</h2>
+                    <p class="bt">Rajan Pillai never truly lost his temper. He never victimized those he disliked. He
+                        arrived before everyone else at his factory each morning — for years. His Chinese secretary Mei
+                        built Twentieth Century Foods on pure loyalty; she left only when Gopikachechi became his second
+                        wife. His operations manager <strong>Subha Napoleon</strong> deposited bail of S$4.5 million
+                        when every friend had made themselves scarce.</p>
+                    <p class="bt">He could make the powerful feel at ease and the ordinary feel seen. Ross Johnson
+                        called him "a great entrepreneur, executive, person, and most of all — a friend." His senior
+                        counsel Alun Jones said the evidence showed he was "plainly innocent" — then walked off the case
+                        because the trial itself was "a perversion of a judicial process."</p>
+                    <p class="bt">His liver was failing for years. He had two near-fatal haemorrhages — in Singapore and
+                        New Delhi. He kept it a secret. As a businessman, he did not want to unnerve his friends,
+                        clients and partners. <strong>When he finally disclosed it in Tihar Jail, the magistrate
+                            allegedly said: "I don't want to see your body parts."</strong></p>
+                    <p class="bt">Amma had convinced herself that there was in him a strong element of Karna, the tragic
+                        hero of Mahabharata, who could not help giving anything anyone ever sought from him.
+                        <em>Rajannan was an uncompromising giver, arrogant and compulsive.</em> His tips could often be
+                        bigger than the bill. He never expected reciprocation — not even gratitude.
+                    </p>
+                    <div class="pq">"Mohan, just think of me, running from court to court like a haunted animal, hearing
+                        the howls and cheers of the onlookers of the media, seeking a sanctuary of justice — perhaps
+                        distant, perhaps non-existent. And look at Subha. Consider her courage, her sense of fulfilment
+                        . . ."</div>
+                    <p class="bt" style="color:var(--ash);font-size:.85rem;">Rajan spoke these words to Rajmohan while
+                        resting in their family home in Kowdiar, Thiruvananthapuram — after he had escaped Singapore,
+                        after he had played with Rajmohan's children, and before he flew to New Delhi to surrender — and
+                        die.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER THREE: BETRAYAL ══════════════════════════════════════ -->
+    <section id="betrayal" class="sec-pad sec-bg-dark">
+        <div class="ch-num-bg" style="top:2rem;right:auto;left:-.02em;">III</div>
+        <div class="cnt">
+            <div class="rv">
+                <div class="ch-label">Chapter Three — The Unravelling</div>
+                <h2 class="sh" style="max-width:620px;">Everyone Who <em>Benefited</em><br>From Him Walked Away</h2>
+                <p class="bt" style="max-width:700px;">The fall of Rajan Pillai was not one catastrophe but a cascade of
+                    betrayals — each by someone he had trusted, elevated, or enriched. Click each card to read the full
+                    account.</p>
+            </div>
+            <div class="bmap">
+                <div class="bm-card open" onclick="toggleBmc(this)">
+                    <div class="bm-agent">The Godfather Turned Enemy</div>
+                    <div class="bm-name">Frederick Ross Johnson</div>
+                    <div class="bm-preview">CEO of RJR Nabisco · Failed $17B buyout · Filed 29-count fraud complaint
+                    </div>
+                    <div class="bm-detail">Johnson was the man who offered to be godfather to Rajan's son. Whose wife
+                        Laurie was made trustee of his will (1982). For seven years, genuine warmth. Then Johnson tried
+                        the biggest leveraged buyout in history — $17 billion for RJR Nabisco — and was outbid by KKR at
+                        $25 billion. He lost his job. When the partnership with Rajan later soured over repayment,
+                        Johnson filed 29 criminal counts with Singapore's Commercial Affairs Department. During the
+                        entire trial, Johnson and his key witnesses gave evidence — then never returned for
+                        cross-examination. Their untested assertions were accepted as fact. Rajan's six international
+                        business witnesses were rejected. Johnson's investment of over $30 million was virtually doubled
+                        in the settlement. Then, quietly, he retired to Atlanta alone.</div>
+                    <div class="bm-toggle">Read full account</div>
+                </div>
+                <div class="bm-card" onclick="toggleBmc(this)">
+                    <div class="bm-agent">The French Takeover</div>
+                    <div class="bm-name">BSN Groupe (now Danone)</div>
+                    <div class="bm-preview">Antoine Riboud · Entered as financial saviour · Seized six-nation empire
+                    </div>
+                    <div class="bm-detail">Antoine Riboud, the avuncular BSN chairman, walked Britannia's factory floors
+                        sniffing bread packets and declared "it would have been a tremendous mistake to go it alone — we
+                        don't know India." He seemed to mean it. But every financial rescue BSN offered came with
+                        strings. When it paid off a Hong Kong Bank loan that Rajan had planned to reschedule, the
+                        repayment became equity. The 50:50 balance tipped. BSN had brought in money; ownership follows
+                        money. Rajannan was naive, Rajmohan writes, to imagine that Riboud would never want control of a
+                        company in which he put in his money. When the time came, a 75-year-old Indian company —
+                        reclaimed from Americans by an Indian — passed to France. Rajan was out.</div>
+                    <div class="bm-toggle">Read full account</div>
+                </div>
+                <div class="bm-card" onclick="toggleBmc(this)">
+                    <div class="bm-agent">The MD He Appointed</div>
+                    <div class="bm-name">Sunil Alagh</div>
+                    <div class="bm-preview">Appointed by Rajan over two senior colleagues · Moved to BSN side</div>
+                    <div class="bm-detail">Alagh was Rajan's choice as Britannia's youngest-ever Managing Director,
+                        appointed over V.K. Singh and Balasubramaniam who had stronger claims. Rajan believed in
+                        marketing above hierarchy. As BSN's power became visible, Alagh moved toward the stronger sun.
+                        Rajan sacked him — rashly, by his own later admission. Alagh went to court, won permission to
+                        attend board meetings without voting rights, and had a ringside view of every operation even as
+                        the chairman's declared enemy. After Rajan's death, Alagh turned Britannia around and received
+                        the credit. Rajannan's genius for making friends, Rajmohan writes, was beginning to wane. He
+                        never knew how to deal with his enemies.</div>
+                    <div class="bm-toggle">Read full account</div>
+                </div>
+                <div class="bm-card" onclick="toggleBmc(this)">
+                    <div class="bm-agent">The Fixer from Bangkok</div>
+                    <div class="bm-name">Rakesh Saxena &amp; Chandraswami</div>
+                    <div class="bm-preview">Bangkok Bank of Commerce · "Done" with one syllable · S$50,000 dakshina
+                    </div>
+                    <div class="bm-detail">Rakesh Saxena was a Bangkok-based NRI who could move money through Bangkok
+                        Bank of Commerce with a single word: "Done." He was Chandraswami's ambassador plenipotentiary.
+                        Chandraswami visited Rajan in Singapore, promised acquittal, and received S$50,000 as dakshina.
+                        He brought Lee Kuan Yew's sister to Rajan's dinner table as evidence of his clout — barely six
+                        weeks before conviction. None of it worked. Saxena later offered Rajan "a passport to an obscure
+                        place in South America where no one would have reached him" — showing he knew Rajan faced prison
+                        or death. When Rajan died, Saxena reportedly said: "Poor man." After 1997's Asian financial
+                        meltdown, Saxena lost his mind. Chandraswami served a term in Tihar — the same jail where Rajan
+                        died.</div>
+                    <div class="bm-toggle">Read full account</div>
+                </div>
+                <div class="bm-card" onclick="toggleBmc(this)">
+                    <div class="bm-agent">Coca-Cola's Betrayal</div>
+                    <div class="bm-name">The Fizz That Evaporated</div>
+                    <div class="bm-preview">Rajan opened India's door · Coke entered through Britco Foods · Then went in
+                        alone</div>
+                    <div class="bm-detail">Rajan unlocked India for Coca-Cola — a country that had banned the company
+                        since 1977 when George Fernandes drove them out. He created Britco Foods (60% his, 40% Coke) and
+                        secured Maharashtra land for the factory. A Mumbai party was thrown to celebrate — Gopikachechi
+                        ensured it was scintillating. But Coke's own consultant showed them they could enter India
+                        directly without Rajan's company. There was a clause in the agreement: if Coke found an
+                        independent route, it could take it. It did. Rajan flew to Atlanta to plead. He was turned away.
+                        The party was forgotten. The investment was not recoverable. Gopikachechi later filed a Rs 100
+                        crore lawsuit against Coca-Cola.</div>
+                    <div class="bm-toggle">Read full account</div>
+                </div>
+                <div class="bm-card" onclick="toggleBmc(this)">
+                    <div class="bm-agent">Control of All Accounts</div>
+                    <div class="bm-name">Nina Gopika Pillai — The Transfer</div>
+                    <div class="bm-preview">Sole signatory of all accounts · "No big money left" · Legal costs borne by
+                        Rajmohan</div>
+                    <div class="bm-detail">When the Singapore case began, Rajan transferred sole signatory rights of all
+                        accounts to his wife. P.C.D. Nambiar was aghast. Rajan cited Achan's example — Achan had always
+                        kept everything in Amma's name. When the anticipatory bail petition required the ability to
+                        furnish any amount the court might set, Gopikachechi said bluntly: "Rajan has left no big money
+                        with me for such expensive court cases." The legal costs — for all the futile bail applications,
+                        for the senior counsels — were borne entirely by Rajmohan, Rajan's younger brother. After
+                        Rajan's death, Bangkok civil court papers filed by Gopikachechi listed Amma as "dead." Amma was
+                        very much alive and filed a legal challenge.</div>
+                    <div class="bm-toggle">Read full account</div>
+                </div>
+            </div>
+            <div class="qwall rv">
+                <div class="qwall-t">"As M.J. Akbar said, when Rajannan needed help in his last days, everyone whom he
+                    trusted had cleared out; everyone whom he entertained had gone into hibernation; everyone who
+                    enjoyed his hospitality was finding fault with him for being a spendthrift. The man who set out to
+                    win friends and influence people suddenly found that the abundance of goodwill and admiration he had
+                    enjoyed for years vanished into thin air."</div>
+                <div class="qwall-a">— J. Rajmohan Pillai, Chapter 9</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER TEN: NINA GOPIKA PILLAI (NEW) ══════════════════════════════════════ -->
+    <section id="gopika" class="sec-pad sec-bg-char">
+        <div class="ch-num-bg" style="top:2rem;right:-.02em;">X</div>
+        <div class="cnt">
+            <div class="two">
+                <div class="rvL">
+                    <div class="ch-label">Chapter Ten — Enter Nina Gopika Pillai</div>
+                    <h2 class="sh"><em>Both Video Cameras</em><br>Failed</h2>
+                    <p class="bt">Both video cameras failed. That was strange. The cameras had been hired for a
+                        high-voltage function at Mumbai's Taj Mahal Hotel, which followed Rajannan's wedding with
+                        Gopikachechi. No one, Gopikachechi least of all, would forgive that failure — it meant there was
+                        no footage of the wedding. <strong>A suspicious mind might even have seen some design behind the
+                            incident.</strong></p>
+                    <p class="bt">Gopikachechi swept into Rajannan's life like an emotional storm and changed it
+                        completely. She was a naval officer's daughter, working as a front-desk manager at the Taj — the
+                        same hotel where Rajannan had a suite for months. Their meeting at the reception desk gave a new
+                        turn to Rajannan's life. Achan and Amma had to be cajoled to accept a daughter-in-law from a
+                        different background — Nusli Wadia assured them she was a good girl.</p>
+                    <p class="bt">In those early years, Rajmohan found her disarmingly sweet. She was a guide and
+                        philosopher, teaching him how to hold his own among the rich and the famous. She engaged a coach
+                        for his tennis. She was jubilant when he beat her chosen opponent — as if <em>she</em>, not
+                        Rajmohan, was the winner. She taught him how important it was to be seen to compete for the
+                        best.</p>
+                    <div class="pq">"She likes such things." — Rajan's silencing reply when a friend questioned his
+                        lavish gift-giving to Gopika</div>
+                    <p class="bt">Rajannan could not bear her not getting anything she wanted. When she once walked out
+                        on him after a serious tiff, he went after her — and returned with something exorbitant inside a
+                        red ornate box. <em>Burglars once broke into his London residence and made away with ornaments.
+                            Gopikachechi was not unduly disturbed. She merely replaced them.</em></p>
+                    <div class="qp rv">
+                        <blockquote>"Rajan has left no big money with me for such expensive court cases."</blockquote>
+                        <cite>— Gopikachechi, to lawyer K.K. Venugopal, as the bail application was being filed at the
+                            Mumbai High Court</cite>
+                    </div>
+                    <p class="bt">After Rajan's conviction in Singapore, she held a party in their Mumbai villa, telling
+                        the assembled glitterati and media: <em>"Rajan has escaped from Singapore."</em> What should
+                        have been quiet legal maneuvering became public performance. That performance became evidence of
+                        arrogance. The front pages that followed used the word: <strong>fugitive.</strong></p>
+                    <p class="bt">When Rajan died, Bangkok civil court papers filed on her behalf listed Amma — Rajamony
+                        Pillai, very much alive, still praying her nightly prayers — as "dead." Amma filed a legal
+                        challenge. She was still praying for her son's soul when the papers were filed.</p>
+                </div>
+                <div class="rvR">
+
+                    <div class="gopika-intro rv">
+                        <p class="bt" style="color:var(--ivory);margin-bottom:1.2rem;">The Transfer of Control</p>
+                        <p class="bt" style="font-size:.85rem;">When Rajan transferred sole signatory rights of all his
+
+                            accounts to Gopikachechi, his financial adviser P.C.D. Nambiar was aghast. Rajan merely
+                            said: "Achan always kept everything in Amma's name." Nambiar said nothing — the transfer was
+                            a fait accompli.</p>
+                        <p class="bt" style="font-size:.85rem;">The crunch was to come later. When the anticipatory bail
+                            petition required the ability to furnish any amount the court might set, the money was
+                            simply not there. The man who had spent £11 million a year on his London household died with
+                            his younger brother paying the legal bills for his bail applications.</p>
+                    </div>
+                    <div class="gopika-intro rv" style="margin-top:1.5rem;">
+                        <p class="bt" style="color:var(--ivory);margin-bottom:1.2rem;">The Bangkok Court Papers</p>
+                        <p class="bt" style="font-size:.85rem;">In Black Case No. 23456/1995 in South Bangkok Civil
+                            Court, Gopikachechi's attorney submitted on her behalf that <em>"Mr Rajan Pillai's mother
+                                had died before him."</em> The attachment listed Amma as "dead."</p>
+                        <p class="bt" style="font-size:.85rem;">Amma, N. Rajamony Pillai — wife of Janardanan Pillai,
+                            mother of Rajan Pillai — has legally questioned the veracity of this report of her death.
+                        </p>
+                        <p class="bt" style="font-size:.85rem;color:var(--gold-dim);font-style:italic;">She was very
+                            much alive. She was trusting her old gods. She was still saying her prayers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="hrg"></div>
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER ELEVEN: STRIKE OF SATURN (NEW) ══════════════════════════════════════ -->
+    <section id="saturn" class="sec-pad sec-bg-dark">
+        <div class="ch-num-bg" style="top:2rem;left:-.02em;">XI</div>
+        <div class="cnt">
+            <div class="rv" style="text-align:center;max-width:680px;margin:0 auto 4rem;">
+                <div class="ch-label" style="justify-content:center;">Chapter Eleven — The Strike of Saturn</div>
+                <h2 class="sh" style="text-align:center;">Antoine Riboud<br>and the <em>French Seduction</em></h2>
+                <p class="bt" style="text-align:center;">Antoine Riboud could have been mistaken for anyone other than
+                    who he really was: boss of BSN Groupe, one of the world's top five food firms. Slender in build and
+                    soft in speech, he moved about at an unhurried pace. When he walked Britannia's factory floors and
+                    sniffed bread packets, he seemed genuinely enchanted. <em>That was a superficial veneer, as Rajannan
+                        discovered much to his dismay.</em></p>
+            </div>
+
+            <div class="img-full rv">
+                <img src="https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=1600&q=80"
+                    alt="Dark corporate boardroom" loading="lazy">
+            </div>
+
+            <div class="two" style="margin-top:4rem;">
+                <div class="rvL">
+                    <p class="bt">Riboud arrived in Chennai and immediately wanted to go to the factory. Once there, he
+                        walked around by himself, as if he knew the place well. He went to a street stall selling pav
+                        bhaji and bought a piece of Marathi bread just to taste it. France's grand old baker was making
+                        up his mind — and sealing Rajannan's fate.</p>
+                    <p class="bt">The move put Rajannan financially at ease for a while, enabled him to be in command of
+                        the biscuit business in six countries. <strong>Eventually, it was that tie-up that broke
+                            him.</strong></p>
+                    <p class="bt">Rajannan was naive to imagine that Riboud would never want control of a company in
+                        which he put in his money. BSN's financial rescues were quietly becoming equity. When BSN struck
+                        a tough posture, presenting unalterable business terms, it had already made Rajannan
+                        increasingly dependent on its financial support.</p>
+                    <div class="qp">
+                        <blockquote>"BSN Groupe had brought in money, and ownership and control always rested with those
+                            who brought in money. Sooner or later, Riboud's men would be calling the tune. Rajannan
+                            should have read the writing on the wall."</blockquote>
+                        <cite>— J. Rajmohan Pillai, Chapter 11</cite>
+                    </div>
+                    <p class="bt">BSN had already acquired from KKR some of RJR Nabisco's European subsidiaries. It paid
+                        off a Hong Kong Bank loan that Rajan had planned to reschedule — the repayment became equity.
+                        The 50:50 balance tipped. When the time came, BSN seized control of Britannia — bringing under
+                        French ownership a 75-year-old Indian company started by Britons, sold to Americans, reclaimed
+                        and run by an Indian for seven years.</p>
+                    <div class="qp rv">
+                        <blockquote>"Business Today, December 1992: '...he seems to have run into an implacable foe in
+                            BSN, which is determined to move into Asia in a big way taking over the Britannia group—any
+                            which way it can. And unless he can buy off the French transnational soon, J.M. Rajan Pillai
+                            could just be ripe for the picking.' Yes. He was."</blockquote>
+                        <cite>— Rajmohan Pillai, quoting Business Today</cite>
+                    </div>
+                </div>
+                <div class="rvR">
+                    <div class="ch-label" style="margin-top:0;">Chapter Twelve — God's Crooked Shadow</div>
+                    <h2 class="sh" style="font-size:clamp(1.6rem,3vw,2.5rem);">Rakesh Saxena &amp; <em>The Bangkok
+                            Miracle</em></h2>
+                    <p class="bt">Rakesh Saxena came from a family of bureaucrats. He had a postgraduate degree in
+                        literature. He started as a nondescript stockbroker in Kochi. No nameplates, no anteroom, no
+                        secretary. He sat at the far end of a hall that seemed too large for an office. He gave Rajmohan
+                        no visiting card. He spoke desultorily about the taste of wine and the perennial traffic jam in
+                        Bangkok.</p>
+                    <p class="bt">Yet for the Thai Agri Foods deal, Saxena cut short their entire explanation of the
+                        $103 million request with a single word: <em>"Done."</em></p>
+                    <p class="bt">Chandraswami visited Rajan in Singapore while the trial was proceeding. He brought Lee
+                        Kuan Yew's sister as evidence of his clout. He promised acquittal. The dakshina — S$50,000 — was
+                        paid. A fortnight later, Saxena came to Delhi and asked for power of attorney over Rajan's Thai
+                        Agri shares. For once, Gopikachechi says, Rajannan answered with an instant and firm
+                        <em>No.</em>
+                    </p>
+                    <div class="img-frame" style="height:320px;margin:2rem 0;">
+                        <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=700&q=80"
+                            alt="Bangkok cityscape" loading="lazy">
+                        <div
+                            style="position:absolute;bottom:1rem;left:1rem;z-index:3;font-family:'Special Elite',cursive;font-size:.55rem;letter-spacing:.2em;color:var(--fog);text-transform:uppercase">
+                            Bangkok · Thai Agri Foods · His Final Dream</div>
+                    </div>
+                    <p class="bt" style="font-size:.85rem;color:var(--ash);">Saxena later offered Rajan "a passport to
+                        an obscure place in South America where no one would have reached him" — showing he knew, long
+                        before the verdict, that Rajan faced prison or death. When Rajan died, Saxena reportedly said:
+                        <em>"Poor man."</em> After the 1997 Asian financial meltdown, Saxena lost his mind. Chandraswami
+                        served a short stint in Tihar Jail — the same jail where Rajan died.
+                    </p>
+                </div>
+            </div>
+
+            <div class="qwall rv" style="margin-top:3rem;">
+                <div class="qwall-t">"Amma had an intuition that Rajannan was to suffer. All her prayers were: <em>'Give
+                        him, my Lord, strength to live it out.'</em><br><br>The Lord did not."</div>
+                <div class="qwall-a">— J. Rajmohan Pillai, Chapter 11</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER THIRTEEN: TRIAL ══════════════════════════════════════ -->
+    <section id="trial" class="sec-pad sec-bg-char">
+        <div class="ch-num-bg">XIII</div>
+        <div class="cnt">
+            <div class="two">
+                <div class="rvL">
+                    <div class="ch-label">Chapter Thirteen — Trial for Law, Test for Lawyer</div>
+                    <h2 class="sh">The <em>Perversion</em> of a<br>Judicial Process</h2>
+                    <p class="bt">Ross Johnson filed 29 criminal counts. Singapore's Commercial Affairs Department
+                        pursued the case for years after Johnson and Rajan had already settled all disputes civilly —
+                        with all parties profiting from the settlement. In a normal legal jurisdiction, writes Alun
+                        Jones, Queen's Counsel: <strong>"that would have been that."</strong></p>
+                    <p class="bt">But Singapore pursued it. Jones flew from London to defend Rajan. Within three weeks,
+                        he had drawn a depressing conclusion: <em>"The trial was a perversion of a judicial
+                            process."</em> He discharged himself — a decision few lawyers would ever make — rather than
+                        be used as evidence of the trial's fairness.</p>
+                    <p class="bt">Jones did not want to be the justification for his client's conviction. He returned
+                        his fees. He left a written statement of his reasons. He later wrote in <em>The Spectator</em>
+                        under the headline: <strong>"Who killed Rajan Pillai?"</strong></p>
+                    <p class="bt">R.V. Pandit, editor and publisher, had told Rajan before the verdict: "I am afraid
+                        Rajan might lose the case. I feel it in my bones. He should plead guilty if that would reduce
+                        his punishment." His apprehensions failed to have any impact on Rajannan, whose optimism was
+                        impervious to everyone's counsel.</p>
+                    <div class="qp rv">
+                        <blockquote>"After all, he had six witnesses of international repute to support his account of
+                            events — straightforward, independent men from a variety of backgrounds — and every document
+                            which had turned up in pre-trial preparation had tended to rebut the allegation of cheating.
+                            Having re-read parts of the court transcripts, it is clear to me that no independent lawyer
+                            could have read the court record, which I possess in full, and concluded that Pillai had
+                            committed any serious fraud."</blockquote>
+                        <cite>— Alun Jones QC, in The Spectator, after Rajan's death</cite>
+                    </div>
+                </div>
+                <div class="rvR">
+                    <div class="trial-box">
+                        <p class="bt" style="margin-bottom:1.5rem;color:var(--ivory);">The 29 Criminal Counts — What
+                            Jones Found</p>
+                        <ul class="charge-list">
+                            <li>2 technical offences of buying a company's shares with its own money</li>
+                            <li>22 counts in relation to the alleged sale of a cashew nut trading business at inflated
+                                value</li>
+                            <li>1 count of selling a trademark to the joint venture — which already owned it</li>
+                            <li>4 further counts — "total fraud said to exceed $13 million in value"</li>
+                        </ul>
+                        <p class="bt" style="margin-top:1.5rem;font-size:.84rem;color:var(--ash);">All disputes with
+                            Johnson were already settled. All parties had profited from the settlement. Ross Johnson's
+                            investment of over $30 million was virtually doubled. No widows or orphans had lost money.
+                            Yet Singapore pursued criminal prosecution. It cost Rajan $18 million to lose the case.</p>
+                    </div>
+                    <div class="trial-box rv" style="margin-top:1.5rem;">
+                        <p class="bt" style="color:var(--ivory);margin-bottom:1rem;">What Jones Observed in Court</p>
+                        <ul class="charge-list">
+                            <li>Johnson's accountants called first to give "broad-ranging and shapeless assertions of
+                                guilt" before evidence was authenticated</li>
+                            <li>Prosecuting lawyers openly "prompted and instructed in court by Johnson's own lawyers"
+                            </li>
+                            <li>Witnesses "openly coached by lawyers outside the court"</li>
+                            <li>Johnson and two key witnesses appeared once — then never returned for cross-examination
+                            </li>
+                            <li>Their untested evidence accepted. Rajan's six international witnesses rejected.</li>
+                        </ul>
+                    </div>
+                    <div class="qp rv" style="margin-top:1.5rem;">
+                        <blockquote>"In any normal legal jurisdiction, that would have been that. No widows and orphans
+                            had lost money; all parties had gained; no obvious public interest lay in prosecuting
+                            someone for allegedly rising early enough in the morning to deceive a lethal corporate
+                            raider..."</blockquote>
+                        <cite>— Alun Jones QC, The Spectator</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER FOURTEEN: FLIGHT ══════════════════════════════════════ -->
+    <section id="flight" class="sec-pad sec-bg-grad">
+        <div class="ch-num-bg">XIV</div>
+        <div class="cnt">
+            <div class="ch-label rv">Chapter Fourteen — Flight into Captivity</div>
+            <h2 class="sh rv" style="max-width:700px;">He Fled. <em>They Came</em> for Him Not as Policemen — But as
+                Well-Wishers.</h2>
+            <div class="two" style="margin-top:4rem;">
+                <div class="rvL">
+                    <p class="bt">On <strong>11 April 1995</strong>, a day before sentencing, Rajan Pillai walked
+                        through Changi Airport in Singapore on an almost-expired passport — using his father's initial,
+                        not his own name. Janardanan <em>R.</em> Pillai instead of Janardanan <em>Rajan</em> Pillai.
+                        Those who recognized him walked up only to wish him well.</p>
+                    <p class="bt">M.P. Gangadharan, a Kerala politician who was in Singapore at the time, missed his
+                        dinner that night — Rajan had left too suddenly for the farewell. A direct fallout of Rajannan's
+                        departure: even the people closest to him were left without warning or ceremony.</p>
+                    <p class="bt">In Mumbai, Gopikachechi threw a party. Champagne. Press conferences. Celebration. What
+                        should have been quiet legal maneuvering became performance — and the performance became
+                        evidence of arrogance. <em>Fugitive</em> was the word the front pages chose.</p>
+                    <p class="bt">Hotel managers hid him in suites not on records. A senior politician provided a
+                        getaway car. A retired Director-General of Police drove with him through the night from Mumbai
+                        to Kochi. At Fort Aguada — the hotel he had helped build from nothing — he slept one final time
+                        in his own legend.</p>
+                    <p class="bt">In Kerala, Magistrate C.D. Anil gave him bail. He played with Rajmohan's children. The
+                        Kerala High Court cancelled his bail. Every plea for anticipatory bail — Mumbai, Kochi, Delhi —
+                        was rejected. On <strong>3 July 1995</strong>, CBI officers broke into Room 208 of Le Meridien,
+                        New Delhi, where Rajan was preparing to surrender the following morning. <strong>They did not
+                            give him that grace.</strong></p>
+                    <p class="bt">One dignitary even suggested a price for his help. It was a price the family could not
+                        pay instantly. Before they could think coherently about the deal, CBI officers descended on
+                        Rajannan.</p>
+                    <div class="pq">"Rajan's arrest had become a matter of prestige for the police force. The decks are
+                        now clear for the CBI to arrest Pillai, if it can find him. 'If they can find him' — that was
+                        the operative clause."</div>
+                </div>
+                <div class="rvR" style="display:flex;flex-direction:column;gap:1.5rem;">
+                    <div class="clip rl">
+                        <div class="dl">Economic Times, April 1995</div>
+                        <div class="hl">Maverick Industrialist Born to Run</div>
+                        Son of a cashew baron, known for the better part of his life as a biscuit king, Rajan Pillai has
+                        a strange habit of popping up on newspapers, Indian and international, just when you thought
+                        you'd heard the last of him.
+                    </div>
+                    <div class="clip rr">
+                        <div class="dl">Times of India, April 19, 1995</div>
+                        <div class="hl">After Two Days of Uncertainty, Fugitive NRI Moves High Court</div>
+                        CBI and police teams rushed to a five-star hotel near Sahar International Airport on a tip-off
+                        that Mr Pillai was sighted there. However, they drew a blank.
+                    </div>
+                    <div class="clip" style="transform:rotate(.3deg);">
+                        <div class="dl">Business Standard, 1995</div>
+                        <div class="hl">India's Reforms at Stake</div>
+                        If the Indian legal system frustrates the attempts of Singapore authorities to bring Pillai to
+                        justice, it would deal a blow to the credibility of India's reforms that will do the country no
+                        good.
+                    </div>
+                    <div class="clip rl" style="transform:rotate(-.5deg);">
+                        <div class="dl">Farooq Abdullah, Chief Minister, J&amp;K</div>
+                        <div class="hl">"Why Do They Keep Away Now?"</div>
+                        Why, why do they keep away from you now? This is the time they should be with you. If they are
+                        worth their salt, they should be here now. What else are friends for? — At lunch, Taj Mansingh,
+                        March 1995
+                    </div>
+                    <div class="qp" style="margin-top:1rem;">
+                        <blockquote>"One dignitary even suggested a price for his help. It was a high price which we
+                            could not pay instantly. Before we could think coherently about the deal, CBI officers
+                            descended on Rajannan."</blockquote>
+                        <cite>— Rajmohan Pillai, Chapter 15</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦ ✦ ✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER FIFTEEN: DEATH ══════════════════════════════════════ -->
+    <section id="death">
+        <div class="cnt" style="position:relative;z-index:1;">
+            <div class="rv" style="text-align:center;">
+                <div class="ch-label" style="justify-content:center;margin-bottom:2rem;">Chapter Fifteen — A Wasted
+                    Death</div>
+                <h2 class="death-hl">Tihar Jail</h2>
+                <p class="death-date">3 July – 8 July 1995 · New Delhi</p>
+            </div>
+
+            <div class="img-full rv">
+                <img src="E:\web westd\bgrj.png" alt="Dark corridor" loading="lazy">
+            </div>
+
+            <div class="fivedays rv">
+                <div class="fd-title">The Five Days — As Recorded in the Book</div>
+
+                <div class="fd-item">
+                    <div class="fd-day">
+                        <div class="fd-day-num">3</div>
+                        <div class="fd-day-label">July</div>
+                    </div>
+                    <div class="fd-content">
+                        <div class="fd-event">Arrest — Room 208, Le Meridien, New Delhi</div>
+                        <div class="fd-desc">CBI officers break into his hotel room shortly before midnight. He was
+                            planning to surrender in court the next morning. They do not give him that grace. His
+                            secretary Babu Nambiar is also arrested — on no charge that anyone could ever explain.
+                            Rajmohan is on the phone with Makhija when it happens. Achan and Amma are asleep. He chooses
+                            not to wake them.</div>
+                    </div>
+                </div>
+
+                <div class="fd-item">
+                    <div class="fd-day">
+                        <div class="fd-day-num">4</div>
+                        <div class="fd-day-label">July</div>
+                    </div>
+                    <div class="fd-content">
+                        <div class="fd-event">Produced Before Magistrate M.L. Mehta, Tees Hazari Court</div>
+                        <div class="fd-desc">His legs are already swollen. An ominous shade of blue has spread over his
+                            face. His lawyer applies for hospitalization. Medical certificates are presented. Magistrate
+                            Mehta holds him "no longer a permanent or serious patient requiring any immediate
+                            hospitalization." He is remanded to Tihar Jail. His family lawyer Velappan Pillai, 60 years
+                            old, swoons in court when the order comes.</div>
+                        <div class="fd-quote">CBI counsel A.K. Dutt possessed a letter from Tihar's jail doctor
+                            confirming that cirrhosis could not be treated there. He did not share it with the court.
+                        </div>
+                        <div class="fd-quote"
+                            style="color:var(--blood-mid);border-color:var(--blood);margin-top:.6rem;">The magistrate
+                            allegedly replied to Rajan's medical disclosure: "I don't want to see your body parts."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fd-item">
+                    <div class="fd-day">
+                        <div class="fd-day-num">5</div>
+                        <div class="fd-day-label">July</div>
+                    </div>
+                    <div class="fd-content">
+                        <div class="fd-event">The Missing Letter — Tihar Jail</div>
+                        <div class="fd-desc">The court's urgent confidential letter to the Tihar Resident Medical
+                            Officer about Rajan's cirrhosis is sent. Assistant Superintendent Sanjay Gupta receives it
+                            but sends it with an escort without taking a receipt — under "pressure of work of releases."
+                            The escort does not deliver it. The RMO never sees it. At 2 pm, when the court inquires
+                            after its reply, it has not come. No one checks. The letter has disappeared into Tihar's
+                            labyrinthine administration.</div>
+                    </div>
+                </div>
+
+                <div class="fd-item">
+                    <div class="fd-day">
+                        <div class="fd-day-num">6</div>
+                        <div class="fd-day-label">July</div>
+                    </div>
+                    <div class="fd-content">
+                        <div class="fd-event">The Cement Platform — and the Prophecy</div>
+                        <div class="fd-desc">In Tihar, the man who had slept in presidential suites across the world is
+                            given a cement sleeping platform as a "special favour" — only because fellow prisoner George
+                            Kutty, a stranger booked at the US Embassy's complaint, pleads with others to release it for
+                            him. George becomes interpreter, advocate, the last friendly face. In the court lock-up at
+                            Tees Hazari, Rajan meets Babu Nambiar. His legs are swollen, blue. He asks: "Can't he see my
+                            condition?" Then he makes his fatal statement:</div>
+                        <div class="fd-quote">"I won't survive till Tuesday."</div>
+                        <div class="fd-desc" style="margin-top:.5rem;">On Tuesday, his various prayers were to be heard.
+                            When Tuesday came, there was no need to hear them.</div>
+                    </div>
+                </div>
+
+                <div class="fd-item">
+                    <div class="fd-day">
+                        <div class="fd-day-num" style="color:var(--blood);">8</div>
+                        <div class="fd-day-label" style="color:var(--rust);">July</div>
+                    </div>
+                    <div class="fd-content">
+                        <div class="fd-event" style="color:var(--blood-mid);">Death — Deen Dayal Upadhyaya Hospital, New
+                            Delhi</div>
+                        <div class="fd-desc">Jail doctor Venkatasubbiah, who had been sent an SOS an hour earlier,
+                            finally examines Rajan. He is transferred to DDU Hospital in a rickety ambulance.
+                            Venkatasubbiah hands the unconscious patient to DDU doctors and leaves exactly two minutes
+                            later. He does not explain the patient's condition. He does not wait. When Delhi's municipal
+                            corporation issues the death certificate, it lists in the permanent address column:</div>
+                        <div class="fd-quote" style="color:var(--blood-mid);border-color:var(--blood);">"Gate No. 4,
+                            Tihar Jail, New Delhi."</div>
+                        <div class="fd-desc" style="margin-top:.5rem;">The next morning in Thiruvananthapuram, Amma does
+                            not know he is dead. She is praying through the night for his life, not his soul. When
+                            Rajmohan tells her: <em>"Amma, pray for his soul. That is all we can do now,"</em> she
+                            starts praying — for his life. She prays until dawn. No one can bring themselves to correct
+                            her.</div>
+                        <div class="fd-desc" style="margin-top:.8rem;color:var(--ash);">In the airport lounge the next
+                            morning, as the family waited for a flight to bring the body home, Rajmohan noticed a
+                            hoarding at the far end — an old front page of The Economic Times, enlarged and illuminated.
+                            The headline read: <em>"Rajan Pillai brings Kellogg's to India."</em></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dfacts rv">
+                <div class="df"><span class="n">5</span><span class="l">Days in captivity</span></div>
+                <div class="df"><span class="n">3</span><span class="l">Bail pleas rejected</span></div>
+                <div class="df"><span class="n">0</span><span class="l">Guilty verdicts in Indian courts</span></div>
+            </div>
+
+            <div class="two rv" style="margin-top:4rem;">
+                <div>
+                    <div class="trial-box">
+                        <p class="bt" style="color:var(--ivory);margin-bottom:1.5rem;">What Justice Leila Seth Found</p>
+                        <p class="bt" style="font-size:.85rem;">Two years later, Justice Leila Seth's commission of
+                            inquiry confirmed: <strong>"There is no doubt that Mr Rajan Pillai was a sick man, having a
+                                chronic disease like alcoholic cirrhosis of the liver. He had two life-threatening
+                                episodes in 1992 and ten sclerotherapies till March 1995."</strong></p>
+                        <p class="bt" style="font-size:.85rem;">She found both jail doctors Venkatasubbiah and Hira Lal
+                            <em>"casual and careless"</em> — their negligence "eventually resulted in giving him hardly
+                            any chance of survival."
+                        </p>
+                        <p class="bt" style="font-size:.85rem;">CBI counsel A.K. Dutt possessed the letter proving
+                            cirrhosis could not be treated in Tihar — and did not share it with the court. Leila Seth:
+                            <em>"A responsible officer is expected to act in a manner showing a level of high integrity
+                                considering the fact that his silence might result in depriving a person of proper
+                                medical treatment."</em>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div class="trial-box">
+                        <p class="bt" style="color:var(--ivory);margin-bottom:1rem;">Kerala Legislative Assembly —
+                            Unanimous Resolution</p>
+                        <p class="bt" style="font-size:.85rem;">The entire Kerala Legislative Assembly passed a
+                            unanimous resolution condemning Rajan Pillai's death as <strong>"judicial murder."</strong>
+                        </p>
+                        <div class="qp" style="margin-top:1.5rem;">
+                            <blockquote>"The rejection of Pillai's request for medical treatment could not be supported
+                                either on the grounds of law or morality or civilised public behaviour. In addition, the
+                                refusal was opposed to the ideal of Universal Declaration of Human Rights and contrary
+                                to the letter and spirit of the Covenant on Civil and Political Rights which India
+                                adopted in 1979."</blockquote>
+                            <cite>— K.N. Bhat, Senior Jurist</cite>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="verdict rv">
+                "Those who wanted Rajannan dead and those who turned up in sackcloth and ashes after he died were
+                equally irrelevant. It was truly a wasted death."
+                <span class="vattr">— J. Rajmohan Pillai</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER SIXTEEN: SEARCH FOR TRUTH (NEW) ══════════════════════════════════════ -->
+    <section id="truth" class="sec-pad sec-bg-char">
+        <div class="ch-num-bg" style="top:2rem;right:-.02em;">XVI</div>
+        <div class="cnt">
+            <div class="rv" style="max-width:680px;margin:0 auto 4rem;text-align:center;">
+                <div class="ch-label" style="justify-content:center;">Chapter Sixteen — A Search for Truth</div>
+                <h2 class="sh" style="text-align:center;">The <em>Elaborate Search</em><br>for What Was Already Obvious
+                </h2>
+                <p class="bt" style="text-align:center;">The basic principle of effective non-governance, writes
+                    Rajmohan Pillai, is that nothing should be treated as self-evident. When the truth is obvious,
+                    governments can safely skip it by instituting an elaborate search for it. <em>That was what happened
+                        after Rajannan's death.</em></p>
+            </div>
+
+            <div class="two">
+                <div class="rvL">
+                    <p class="bt">That Rajannan was seriously ill was evident from medical certificates. That CBI
+                        counsel opposed even a medical check-up was public knowledge. That jail doctors did not do what
+                        they could to save a prisoner's life was obvious. Yet it was necessary to ascertain whether
+                        there was any negligence — and inevitably, it was to be a judicial inquiry.</p>
+                    <p class="bt">Leila Seth, former Chief Justice of the Himachal Pradesh High Court, was appointed to
+                        hold it. At the end of her inquiry, she came to a startling conclusion. The conclusion, recorded
+                        as the first sentence of the last but one paragraph of the fourth chapter of her report, was:
+                    </p>
+                    <div class="leila-box rv">
+                        <div class="label">Justice Leila Seth's Commission · Finding</div>
+                        <p class="bt" style="color:var(--ivory);">"There is no doubt that Mr Rajan Pillai was a sick
+                            man, having a chronic disease like alcoholic cirrhosis of the liver. He had two
+                            life-threatening episodes in 1992 and ten sclerotherapies till March 1995."</p>
+                    </div>
+                    <p class="bt">Her report also chronicled the story of the missing letter — the court's urgent
+                        confidential inquiry to the jail's Resident Medical Officer, received by an assistant
+                        superintendent, sent without receipt, never delivered, never replied to. A letter that might
+                        have changed the course of events. A letter that simply disappeared.</p>
+                    <div class="qp rv">
+                        <blockquote>"Unfortunately, both Dr Venkatasubbiah and Dr Hira Lal, the two doctors in Central
+                            Jail, Tihar, New Delhi, who examined him were casual and careless in the performance of
+                            their professional duty. Their negligence eventually resulted in giving him hardly any
+                            chance of survival."</blockquote>
+                        <cite>— Justice Leila Seth, Commission of Inquiry Report</cite>
+                    </div>
+                    <p class="bt">Yet where Magistrate Mehta was concerned, Leila Seth found she had no power to sit in
+                        judgement over a judge's orders. She gave a sixteen-page order to explain why. The man who had
+                        allegedly told Rajan "I don't want to see your body parts" was protected by judicial immunity.
+                        He received a promotion as additional sessions judge. He told The Economic Times he was "most
+                        unfortunate" about Rajan's death.</p>
+                </div>
+                <div class="rvR">
+                    <div class="img-frame" style="height:400px;margin-bottom:2rem;">
+                        <img src="E:\web westd\tiz.png" alt="Legal court building" loading="lazy">
+                        <div
+                            style="position:absolute;bottom:1rem;left:1rem;z-index:3;font-family:'Special Elite',cursive;font-size:.55rem;letter-spacing:.2em;color:var(--fog);text-transform:uppercase">
+                            Tiz Hazari Courts · New Delhi<br>Where his medical plea was denied</div>
+                    </div>
+                    <div class="leila-box rv">
+                        <div class="label">On the CBI Counsel</div>
+                        <p class="bt" style="font-size:.85rem;color:var(--fog);">Mr A.K. Dutt, Deputy Legal Advisor to
+                            the CBI, was aware of the fact that Rajan Pillai's illness could not be treated in the jail
+                            as there were no proper facilities. This information was available with him on 5.7.1995 as
+                            the CBI had written to the jail's RMO and received his reply. However, he did not bring this
+                            fact to the notice of the court.</p>
+                    </div>
+                    <div class="leila-box rv" style="margin-top:1.5rem;">
+                        <div class="label">On Tihar's Medical Facilities</div>
+                        <p class="bt" style="font-size:.85rem;color:var(--fog);">Leila Seth opened her chapter on
+                            improving Tihar with an Arab proverb: <em>"He who has health has hope; and he who has hope
+                                has everything."</em> She found that six doctors were looking after over 9,000 prisoners
+                            — a "token of medical facilities."</p>
+                        <p class="bt" style="font-size:.85rem;color:var(--ash);margin-top:.8rem;">"It has taken the
+                            tragic death of a well-known person to shake the sluggish lethargy of the administration."
+                        </p>
+                    </div>
+                    <div class="qp rv" style="margin-top:1.5rem;">
+                        <blockquote>"Rajannan's would not have been an entirely futile death if it had shaken the
+                            administration out of its lethargy. Did it?"</blockquote>
+                        <cite>— J. Rajmohan Pillai, Chapter 16</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ CHAPTER SEVENTEEN: GOSPEL OF FEAR (NEW) ══════════════════════════════════════ -->
+    <section id="gospel" class="sec-pad sec-bg-dark">
+        <div class="ch-num-bg" style="top:2rem;left:-.02em;">XVII</div>
+        <div class="cnt">
+            <div class="rv" style="max-width:680px;margin:0 auto 4rem;text-align:center;">
+                <div class="ch-label" style="justify-content:center;">Chapter Seventeen — Gospel of Fear</div>
+                <h2 class="sh" style="text-align:center;">A Theory of <em>Conspiracy</em><br>in the Himalayan Dark</h2>
+            </div>
+
+            <div class="two">
+                <div class="rvL">
+                    <p class="bt">In the summer of 1996, about a year after Rajannan's death, Rajmohan and Gopikachechi
+                        set out to Dharmsala — to the monastery of the Dalai Lama. Gopikachechi had long wanted to meet
+                        two men: Nelson Mandela, and the Dalai Lama. Both were emblems of extraordinary endurance.</p>
+                    <p class="bt">The road from Jammu to Dharmsala was less rough than feared. The lodging in Siddibara,
+                        some distance from the monastery, was more comfortable than expected. But Gopikachechi's mind
+                        was not on peace. She was fighting an election from Kollam, riding on a wave of sympathy. And
+                        she was still carrying her gospel of fear.</p>
+                    <div class="qp">
+                        <blockquote>"Mohan, look at Mandela — he was given up for good. If anyone had not given him up,
+                            it was himself. Thirty years of despair did not break him."</blockquote>
+                        <cite>— Gopikachechi, to Rajmohan, on the journey to Dharmsala</cite>
+                    </div>
+                    <p class="bt">The meeting with the Dalai Lama had been arranged by Anand Sharma. His Holiness spoke
+                        softly, primarily about his struggle, for about twenty minutes. <em>Rajmohan's mind was still
+                            troubled. The sinister scenario Gopikachechi had painted was weighing him down. The Dalai
+                            Lama's short discourse did not lift up his spirits.</em></p>
+                    <p class="bt">In the terrifying silence of that Himalayan hotel that night, Gopikachechi revealed
+                        her theory of conspiracy — truth as she perceived it. She believed Rajannan had been coerced
+                        into signing a power of attorney in favour of Rakesh Saxena. She believed that the death was not
+                        merely negligent. That the pattern of things — hostile media, hostile officials, a spiritual
+                        godman who took his money and delivered nothing, expert medical care denied at the critical
+                        moment — could not have been a coincidence.</p>
+                    <div class="gospel-box rv">
+                        <p class="bt" style="color:var(--ivory);margin-bottom:1rem;">Leila Seth's Commission on the
+                            Conspiracy Theory</p>
+                        <p class="bt" style="font-size:.85rem;color:var(--fog);">"She has made certain vague unconnected
+                            allegations regarding various persons being part of a conspiracy to kill her husband Mr
+                            Rajan Pillai but has not indicated the 'culprit brains'. The evidence of the applicant has
+                            to be tested on the anvil of cross-examination to ascertain whether these allegations are
+                            reckless, far-fetched, imaginary and false, fabricated or malicious."</p>
+                        <p class="bt" style="font-size:.85rem;color:var(--ash);margin-top:.8rem;">The commission placed
+                            the burden of proof entirely on her. Every effort to get a judicial probe into her theory
+                            was being officially foiled until January 2001, six years after Rajannan's death, when the
+                            Supreme Court called for an inquiry.</p>
+                    </div>
+                </div>
+                <div class="rvR">
+                    <div class="img-frame" style="height:380px;margin-bottom:2rem;">
+                        <img src="E:\web westd\dharma.png" alt="Dharamsala monastery mountains" loading="lazy">
+                        <div
+                            style="position:absolute;bottom:1rem;left:1rem;z-index:3;font-family:'Special Elite',cursive;font-size:.55rem;letter-spacing:.2em;color:var(--fog);text-transform:uppercase">
+                            Dharmsala · Dalai Lama's Monastery<br>Summer 1996 — One Year After His Death</div>
+                    </div>
+                    <div class="gospel-box rv">
+                        <p class="bt" style="color:var(--ivory);margin-bottom:1rem;">The CBI's Double Role</p>
+                        <p class="bt" style="font-size:.85rem;color:var(--fog);">It was the CBI which had opposed
+                            Rajannan's hospitalization, dubbing his plea for medical help as one not made in good faith.
+                            The CBI counsel had the letter that proved cirrhosis could not be treated at Tihar — and
+                            withheld it.</p>
+                        <p class="bt" style="font-size:.85rem;color:var(--ash);margin-top:.8rem;font-style:italic;">
+                            Ironically, the same agency is to investigate Gopikachechi's theory of conspiracy.</p>
+                    </div>
+                    <div class="qp rv" style="margin-top:1.5rem;">
+                        <blockquote>"One day, when we were going over things past, I told Amma: 'God had really
+                            conspired against Rajannan.' Amma was silent. I could not make out whether she endorsed my
+                            view or not."</blockquote>
+                        <cite>— J. Rajmohan Pillai, Chapter 17</cite>
+                    </div>
+                    <div class="afterword rv" style="margin-top:1.5rem;">
+                        <p class="aw-quote">"Gopikachechi told me: 'Well, Mohan, I am not going to sleep over it. I will
+                            pursue it as long as my memory works.'"</p>
+                        <p class="aw-attr">— Rajmohan Pillai · Dharmsala, 1996</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament">✦</div>
+
+    <!-- ══════════════════════════════════════ LEGACY / EPILOGUE ══════════════════════════════════════ -->
+    <section id="legacy" class="sec-pad sec-bg-grad">
+        <div class="cnt">
+            <div class="ch-label rv" style="justify-content:center;">Epilogue &amp; Afterword</div>
+            <div class="final-epig rv">
+                <p class="fe-text">"What else could I do? I was merely trying to learn from him, watching how tall he
+                    stood."</p>
+                <p class="fe-attr">— Rajmohan Pillai, younger brother, in the afterword</p>
+            </div>
+
+            <div style="max-width:800px;margin:6rem auto 0;" class="rv">
+                <p class="bt" style="text-align:center;">Two years after his death, Singapore's <em>Straits Times</em>
+                    reported Rajan Pillai had been "sighted in Darwin, Australia" — suggesting the body cremated in
+                    Kollam was borrowed, not his. The lie lived because the legend was too large to die quietly.</p>
+                <p class="bt" style="text-align:center;margin-top:1.5rem;">His mother Rajamony Amma was reported as
+                    "dead" in Bangkok court papers filed by his widow. Amma was very much alive — and filed a legal
+                    challenge. She was still saying her prayers for her son's soul, trusting her old gods, when the
+                    papers were filed.</p>
+                <p class="bt" style="text-align:center;margin-top:1.5rem;">No Indian court ever found him guilty of any
+                    wrongdoing. Every charge filed against him on Indian soil was thrown out. He died a man not
+                    convicted by any court that had heard both sides — only by one that stopped his Queen's Counsel
+                    mid-cross-examination and accepted untested assertions as gospel.</p>
+                <p class="bt" style="text-align:center;margin-top:1.5rem;">Achan had a stroke. He told Rajmohan: <em>"I
+                        will not forgive Rajan for dying to give them an opportunity to drown us in an everlasting
+                        deluge of empty words."</em></p>
+            </div>
+
+            <div class="aftermath rv" style="margin-top:6rem;">
+                <div class="aftermath-title">Where They All Are Now — The Afterword of J. Rajmohan Pillai</div>
+                <div class="am-row">
+                    <div class="am-name">Frederick Ross Johnson</div>
+                    <div class="am-fate">Set up home quietly in Atlanta alone. Laurie, his wife — whom Rajan made
+                        trustee of his will — went her own way. He never returned to cross-examination.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Nusli Wadia</div>
+                    <div class="am-fate">Became chairman of Britannia — the company Rajan had built for India.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">M.L. Mehta</div>
+                    <div class="am-fate">Received a promotion as additional sessions judge. He was "most unfortunate"
+                        about Rajan's death, he told The Economic Times. He was the magistrate who denied medical
+                        treatment and allegedly said "I don't want to see your body parts."</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">A.K. Dutt (CBI counsel)</div>
+                    <div class="am-fate">Pursued his legal career successfully. He had withheld the letter proving Tihar
+                        could not treat cirrhosis.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Dr. Venkatasubbiah</div>
+                    <div class="am-fate">Relieved from Tihar jail hospital. Drafted to look after children under a
+                        school health programme. He had left the DDU hospital two minutes after handing over an
+                        unconscious Rajan, without explaining the patient's condition.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Dr. Hira Lal</div>
+                    <div class="am-fate">Suspended — though his suspension was not connected with Rajan's case.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">George Kutty</div>
+                    <div class="am-fate">Released from Tihar Jail two years after Rajan's death. The stranger who
+                        pleaded for Rajan's cement sleeping platform — who became his last friendly face.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">C.D. Anil</div>
+                    <div class="am-fate">The magistrate who gave Rajan bail in Thiruvananthapuram — missed a promotion.
+                    </div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Rakesh Saxena</div>
+                    <div class="am-fate">Ended up in a Toronto prison — arrested for threatening his bodyguard. Thailand
+                        sought extradition. He lost his mind.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Chandraswami</div>
+                    <div class="am-fate">Served a short term in Tihar Jail — the same jail where Rajan died.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Achan (Janardhanan Pillai)</div>
+                    <div class="am-fate">Had a stroke. Never walked again. Told Rajmohan: "I will not forgive Rajan for
+                        dying to give them an opportunity to drown us in an everlasting deluge of empty words."</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Amma (Rajamony Pillai)</div>
+                    <div class="am-fate">Still says her prayers, trusting her old gods. Declared "dead" in Bangkok court
+                        papers. Very much alive. Filed a legal challenge. Was praying for his life — not his soul — when
+                        he died.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Krish (Rajan's eldest son)</div>
+                    <div class="am-fate">Seventeen years old when Rajmohan last wrote. Emotionally wrecked.</div>
+                </div>
+                <div class="am-row">
+                    <div class="am-name">Shiv (Rajan's younger son)</div>
+                    <div class="am-fate">Seven years old. Asked Rajmohan: "Why do my friends say my father died in
+                        jail?"</div>
+                </div>
+            </div>
+
+            <div class="afterword rv" style="margin-top:5rem;">
+                <p class="aw-quote">"Maranaantaani Vairaani — Hostilities only last until death. All hostilities end
+                    with death.<br><br>Do they? They didn't in Rajannan's case."</p>
+                <p class="aw-attr">— Achan to Rajmohan · Final Afterword · A Wasted Death</p>
+            </div>
+
+            <div class="afterword rv" style="margin-top:2rem;">
+                <p class="aw-quote">"Height is not merely a physical attribute."</p>
+                <p class="aw-attr">Rajan Pillai · 1947 – 8 July 1995</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>A Wasted Death: The Rise and Fall of Rajan Pillai</p>
+        <p>J. Rajmohan Pillai with K. Govindan Kutty</p>
+        <p style="margin-top:1.5rem;color:var(--gold-dim);">✦</p>
+        <p style="margin-top:.5rem;color:var(--blood);opacity:.55;letter-spacing:.4em;">He built empires. He was denied
+            a hospital bed.</p>
+    </footer>
+
+    <script>
+        /* ══════════════════════════════════════
+           CINEMATIC SPLASH SCREEN
+        ══════════════════════════════════════ */
+        (function initSplash() {
+            const sc = document.getElementById('splashCanvas');
+            const ctx = sc.getContext('2d');
+            let W, H, particles = [];
+            function rsz() { W = sc.width = window.innerWidth; H = sc.height = window.innerHeight; }
+            rsz(); window.addEventListener('resize', rsz);
+
+            // Particle class
+            class SP { constructor() { this.reset(true); } reset(i) { this.x = Math.random() * W; this.y = i ? Math.random() * H : H + 10; this.sz = Math.random() * 1.8 + .3; this.sp = Math.random() * .4 + .06; this.op = Math.random() * .5 + .05; this.dr = (Math.random() - .5) * .3; this.c = Math.random() > .6 ? 'rgba(201,168,76,' : 'rgba(180,155,100,'; } update() { this.y -= this.sp; this.x += this.dr; this.op -= .0005; if (this.y < -10 || this.op <= 0) this.reset(false); } draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.sz, 0, Math.PI * 2); ctx.fillStyle = this.c + this.op + ')'; ctx.fill(); } }
+            for (let i = 0; i < 200; i++)particles.push(new SP());
+
+            let ang = 0;
+            function drawLoop() {
+                ctx.clearRect(0, 0, W, H);
+                // Deep black bg
+                ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+                // Blood glow top
+                ang += .008;
+                const pulse = .12 + Math.sin(ang) * .05;
+                const g1 = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, H * .7);
+                g1.addColorStop(0, `rgba(80,10,10,${pulse})`); g1.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = g1; ctx.fillRect(0, 0, W, H);
+                // Gold glow bottom left
+                const g2 = ctx.createRadialGradient(W * .1, H, 0, W * .1, H, H * .4);
+                g2.addColorStop(0, 'rgba(40,25,8,.45)'); g2.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+                // Particles
+                particles.forEach(p => { p.update(); p.draw(); });
+                // Scanlines
+                for (let i = 0; i < H; i += 4) { ctx.fillStyle = 'rgba(0,0,0,.02)'; ctx.fillRect(0, i, W, 1); }
+                requestAnimationFrame(drawLoop);
+            }
+            drawLoop();
+
+            // Light streaks
+            const splash = document.getElementById('splash');
+            for (let i = 0; i < 5; i++) {
+                const s = document.createElement('div');
+                s.className = 'splash-streak';
+                s.style.cssText = `left:${10 + i * 20}%;height:${60 + Math.random() * 40}vh;animation-duration:${4 + Math.random() * 6}s;animation-delay:${i * .8 + 2}s;opacity:.6`;
+                splash.appendChild(s);
+            }
+
+            // Reveal sequence
+            let phase = 0;
+            const sey = document.getElementById('sey');
+            const sl1 = document.getElementById('sl1');
+            const sl2 = document.getElementById('sl2');
+            const sl3 = document.getElementById('sl3');
+            const stitle = document.getElementById('stitle');
+            const sdiv = document.getElementById('sdiv');
+            const sdates = document.getElementById('sdates');
+            const senter = document.getElementById('senter');
+            const barTop = document.getElementById('barTop');
+            const barBot = document.getElementById('barBot');
+
+            function reveal(el, delay, extra) {
+                setTimeout(() => {
+                    el.style.transition = `opacity 1.4s ease, transform 1.6s cubic-bezier(.22,1,.36,1)`;
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0) scale(1)';
+                    if (extra) extra();
+                }, delay);
+            }
+
+            // Open letterbox bars first
+            setTimeout(() => { barTop.classList.add('open'); barBot.classList.add('open'); }, 300);
+
+            // Sequence reveals
+            setTimeout(() => reveal(sey, 0), 1000);
+            setTimeout(() => reveal(sl1, 0), 2200);
+            setTimeout(() => reveal(sl2, 0), 3800);
+            setTimeout(() => reveal(sl3, 0), 5400);
+            // Fade out lines before title
+            setTimeout(() => {
+                [sl1, sl2, sl3].forEach(el => {
+                    el.style.transition = 'opacity 1s ease';
+                    el.style.opacity = '0.15';
+                });
+                sey.style.opacity = '0.3';
+            }, 6800);
+            // Title
+            setTimeout(() => reveal(stitle, 0), 7200);
+            // Divider
+            setTimeout(() => { sdiv.style.height = '80px'; }, 8600);
+            // Dates
+            setTimeout(() => reveal(sdates, 0), 9200);
+            // Enter button
+            setTimeout(() => reveal(senter, 0), 9800);
+        })();
+
+        function exitSplash() {
+            const splash = document.getElementById('splash');
+            splash.classList.add('exit');
+            setTimeout(() => { splash.style.display = 'none'; }, 1900);
+        }
+
+        /* ══════════════════════════════════════
+           CURSOR
+        ══════════════════════════════════════ */
+        const cur = document.getElementById('cur'), cur2 = document.getElementById('cur2');
+        let mx = 0, my = 0, tx = 0, ty = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx + 'px'; cur.style.top = my + 'px'; });
+        document.querySelectorAll('a,button,.bc,.bm-card,.ec,.ti,.si,.ch-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('big'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+        });
+        (function anim() { tx += (mx - tx) * .1; ty += (my - ty) * .1; cur2.style.left = tx + 'px'; cur2.style.top = ty + 'px'; requestAnimationFrame(anim); })();
+
+        /* ══════════════════════════════════════
+           OVERLAY LOGIC
+        ══════════════════════════════════════ */
+        const overlay = document.getElementById('chOverlay');
+        document.getElementById('chTrigger').addEventListener('click', () => overlay.classList.add('open'));
+        document.getElementById('chClose').addEventListener('click', () => overlay.classList.remove('open'));
+        document.querySelectorAll('.ch-item').forEach(link => link.addEventListener('click', () => overlay.classList.remove('open')));
+
+        /* ══════════════════════════════════════
+           HERO CANVAS
+        ══════════════════════════════════════ */
+        const canvas = document.getElementById('hc'), ctx2 = canvas.getContext('2d');
+        let W2, H2, particles2 = [], pAngle = 0;
+        function resize2() { W2 = canvas.width = canvas.offsetWidth; H2 = canvas.height = canvas.offsetHeight; }
+        resize2(); window.addEventListener('resize', resize2);
+        class P2 { constructor() { this.reset(true); } reset(i) { this.x = Math.random() * W2; this.y = i ? Math.random() * H2 : H2 + 10; this.sz = Math.random() * 1.4 + .2; this.sp = Math.random() * .35 + .08; this.op = Math.random() * .45 + .04; this.dr = (Math.random() - .5) * .28; this.c = Math.random() > .65 ? 'rgba(201,168,76,' : 'rgba(190,172,130,'; } update() { this.y -= this.sp; this.x += this.dr; this.op -= .0007; if (this.y < -10 || this.op <= 0) this.reset(false); } draw() { ctx2.beginPath(); ctx2.arc(this.x, this.y, this.sz, 0, Math.PI * 2); ctx2.fillStyle = this.c + this.op + ')'; ctx2.fill(); } }
+        for (let i = 0; i < 130; i++)particles2.push(new P2());
+        function drawHero() {
+            ctx2.clearRect(0, 0, W2, H2);
+            const bg = ctx2.createRadialGradient(W2 / 2, H2 * .38, 0, W2 / 2, H2 * .38, Math.max(W2, H2) * .85);
+            bg.addColorStop(0, 'rgba(28,13,5,.96)'); bg.addColorStop(.45, 'rgba(12,8,3,.96)'); bg.addColorStop(1, 'rgba(3,2,1,1)');
+            ctx2.fillStyle = bg; ctx2.fillRect(0, 0, W2, H2);
+            pAngle += .011;
+            const pulse = .13 + Math.sin(pAngle) * .045;
+            const bl = ctx2.createRadialGradient(W2 / 2, 0, 0, W2 / 2, 0, H2 * .62);
+            bl.addColorStop(0, `rgba(139,46,16,${pulse})`); bl.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx2.fillStyle = bl; ctx2.fillRect(0, 0, W2, H2);
+            const gs = ctx2.createRadialGradient(W2 * .12, H2, 0, W2 * .12, H2, H2 * .48);
+            gs.addColorStop(0, 'rgba(44,31,16,.55)'); gs.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx2.fillStyle = gs; ctx2.fillRect(0, 0, W2, H2);
+            particles2.forEach(p => { p.update(); p.draw(); });
+            for (let i = 0; i < H2; i += 4) { ctx2.fillStyle = 'rgba(0,0,0,.018)'; ctx2.fillRect(0, i, W2, 1); }
+            requestAnimationFrame(drawHero);
+        }
+        drawHero();
+
+        /* ══════════════════════════════════════
+           SCROLL EFFECTS
+        ══════════════════════════════════════ */
+        const sections = ['hero', 'origins', 'empire', 'baron', 'betrayal', 'gopika', 'saturn', 'trial', 'flight', 'death', 'truth', 'legacy'];
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            const dH = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = (y / dH) * 100;
+            document.getElementById('prog').style.width = pct + '%';
+            document.getElementById('rbar').style.setProperty('--p', pct + '%');
+            if (y > 80) nav.classList.add('s'); else nav.classList.remove('s');
+            sections.forEach(id => {
+                const el = document.getElementById(id); if (!el) return;
+                const r = el.getBoundingClientRect();
+                const dot = document.querySelector(`.cd[data-s="${id}"]`); if (!dot) return;
+                if (r.top <= window.innerHeight * .5 && r.bottom >= window.innerHeight * .5) {
+                    document.querySelectorAll('.cd').forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                }
+            });
+        }, { passive: true });
+
+        /* Parallax */
+        window.addEventListener('scroll', () => {
+            const y = window.scrollY;
+            const hc = document.querySelector('.hcon');
+            if (hc && y < window.innerHeight) { hc.style.transform = `translateY(${y * .22}px)`; hc.style.opacity = 1 - y / 650; }
+            document.querySelectorAll('.ch-num-bg').forEach(el => { el.style.transform = `translateY(${y * .03}px)`; });
+        }, { passive: true });
+
+        /* ══════════════════════════════════════
+           INTERSECTION OBSERVER
+        ══════════════════════════════════════ */
+        const io = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }); }, { threshold: .1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.rv,.rvL,.rvR,.ti,.ec,.bc,.df,.fd-item,.si').forEach(el => io.observe(el));
+        document.querySelectorAll('.ti').forEach((el, i) => { el.style.transitionDelay = (i * .12) + 's'; });
+        document.querySelectorAll('.ec').forEach((el, i) => { el.style.transitionDelay = (i * .09) + 's'; });
+        document.querySelectorAll('.df').forEach((el, i) => { el.style.transitionDelay = (i * .2) + 's'; });
+        document.querySelectorAll('.fd-item').forEach((el, i) => { el.style.transitionDelay = (i * .12) + 's'; });
+
+        /* ══════════════════════════════════════
+           ANIMATED COUNTERS
+        ══════════════════════════════════════ */
+        function animN(el, end, dur) { let s = 0; const step = end / (dur / 16); const iv = setInterval(() => { s += step; if (s >= end) { el.textContent = end; clearInterval(iv); return; } el.textContent = Math.floor(s); }, 16); }
+        const cio = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { const num = e.target.querySelector('.n'); if (num && !e.target.dataset.counted) { e.target.dataset.counted = '1'; const v = parseInt(num.textContent); if (!isNaN(v) && v > 0) animN(num, v, 1100); } } }); }, { threshold: .5 });
+        document.querySelectorAll('.df').forEach(el => cio.observe(el));
+
+        /* ══════════════════════════════════════
+           BETRAYAL TOGGLE
+        ══════════════════════════════════════ */
+        function toggleBmc(card) {
+            const isOpen = card.classList.contains('open');
+            document.querySelectorAll('.bm-card').forEach(c => c.classList.remove('open'));
+            if (!isOpen) card.classList.add('open');
+        }
+
+        /* ══════════════════════════════════════
+           HORIZONTAL TIMELINE
+        ══════════════════════════════════════ */
+        const tlData = [
+            { title: '1973 — Singapore Arrival', text: 'Rajannan lands in a city literally eliminating its crows — discipline made visible. He is given land in Jurong industrial estate. He sets two rules: the factory will be beautiful, and no one will reach the office before him. He arrives an hour before staff every morning.' },
+            { title: '1975 — Ole Brand Born', text: 'Branded, roasted, elegantly packaged cashew nuts — Ole (Spanish for victory). Twentieth Century Foods\' Jurong factory becomes a tourist attraction. Workers call it their region\'s "Taj Mahal." Ole products capture Japan, Thailand, West Asia.' },
+            { title: '1982 — London, Nabisco VP', text: 'After the Mtwara disaster (Rs 40cr loss) and Achan\'s heart attack, on 1 February — Achan\'s birthday, his wedding anniversary, the day Achan started business — Rajan gets a call from Nabisco Brands. He moves to London as area vice-president.' },
+            { title: '1983 — Britannia Stake', text: 'Rajan acquires 8% of Britannia shares personally, and another 5% through family. Combined with Nabisco\'s 40%, he effectively holds control of Britannia Industries — a 75-year-old Indian company. He becomes vice-chairman.' },
+            { title: '1985 — Chairman of Britannia', text: 'Rajan becomes chairman — the first Indian to run this company. He funds the Britannia-Amritraj Tennis centre with Vijay Amritraj. He takes a Learjet to attend Achan\'s 70th birthday. He books whole floors of hotels.' },
+            { title: '1989 — The $44M Buyout', text: 'Business Times headline: TRANSACTION MAKES LOCAL BUSINESSMAN BISCUIT KING OF INDIA AND PAKISTAN. After KKR takes over RJR Nabisco, Rajan buys all their Asia-Pacific interests for $44 million — just 17% of Britannia\'s annual turnover. A masterpiece.' },
+            { title: '1990 — BSN Alliance', text: 'To service Rs 300cr in debt, Rajan allies with France\'s BSN Groupe. Antoine Riboud: "It would have been a tremendous mistake to go it alone — we don\'t know India." He does know India now. The beginning of the end.' },
+            { title: '1992–93 — BSN Seizes Control', text: 'BSN\'s financial rescues quietly become equity. The 50:50 balance tips. BSN paid off a Hong Kong Bank loan: now it owns more. Rajan is forced out of Britannia. A 75-year-old Indian company — reclaimed from Americans by an Indian — passes to France.' }
+        ];
+        const nodes = document.querySelectorAll('.htl-node');
+        const panel = document.getElementById('htlpanel');
+        const ptitle = document.getElementById('htlptitle');
+        const ptext = document.getElementById('htlptext');
+        nodes.forEach(n => {
+            n.addEventListener('click', () => {
+                nodes.forEach(x => x.classList.remove('act'));
+                n.classList.add('act');
+                const idx = parseInt(n.dataset.idx);
+                ptitle.textContent = tlData[idx].title;
+                ptext.textContent = tlData[idx].text;
+                panel.style.display = 'none';
+                requestAnimationFrame(() => { panel.style.display = 'block'; panel.classList.add('show'); });
+            });
+        });
+    </script>
+</body>
+
+</html>
